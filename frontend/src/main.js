@@ -6,6 +6,10 @@ import {router} from './router'
 import store from './store'
 import ElementUI from 'element-ui'
 
+//import 'bootstrap/css/bootstrap.min.css'
+//import 'bootstrap/dist/js/bootstrap.min'
+
+
 Vue.use(ElementUI)
 
 //axios 配置

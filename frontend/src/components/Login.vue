@@ -59,8 +59,14 @@ export default {
           if (resp.status === 200 && resp.data.hasOwnProperty("token")) {
             this.$store.commit('login', resp.data)
             this.$router.replace({path: '/'})
-          } else{
-            alert('login error')
+          } else if(resp.status === 400){
+            alert('no user')
+          }
+          else if(resp.status === 600){
+            alert('wrong password')
+          }
+          else{
+            alert('some mistake')
           }
         })
         .catch(error => {
@@ -79,7 +85,8 @@ export default {
     height: 100%;
     width: 100%;
     background-size: cover;
-    position: fixed;
+    position: absolute;
+    z-index:999;
   }
   body{
     margin: 0px;

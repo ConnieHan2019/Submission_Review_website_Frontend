@@ -140,19 +140,19 @@
       <input type="text" placeholder="&nbsp&nbsp如“The 42nd International Conference on Software Engineering”" class="textW" name="fullname" required>
       <br>
       <label class="lb">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp举办时间:&nbsp&nbsp&nbsp&nbsp</label>
-      <input type="text" placeholder="&nbsp&nbsp如“October 5-11, 2020”" class="textW" name="organizationTime"  required>
+      <input type="text" placeholder="&nbsp&nbsp按照年-月-日的格式" class="textW" name="organizationTime"  required pattern="^(?:(?!0000)[0-9]{4}([-/.]?)(?:(?:0?[1-9]|1[0-2])\1(?:0?[1-9]|1[0-9]|2[0-8])|(?:0?[13-9]|1[0-2])\1(?:29|30)|(?:0?[13578]|1[02])\1(?:31))|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)([-/.]?)0?2\2(?:29))$">
       <br>
       <label class="lb">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp举办地点:&nbsp&nbsp&nbsp&nbsp</label>
-      <input type="text" placeholder="&nbsp&nbsp如“ Seoul, South Korea”" class="textW" name="place" required >
+      <input type="text" placeholder="&nbsp&nbsp城市与国家用逗号分开，如“ Seoul, South Korea”" class="textW" name="place" required pattern=".*，.*">
       <br>
       <label class="lb">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp投稿截止日期:&nbsp&nbsp&nbsp&nbsp</label>
-      <input type="text" placeholder="&nbsp&nbsp如“October 5-11, 2020”" class="textW" name="deadline" required>
+      <input type="text" placeholder="&nbsp&nbsp按照年-月-日的格式" class="textW" name="deadline" required pattern="^(?:(?!0000)[0-9]{4}([-/.]?)(?:(?:0?[1-9]|1[0-2])\1(?:0?[1-9]|1[0-9]|2[0-8])|(?:0?[13-9]|1[0-2])\1(?:29|30)|(?:0?[13578]|1[02])\1(?:31))|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)([-/.]?)0?2\2(?:29))$">
       <br>
       <label class="lb">评审结果发布日期: &nbsp&nbsp&nbsp </label>
-      <input type="text" class="textW" placeholder="&nbsp&nbsp如“October 6-11, 2020”" name="ResultReleaseTime" required>
+      <input type="text" class="textW" placeholder="&nbsp&nbsp按照年-月-日的格式" name="ResultReleaseTime" required pattern="^(?:(?!0000)[0-9]{4}([-/.]?)(?:(?:0?[1-9]|1[0-2])\1(?:0?[1-9]|1[0-9]|2[0-8])|(?:0?[13-9]|1[0-2])\1(?:29|30)|(?:0?[13578]|1[02])\1(?:31))|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)([-/.]?)0?2\2(?:29))$">
       <br><br>
 
-      <input type="submit" class="btn more mr-2" id="Submit" style="margin-left: 350px;color: white" value="申请" >
+      <input type="submit" class="btn more mr-2" id="Submit" style="margin-left: 350px;color: white" value="申请会议" >
 
     </div>
     <!-- //banner-hny-info -->

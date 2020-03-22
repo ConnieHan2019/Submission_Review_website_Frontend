@@ -58,9 +58,16 @@ export default {
         .then(resp => {
           if (resp.status === 200 && resp.data.hasOwnProperty("token")) {
             this.$store.commit('login', resp.data)
-            this.$router.replace({path: '/'})
-          } else{
-            alert('login error')
+            this.$router.replace({path:'/'})
+            //this.$router.replace({path: this.$route.query.redirect})
+          } else if(resp.status === 400){
+            alert('no user')
+          }
+          else if(resp.status === 600){
+            alert('wrong password')
+          }
+          else{
+            alert('some mistake')
           }
         })
         .catch(error => {
@@ -74,12 +81,14 @@ export default {
 
 <style scoped>
   #base_login{
-    background: url("../assets/background/checkerboard-cross.png") repeat;
+    //background: url("../assets/background/checkerboard-cross.png") repeat;
     background-position: center;
     height: 100%;
     width: 100%;
     background-size: cover;
-    position: fixed;
+    position: absolute;
+    z-index:999;
+    left:100px;
   }
   body{
     margin: 0px;

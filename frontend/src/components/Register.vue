@@ -4,7 +4,7 @@
              label-width="0px" v-loading="loading" :ref="registerForm">
       <h3 class="register_title">Register</h3>
       <el-form-item prop="username">
-        <el-input type="text" v-model="registerForm.username"
+        <el-input type="text" v-model="registerForm.username" 
                   auto-complete="off" placeholder="username"></el-input>
       </el-form-item>
       <el-form-item prop="password">
@@ -76,7 +76,10 @@ export default {
                 // 跳转到login
                 alert('successful registration')
                 this.$router.replace('/login')
-              } else{
+              }else if(resp.status === 400){
+                alert('username exists')
+              } 
+              else{
                 alert('register error')
               }
             })
@@ -95,13 +98,14 @@ export default {
 
 <style scoped>
   #base_register{
-    background: url("../assets/background/checkerboard-cross.png") repeat;
+    //background: url("../assets/background/checkerboard-cross.png") repeat;
     background-position: center;
     height: 100%;
     width: 100%;
     background-size: cover;
     position: absolute;
     z-index:999;
+    left:100px;
   }
   .register_container{
     border-radius: 15px;

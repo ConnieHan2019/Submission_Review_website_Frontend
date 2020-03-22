@@ -21,21 +21,26 @@
 //   return reg.test(str)
 
 // }
+var username;
 export function usernameValid (rule, value, callback) 
 {  setTimeout(() => {    
-    if (!/[A-Za-z0-9_\-\u4e00-\u9fa5]+/.test(value)) {      
+    if (!/^([a-zA-Z]|\-)[A-Za-z0-9_\-]+/.test(value)) {      
         callback(new Error('Please input correct username'))    
     } else {      
+        username = value;
         callback()   
     }  
 }, 500)}
 export function passwordValid (rule, value, callback) 
 {  setTimeout(() => {    
-    if (!/[A-Za-z0-9_\-\u4e00-\u9fa5]+/.test(value)) {      
+    if (!/(?!^(\d+|[a-zA-Z]+|\-+)$)^[\w\-]/.test(value)) {      
         callback(new Error('Please input correct password'))    
-    } else {      
-        callback()   
+    } else if(username != undefined && value.indexOf(username) != -1){      
+        callback(new Error("Password can not contain username"))   
     }  
+    else{
+
+    }
 }, 500)}
 export function emailValid (rule, value, callback) 
 {  setTimeout(() => {    

@@ -11,7 +11,7 @@ export default new Vuex.Store({
     login(state, data){
       localStorage.setItem('token', data.token)
       localStorage.setItem('userDetails', data.userDetails)
-      state.user = data.userDetails
+      state.userDetails = data.userDetails
       state.token = data.token
     },
     logout(state) {

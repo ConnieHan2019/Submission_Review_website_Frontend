@@ -7,26 +7,29 @@
              label-width="0px"
              v-loading="loading">
       <h3 class="login_title">Login</h3>
-      <el-form-item prop="username">
+      <el-form-item prop="username"style="font-size:15px;color:#f00">
         <el-input type="text"
                   v-model="loginForm.username"
                   auto-complete="off"
-                  placeholder="username"></el-input>
+                  placeholder="username"
+                  style="font-size:25px;color:#000"></el-input>
       </el-form-item>
-      <el-form-item prop="password">
+      <el-form-item prop="password"style="font-size:15px;color:#f00">
         <el-input type="password"
                   v-model="loginForm.password"
                   auto-complete="off"
-                  placeholder="password"></el-input>
+                  placeholder="password"
+                  style="font-size:25px;color:#000"></el-input>
       </el-form-item>
       <el-form-item style="width: 100%">
         <el-button type="primary"
-                   style="width: 40%;background: #afb4db;border: none"
-                   v-on:click="login">login</el-button>
-        <router-link to="register">
+                   style="width: 32%;background: #afb4db;border: none;font-size:15px;font-weight:600"
+                   v-on:click="login">LOGIN</el-button>
+        
           <el-button type="primary"
-                     style="width: 40%;background: #afb4db;border: none">register</el-button>
-        </router-link>
+                     style="width: 32%;background: #afb4db;border: none;font-size:15px;font-weight:600"><router-link to="register" 
+                     style="text-decoration: none;color: #232323; font-size:15px">register</router-link></el-button>
+        
       </el-form-item>
     </el-form>
   </div>
@@ -81,14 +84,13 @@ export default {
 
 <style scoped>
   #base_login{
-    //background: url("../assets/background/checkerboard-cross.png") repeat;
     background-position: center;
-    height: 100%;
-    width: 100%;
+    font-size:30px;
     background-size: cover;
-    position: absolute;
+    position: fixed;
     z-index:999;
-    left:100px;
+    left:400px;
+    top:50px;
   }
   body{
     margin: 0px;
@@ -98,15 +100,23 @@ export default {
     border-radius: 15px;
     background-clip: padding-box;
     margin: 90px auto;
-    width: 350px;
+    width: 500px;
+    height:300px;
     padding: 35px 35px 15px 35px;
     background: #fff;
     border: 1px solid #eaeaea;
     box-shadow: 0 0 25px #cac6c6;
   }
   .login_title {
-    margin: 0px auto 40px auto;
+    margin: 0px auto 20px auto;
     text-align: center;
     color: #494e8f;
+  }
+  button{
+    margin:20px;
+    height:35px;
+    text-align: center;
+    position:relative;
+    top:0;
   }
 </style>

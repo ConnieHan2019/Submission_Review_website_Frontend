@@ -3,17 +3,17 @@
     <el-form :model="registerForm" :rules="rules" class="register_container" label-position="left"
              label-width="0px" v-loading="loading" :ref="registerForm">
       <h3 class="register_title">Register</h3>
-      <el-form-item prop="username">
+      <el-form-item prop="username" style="font-size:15px;color:#f00">
         <el-input type="text" v-model="registerForm.username" 
-                  auto-complete="off" placeholder="username,e.g. rjgc2020"></el-input>
+                  auto-complete="off" placeholder="username,e.g. rjgc2020" style="font-size:25px;color:#000"></el-input>
       </el-form-item>
-      <el-form-item prop="password">
+      <el-form-item prop="password"style="font-size:15px;color:#f00">
         <el-input type="password" v-model="registerForm.password"
-                  auto-complete="off" placeholder="password, e.g. rjgclab2"></el-input>
+                  auto-complete="off" placeholder="password, e.g. rjgclab2"style="font-size:25px;color:#000"></el-input>
       </el-form-item>
-      <el-form-item prop="email">
+      <el-form-item prop="email"style="font-size:15px;color:#f00">
         <el-input type="email" v-model="registerForm.email"
-                  auto-complete="off" placeholder="email"></el-input>
+                  auto-complete="off" placeholder="email"style="font-size:25px;color:#000"></el-input>
       </el-form-item>
       <el-form-item prop="fullname">
         <el-input type="text" v-model="registerForm.fullname"
@@ -98,31 +98,36 @@ export default {
 
 <style scoped>
   #base_register{
-    //background: url("../assets/background/checkerboard-cross.png") repeat;
+    font-size:25px;
     background-position: center;
     height: 100%;
     width: 100%;
     background-size: cover;
-    position: absolute;
+    position: fixed;
     z-index:999;
-    left:100px;
+    left:50px;
+    top:-10px;
   }
   .register_container{
     border-radius: 15px;
     background-clip: padding-box;
     margin: 90px auto;
-    width: 350px;
+    width: 500px;
     padding: 35px 35px 15px 35px;
     background: #fff;
     border: 1px solid #eaeaea;
     box-shadow: 0 0 25px #cac6c6;
   }
   .register_title{
-    margin: 0px auto 40px auto;
+    margin: 0px auto 10px auto;
     text-align: center;
     color: #505458;
   }
+  button{
+    margin:10px;
+  }
   .el-form-item__error{
-    
+    font-size:10px;
+    color:#ff9f4c;
   }
 </style>

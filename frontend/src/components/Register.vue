@@ -5,11 +5,11 @@
       <h3 class="register_title">Register</h3>
       <el-form-item prop="username">
         <el-input type="text" v-model="registerForm.username" 
-                  auto-complete="off" placeholder="username"></el-input>
+                  auto-complete="off" placeholder="username,e.g. rjgc2020"></el-input>
       </el-form-item>
       <el-form-item prop="password">
         <el-input type="password" v-model="registerForm.password"
-                  auto-complete="off" placeholder="password"></el-input>
+                  auto-complete="off" placeholder="password, e.g. rjgclab2"></el-input>
       </el-form-item>
       <el-form-item prop="email">
         <el-input type="email" v-model="registerForm.email"
@@ -50,8 +50,8 @@ export default {
       },
       rules: {
         // blur 失去鼠标焦点时触发验证
-        username: [{required: true, message: '', trigger: 'blur'}, {validator: usernameValid, trigger: 'blur'},{min: 5, max: 32, message: 'length of username from 5 to 32 ', trigger: 'blur'}],
-        password: [{required: true, message: '', trigger: 'blur'}, {validator: passwordValid, trigger: 'blur'},{min: 6, max: 32, message: 'length of username from 6 to 32', trigger: 'blur'}],
+        username: [{required: true, message: '', trigger: 'blur'}, {validator: usernameValid, trigger: 'blur'},{min: 5, max: 32, message: 'Please input 5-32 characters', trigger: 'blur'}],
+        password: [{required: true, message: '', trigger: 'blur'}, {validator: passwordValid, trigger: 'blur'},{min: 6, max: 32, message: 'Please input 6-32 characters', trigger: 'blur'}],
         email: [{required: true, message: '', trigger: 'blur'}, {validator: emailValid, trigger: 'blur'}]
       },
       loading: false
@@ -60,7 +60,7 @@ export default {
   methods: {
     userTypeChange() {
     },
-    register (formName) {
+    register(formName) {
       this.$refs[formName].validate(valid => {
         if(valid){
           this.$axios.post('/register', {
@@ -80,7 +80,7 @@ export default {
                 alert('username exists')
               } 
               else{
-                alert('register error')
+                alert('some mistake')
               }
             })
             .catch(error => {
@@ -121,5 +121,8 @@ export default {
     margin: 0px auto 40px auto;
     text-align: center;
     color: #505458;
+  }
+  .el-form-item__error{
+    
   }
 </style>

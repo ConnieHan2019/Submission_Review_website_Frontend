@@ -7,14 +7,14 @@
              label-width="0px"
              v-loading="loading">
       <h3 class="login_title">Login</h3>
-      <el-form-item prop="username"style="font-size:15px;color:#f00">
+      <el-form-item prop="username" style="font-size:15px;color:#f00">
         <el-input type="text"
                   v-model="loginForm.username"
                   auto-complete="off"
                   placeholder="username"
                   style="font-size:25px;color:#000"></el-input>
       </el-form-item>
-      <el-form-item prop="password"style="font-size:15px;color:#f00">
+      <el-form-item prop="password" style="font-size:15px;color:#f00">
         <el-input type="password"
                   v-model="loginForm.password"
                   auto-complete="off"

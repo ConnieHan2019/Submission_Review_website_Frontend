@@ -25,11 +25,11 @@
         <el-button type="primary"
                    style="width: 32%;background: #afb4db;border: none;font-size:15px;font-weight:600"
                    v-on:click="login">LOGIN</el-button>
-        
+
           <el-button type="primary"
-                     style="width: 32%;background: #afb4db;border: none;font-size:15px;font-weight:600"><router-link to="register" 
+                     style="width: 32%;background: #afb4db;border: none;font-size:15px;font-weight:600"><router-link to="register"
                      style="text-decoration: none;color: #232323; font-size:15px">register</router-link></el-button>
-        
+
       </el-form-item>
     </el-form>
   </div>

@@ -76,9 +76,7 @@ export default {
                 // 跳转到login
                 alert('successful registration')
                 this.$router.replace('/login')
-              }else if(resp.status === 400){
-                alert('username exists')
-              } 
+              }
               else{
                 alert('some mistake')
               }

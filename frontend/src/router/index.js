@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
+import Contact from '@/components/Contact'
 import store from '../store'
 
 Vue.use(Router)
@@ -26,6 +27,14 @@ export const router = new Router({
       path: '/register',
       name: 'Register',
       component: Register
+    },
+    {
+      path: '/contact',
+      name: 'Contact',
+      component: Contact,
+      meta: {
+        requireAuth: true
+      }
     }
   ]
 })
@@ -38,7 +47,7 @@ router.beforeEach(function (to, from ,next) {
     } else {
       next({
         path: '/login',
-        query: {redirect: to.fullPath} // 登录成功之后重新跳转到该路由,将目的路由地址存入login的query中
+        query: {redirect:to.fullPath} // 登录成功之后重新跳转到该路由,将目的路由地址存入login的query中
       })
     }
   } else {

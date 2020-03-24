@@ -7,14 +7,14 @@
              label-width="0px"
              v-loading="loading">
       <h3 class="login_title">Login</h3>
-      <el-form-item prop="username"style="font-size:15px;color:#f00">
+      <el-form-item prop="username" style="font-size:15px;color:#f00">
         <el-input type="text"
                   v-model="loginForm.username"
                   auto-complete="off"
                   placeholder="username"
                   style="font-size:25px;color:#000"></el-input>
       </el-form-item>
-      <el-form-item prop="password"style="font-size:15px;color:#f00">
+      <el-form-item prop="password" style="font-size:15px;color:#f00">
         <el-input type="password"
                   v-model="loginForm.password"
                   auto-complete="off"
@@ -25,11 +25,11 @@
         <el-button type="primary"
                    style="width: 32%;background: #afb4db;border: none;font-size:15px;font-weight:600"
                    v-on:click="login">LOGIN</el-button>
-        
+
           <el-button type="primary"
-                     style="width: 32%;background: #afb4db;border: none;font-size:15px;font-weight:600"><router-link to="register" 
+                     style="width: 32%;background: #afb4db;border: none;font-size:15px;font-weight:600"><router-link to="register"
                      style="text-decoration: none;color: #232323; font-size:15px">register</router-link></el-button>
-        
+
       </el-form-item>
     </el-form>
   </div>

@@ -7,13 +7,13 @@
         <el-input type="text" v-model="registerForm.username" 
                   auto-complete="off" placeholder="username,e.g. rjgc2020" style="font-size:25px;color:#000"></el-input>
       </el-form-item>
-      <el-form-item prop="password"style="font-size:15px;color:#f00">
+      <el-form-item prop="password" style="font-size:15px;color:#f00">
         <el-input type="password" v-model="registerForm.password"
-                  auto-complete="off" placeholder="password, e.g. rjgclab2"style="font-size:25px;color:#000"></el-input>
+                  auto-complete="off" placeholder="password, e.g. rjgclab2" style="font-size:25px;color:#000"></el-input>
       </el-form-item>
-      <el-form-item prop="email"style="font-size:15px;color:#f00">
+      <el-form-item prop="email" style="font-size:15px;color:#f00">
         <el-input type="email" v-model="registerForm.email"
-                  auto-complete="off" placeholder="email"style="font-size:25px;color:#000"></el-input>
+                  auto-complete="off" placeholder="email" style="font-size:25px;color:#000"></el-input>
       </el-form-item>
       <el-form-item prop="fullname">
         <el-input type="text" v-model="registerForm.fullname"

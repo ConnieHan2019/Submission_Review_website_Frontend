@@ -9,9 +9,9 @@
              v-loading="loading">
       <h3 class="contact_title">contact</h3>
       <span>会议简称:</span>
-      <el-form-item prop="abbreviation" style="font-size:15px;color:#f00">
+      <el-form-item prop="shortname" style="font-size:15px;color:#f00">
         <el-input type="text"
-                  v-model="contactForm.abbreviation"
+                  v-model="contactForm.shortname"
                   auto-complete="off"
                   placeholder="如ICSE2020"
                   style="font-size:20px;color:#000"></el-input>
@@ -34,25 +34,25 @@
                   style="font-size:20px;color:#000"></el-input>
       </el-form-item>
       <span>结果发布日期:</span>
-      <el-form-item prop="releasedate" style="font-size:15px;color:#f00">
-        <el-input type="releasedate"
-                  v-model="contactForm.releasedate"
+      <el-form-item prop="resultReleaseTime" style="font-size:15px;color:#f00">
+        <el-input type="resultReleaseTime"
+                  v-model="contactForm.resultReleaseTime"
                   auto-complete="off"
                   placeholder=" 按照年-月-日的格式"
                   style="font-size:20px;color:#000"></el-input>
       </el-form-item>
       <span>举办时间:</span>
-      <el-form-item prop="holdtime" style="font-size:15px;color:#f00">
-        <el-input type="holdtime"
-                  v-model="contactForm.holdtime"
+      <el-form-item prop="organizationTime" style="font-size:15px;color:#f00">
+        <el-input type="organizationTime"
+                  v-model="contactForm.organizationTime"
                   auto-complete="off"
                   placeholder="按照年-月-日的格式"
                   style="font-size:20px;color:#000"></el-input>
       </el-form-item>
       <span>举办地点:</span>
-      <el-form-item prop="holdplace" style="font-size:15px;color:#f00">
-        <el-input type="holdplace"
-                  v-model="contactForm.holdplace"
+      <el-form-item prop="place" style="font-size:15px;color:#f00">
+        <el-input type="place"
+                  v-model="contactForm.place"
                   auto-complete="off"
                   placeholder="城市与国家用逗号分开，如“ Seoul, South Korea”"
                   style="font-size:20px;color:#000；width:10px"></el-input>
@@ -78,20 +78,20 @@ export default {
   data () {
     return {
       contactForm: {
-        abbreviation: '',
+        shortname: '',
         fullname: '',
         deadline: '',
-        releasedate: '',
-        holdtime: '',
-        holdplace: ''
+        resultReleaseTime: '',
+        organizationTime: '',
+        place: ''
       },
       rules: {
-        abbreviation: [{required: true, message: '', trigger: 'blur'}],
+        shortname: [{required: true, message: '', trigger: 'blur'}],
         fullname: [{required: true, message: '', trigger: 'blur'}],
         deadline: [{required: true, message: '', trigger: 'blur'}],
-        releasedate: [{required: true, message: '', trigger: 'blur'}],
-        holdtime: [{required: true, message: '', trigger: 'blur'}],
-        holdplace: [{required: true, message: '', trigger: 'blur'}]
+        resultReleaseTime: [{required: true, message: '', trigger: 'blur'}],
+        organizationTime: [{required: true, message: '', trigger: 'blur'}],
+        place: [{required: true, message: '', trigger: 'blur'}]
       },
       loading: false
     }
@@ -99,12 +99,12 @@ export default {
   methods: {
     contact () {
       this.$axios.post('/contact', {
-        abbreviation: this.contactForm.abbreviation,
+        shortname: this.contactForm.shortname,
         fullname: this.contactForm.fullname,
         deadline: this.contactForm.deadline,
-        releasedate: this.contactForm.releasedate,
-        holdtime: this.contactForm.holdtime,
-        holdplace: this.contactForm.holdplace
+        resultReleaseTime: this.contactForm.resultReleaseTime,
+        organizationTime: this.contactForm.organizationTime,
+        place: this.contactForm.place
       })
         .then(resp => {
           if (resp.status === 200 ) {

@@ -1,5 +1,67 @@
 <template>
   <div id="base_login">
+  <div id="home">
+  <!--/top-nav -->
+  <div class="top_w3pvt_main container">
+    <!--/header -->
+    <header class="nav_w3pvt text-center ">
+      <!-- nav -->
+      <nav class="wthree-w3ls">
+        <div id="logo">
+          <h1> <a class="navbar-brand px-0 mx-0" href="index.html">Infinitude
+          </a>
+          </h1>
+        </div>
+
+        <label for="drop" class="toggle">导航</label>
+        <input type="checkbox" id="drop" />
+      </nav>
+      <!-- //nav -->
+    </header>
+    <!--//header -->
+  </div>
+  <!-- //top-nav -->
+  <!-- banner slider -->
+  <div id="homepage-slider" class="st-slider">
+    <input type="radio" class="cs_anchor radio" name="slider" id="play1" checked="" />
+    <input type="radio" class="cs_anchor radio" name="slider" id="slide1" />
+    <input type="radio" class="cs_anchor radio" name="slider" id="slide2" />
+    <input type="radio" class="cs_anchor radio" name="slider" id="slide3" />
+    <div class="images">
+      <div class="images-inner">
+        <div class="image-slide">
+          <div class="banner-w3pvt-1">
+            <div class="overlay-w3ls">
+
+            </div>
+
+          </div>
+        </div>
+        <div class="image-slide">
+          <div class="banner-w3pvt-2">
+            <div class="overlay-w3ls">
+
+            </div>
+          </div>
+        </div>
+        <div class="image-slide">
+          <div class="banner-w3pvt-3">
+            <div class="overlay-w3ls">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="labels">
+      <div class="fake-radio">
+        <label for="slide1" class="radio-btn"></label>
+        <label for="slide2" class="radio-btn"></label>
+        <label for="slide3" class="radio-btn"></label>
+      </div>
+    </div>
+             <!-- banner-hny-info -->
+    <div class="banner-hny-info" style="padding-top: 150px" >
     <el-form :model="loginForm"
              :rules="rules"
              class="login_container"
@@ -7,31 +69,39 @@
              label-width="0px"
              v-loading="loading">
       <h3 class="login_title">Login</h3>
-      <el-form-item prop="username" style="font-size:15px;color:#f00">
+      <el-form-item prop="username" style="margin-bottom:15px">
         <el-input type="text"
                   v-model="loginForm.username"
                   auto-complete="off"
-                  placeholder="username"
+                  placeholder="  username"
                   style="font-size:25px;color:#000"></el-input>
       </el-form-item>
-      <el-form-item prop="password" style="font-size:15px;color:#f00">
+      <el-form-item prop="password" style="margin-bottom:15px">
         <el-input type="password"
                   v-model="loginForm.password"
                   auto-complete="off"
-                  placeholder="password"
+                  placeholder="  password"
                   style="font-size:25px;color:#000"></el-input>
       </el-form-item>
       <el-form-item style="width: 100%">
         <el-button type="primary"
-                   style="width: 32%;background: #afb4db;border: none;font-size:15px;font-weight:600"
-                   v-on:click="login">LOGIN</el-button>
+                   class="btn more mr-2"
+                   style="width: 20%;background: #afb4db;border: none;font-size:15px;font-weight:600"
+                   v-on:click="login">Login</el-button>
 
           <el-button type="primary"
-                     style="width: 32%;background: #afb4db;border: none;font-size:15px;font-weight:600"><router-link to="register"
+                   class="btn more mr-2"
+                     style="width: 20%;background: #afb4db;border: none;font-size:15px;font-weight:600"><router-link to="register"
                      style="text-decoration: none;color: #232323; font-size:15px">register</router-link></el-button>
 
       </el-form-item>
     </el-form>
+    </div>
+    <!-- //banner-hny-info -->
+  </div>
+  <!-- //banner slider -->
+</div>
+    
   </div>
 
 </template>
@@ -79,15 +149,6 @@ export default {
 </script>
 
 <style scoped>
-  #base_login{
-    background-position: center;
-    font-size:30px;
-    background-size: cover;
-    position: fixed;
-    z-index:999;
-    left:400px;
-    top:50px;
-  }
   body{
     margin: 0px;
     padding: 0px;
@@ -95,24 +156,31 @@ export default {
   .login_container{
     border-radius: 15px;
     background-clip: padding-box;
-    margin: 90px auto;
-    width: 500px;
-    height:300px;
-    padding: 35px 35px 15px 35px;
-    background: #fff;
+    margin: auto;
+    width: 400px;
     border: 1px solid #eaeaea;
     box-shadow: 0 0 25px #cac6c6;
   }
   .login_title {
-    margin: 0px auto 20px auto;
+    margin: 10px auto 20px auto;
     text-align: center;
-    color: #494e8f;
+    color: #CCCCFF;
   }
   button{
-    margin:20px;
+    padding:0;
+    margin:15px;
     height:35px;
-    text-align: center;
-    position:relative;
-    top:0;
+    box-shadow: 0 0 25px #cac6c6;
+  }
+  >>> input{
+      border-radius: 5px;
+      width: 250px;
+      font-size:20px;
+  }
+  >>> .el-form-item__error{
+    position:absolute;
+    left:533px;
+    font-size:15px;
+    color:#f00;
   }
 </style>

@@ -15,7 +15,7 @@ export const router = new Router({
       name: 'HelloWorld',
       component: HelloWorld,
       meta: {
-        requireAuth: false // 需要登录权限
+        requireAuth: true // 需要登录权限
       }
     },
     {

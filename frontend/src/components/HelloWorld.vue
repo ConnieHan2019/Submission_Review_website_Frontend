@@ -17,7 +17,7 @@
           <label for="drop" class="toggle">导航</label>
           <input type="checkbox" id="drop" />
           <ul class="menu mr-auto">
-            <li class="active"><a href="index.html">个人空间</a></li>
+            <li class="active"><a href="index.html"><span class="fa fa-user" aria-hidden="true"></span>{{ msg }}</a></li>
             <!--<li><a href="">About</a></li>-->
             <li>
               <!-- First Tier Drop Down -->
@@ -35,9 +35,8 @@
             </li>
             <li><a href="">ENGLISH</a></li>
             <li><a href="">关于我们</a></li>
-            <li class="social-icons ml-lg-3"><a href="#" class="p-0 social-icon"><span class="fa fa-user" aria-hidden="true"></span>{{ msg }} </a> </li>
-            <li class="social-icons ml-lg-3" ><div id="app"></div>
-            </li>
+            <li class="social-icons ml-lg-3"><router-link to='/' @click.native='logout' v-if='out' >登出</router-link><router-link to='login' v-else>登录/注册</router-link></li>
+            
 
           </ul>
         </nav>
@@ -129,7 +128,13 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: this.$store.state.userDetails
+      msg: this.$store.state.userDetails?this.$store.state.userDetails:"个人空间",
+      out: this.$store.state.userDetails
+    }
+  },
+  methods:{
+    logout(){
+      this.$store.commit('logout')
     }
   }
 }

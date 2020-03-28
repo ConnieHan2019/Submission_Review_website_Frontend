@@ -67,7 +67,8 @@
              class="login_container"
              label-position="left"
              label-width="0px"
-             v-loading="loading">
+             v-loading="loading"
+             :ref="loginForm">
       <h3 class="login_title">Login</h3>
       <el-form-item prop="username" style="margin-bottom:20px">
         <el-input type="text"
@@ -87,7 +88,7 @@
         <el-button type="primary"
                    class="btn more mr-2"
                    style="width: 20%;background: #afb4db;border: none;font-size:15px;font-weight:600"
-                   v-on:click="login">Login</el-button>
+                   v-on:click="login(loginForm)">Login</el-button>
 
           <el-button type="primary"
                    class="btn more mr-2"
@@ -123,8 +124,10 @@ export default {
     }
   },
   methods: {
-    login () {
-      this.$axios.post('/login', {
+    login (formName) {
+      this.$refs[formName].validate(valid => {
+        if(valid){
+          this.$axios.post('/login', {
         username: this.loginForm.username,
         password: this.loginForm.password
       })
@@ -134,6 +137,7 @@ export default {
             this.$store.commit('login', resp.data)
             this.$router.replace({path:'/'})
             //this.$router.replace({path: this.$route.query.redirect})
+            location.reload() 
           }
           else{
             alert('some mistake')
@@ -144,6 +148,10 @@ export default {
           console.log(error)
           alert('login error')
         })
+        } else {
+          alert('wrong submit')
+        }
+      })
     }
   }
 }

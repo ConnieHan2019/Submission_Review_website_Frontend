@@ -142,7 +142,7 @@ export default {
               // 根据后端的返回数据修改
               if(resp.status === 200 && resp.data.hasOwnProperty("id")) {
                 // 跳转到login
-                alert('successful registration')
+                // alert('successful registration')
                 this.$router.replace('/login')
               }
               else{

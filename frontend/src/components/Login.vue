@@ -130,7 +130,7 @@ export default {
       })
         .then(resp => {
           if (resp.status === 200 && resp.data.hasOwnProperty("token")) {
-            alert("Log in successfully")
+            // alert("Log in successfully")
             this.$store.commit('login', resp.data)
             this.$router.replace({path:'/'})
             //this.$router.replace({path: this.$route.query.redirect})

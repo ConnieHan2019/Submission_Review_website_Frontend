@@ -42,9 +42,11 @@ axios.interceptors.response.use(
     return response
   },
   error => {
+    console.log(error)
     console.log(error.response)
     //处理一般的error，特殊的error返回给各自处理
     if(error) {
+      
       // 清除token 如果不是register/login, 跳转至login
       store.commit('logout')
       router.currentRoute.path !== '/login' &&

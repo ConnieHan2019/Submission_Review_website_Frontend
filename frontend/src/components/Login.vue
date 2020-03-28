@@ -69,14 +69,14 @@
              label-width="0px"
              v-loading="loading">
       <h3 class="login_title">Login</h3>
-      <el-form-item prop="username" style="margin-bottom:15px">
+      <el-form-item prop="username" style="margin-bottom:20px">
         <el-input type="text"
                   v-model="loginForm.username"
                   auto-complete="off"
                   placeholder="  username"
                   style="font-size:25px;color:#000"></el-input>
       </el-form-item>
-      <el-form-item prop="password" style="margin-bottom:15px">
+      <el-form-item prop="password" style="margin-bottom:20px">
         <el-input type="password"
                   v-model="loginForm.password"
                   auto-complete="off"
@@ -140,6 +140,7 @@ export default {
           }
         })
         .catch(error => {
+          console.log('login error')
           console.log(error)
           alert('login error')
         })
@@ -179,7 +180,7 @@ export default {
   }
   >>> .el-form-item__error{
     position:absolute;
-    left:533px;
+    left:510px;
     font-size:15px;
     color:#f00;
   }

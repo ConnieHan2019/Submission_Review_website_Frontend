@@ -1,26 +1,6 @@
 <template>
   <div id="base_register">
   <div id="home">
-  <!--/top-nav -->
-  <div class="top_w3pvt_main container">
-    <!--/header -->
-    <header class="nav_w3pvt text-center ">
-      <!-- nav -->
-      <nav class="wthree-w3ls">
-        <div id="logo">
-          <h1> <a class="navbar-brand px-0 mx-0" href="index.html">Infinitude
-          </a>
-          </h1>
-        </div>
-
-        <label for="drop" class="toggle">导航</label>
-        <input type="checkbox" id="drop" />
-      </nav>
-      <!-- //nav -->
-    </header>
-    <!--//header -->
-  </div>
-  <!-- //top-nav -->
   <!-- banner slider -->
   <div id="homepage-slider" class="st-slider">
     <input type="radio" class="cs_anchor radio" name="slider" id="play1" checked="" />
@@ -61,33 +41,32 @@
       </div>
     </div>
              <!-- banner-hny-info -->
-    <div class="banner-hny-info" style="padding-top: 50px" >
+    <div class="banner-hny-info" style="padding: 10px" >
     <el-form :model="registerForm" :rules="rules" class="register_container" label-position="left"
              label-width="0px" v-loading="loading" :ref="registerForm">
       <h3 class="register_title">Register</h3>
-      <el-form-item prop="username" style="margin-bottom:20px">
+      <el-form-item prop="username" >
         <el-input type="text" v-model="registerForm.username" 
-                  auto-complete="off" placeholder="  username,e.g. rjgc2020" style="font-size:25px;color:#000"></el-input>
+                  auto-complete="off" placeholder="username,e.g. rjgc2020" ></el-input>
       </el-form-item>
-      <el-form-item prop="password" style="margin-bottom:20px">
+      <el-form-item prop="password" >
         <el-input type="password" v-model="registerForm.password"
-                  auto-complete="off" placeholder="  password, e.g. rjgclab2" style="font-size:25px;color:#000"></el-input>
+                  auto-complete="off" placeholder="password, e.g. rjgclab2"></el-input>
       </el-form-item>
-      <el-form-item prop="email" style="margin-bottom:20px">
+      <el-form-item prop="email">
         <el-input type="email" v-model="registerForm.email"
-                  auto-complete="off" placeholder="  email" style="font-size:25px;color:#000"></el-input>
+                  auto-complete="off" placeholder="email" ></el-input>
       </el-form-item>
       <el-form-item prop="fullname">
-        <el-input type="text" v-model="registerForm.fullname" style="margin-bottom:20px"
-                  auto-complete="off" placeholder="  fullname"></el-input>
+        <el-input type="text" v-model="registerForm.fullname" 
+                  auto-complete="off" placeholder="fullname"></el-input>
       </el-form-item>
-      <el-form-item prop="sector">
-        <el-input type="text" v-model="registerForm.sector" style="margin-bottom:20px"
-                  auto-complete="off" placeholder="  sector"></el-input>
+      <el-form-item prop="sector" >
+        <el-input type="text" v-model="registerForm.sector" 
+                  auto-complete="off" placeholder="sector"></el-input>
       </el-form-item>
-      <el-form-item prop="country">
-        <el-input type="text" v-model="registerForm.country" style="margin-bottom:20px"
-                  auto-complete="off" placeholder="  country"></el-input>
+      <el-form-item prop="country" >
+      <el-cascader v-model="registerForm.country" :options="options" :props="{ expandTrigger: 'hover' }"></el-cascader>
       </el-form-item>
 
       <el-form-item style="width: 100%">
@@ -114,15 +93,42 @@ export default {
         username: '',
         password: '',
         fullname: '',
-        email: ''
+        email: '',
+        sector:'',
+        country:''
       },
       rules: {
         // blur 失去鼠标焦点时触发验证
         username: [{required: true, message: '', trigger: 'blur'}, {validator: usernameValid, trigger: 'blur'},{min: 5, max: 32, message: 'Please input 5-32 characters', trigger: 'blur'}],
         password: [{required: true, message: '', trigger: 'blur'}, {validator: passwordValid, trigger: 'blur'},{min: 6, max: 32, message: 'Please input 6-32 characters', trigger: 'blur'}],
-        email: [{required: true, message: '', trigger: 'blur'}, {validator: emailValid, trigger: 'blur'}]
+        email: [{required: true, message: '', trigger: 'blur'}, {validator: emailValid, trigger: 'blur'}],
+        fullname: [{required: true, message: '', trigger: 'blur'}]
       },
-      loading: false
+      loading: false,
+      options:[{
+        value:'Asia',
+        label:'Asia',
+        children:[{
+          value:'China',
+          label:'China'
+        },
+        {
+          value:'India',
+          label:'India'
+        }]
+      },
+      {
+        value:'Europe',
+        label:'Europe',
+        children:[{
+          value:'England',
+          label:'England'
+        },
+        {
+          value:'France',
+          label:'France'
+        }]
+      }]
     }
   },
   methods: {
@@ -136,6 +142,8 @@ export default {
               password: this.registerForm.password,
               fullname: this.registerForm.fullname,
               email: this.registerForm.email,
+              sector: this.registerForm.sector,
+              country: this.registerForm.country
             }
           )
             .then(resp => {
@@ -168,7 +176,8 @@ export default {
     background-clip: padding-box;
     width: 500px;
     top:10px;
-    margin:auto ;
+    margin:auto;
+    margin-top:90px;
     padding:20px;
     border: 1px solid #eaeaea;
     box-shadow: 0 0 25px #cac6c6;
@@ -183,16 +192,5 @@ export default {
     height:35px;
     font-weight:600;
     box-shadow: 0 0 25px #cac6c6;
-  }
-  >>> input{
-      border-radius: 5px;
-      width: 400px;
-      font-size:20px;
-  }
-  >>> .el-form-item__error{
-    position:absolute;
-    left:433px;
-    font-size:15px;
-    color:#f00;
   }
 </style>

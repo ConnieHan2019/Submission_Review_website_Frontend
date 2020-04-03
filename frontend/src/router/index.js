@@ -4,6 +4,7 @@ import HelloWorld from '@/components/HelloWorld'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import Contact from '@/components/Contact'
+import Personal from '@/components/Personal'
 import store from '../store'
 
 Vue.use(Router)
@@ -32,6 +33,14 @@ export const router = new Router({
       path: '/contact',
       name: 'Contact',
       component: Contact,
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/personal',
+      name: 'Personal',
+      component: Personal,
       meta: {
         requireAuth: true
       }

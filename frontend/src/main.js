@@ -5,6 +5,7 @@ import App from './App'
 import {router} from './router'
 import store from './store'
 import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 
 //import 'bootstrap/css/bootstrap.min.css'
 //import 'bootstrap/dist/js/bootstrap.min'

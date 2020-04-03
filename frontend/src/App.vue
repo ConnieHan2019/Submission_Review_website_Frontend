@@ -1,15 +1,22 @@
+<script>
+import Navigation from './components/Navigation'
+export default {
+  name: 'App',
+  components:{
+    Navigation
+  }
+}
+</script>
+
 <template>
   <div id="app">
+    <Navigation></Navigation>
     <router-view/>
   </div>
 </template>
 
 
-<script>
-export default {
-  name: 'App'
-}
-</script>
+
 
 <style>
   @import "assets/css/bootstrap.css";

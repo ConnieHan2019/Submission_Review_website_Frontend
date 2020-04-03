@@ -20,7 +20,6 @@ export default new Vuex.Store({
       localStorage.removeItem('userDetails')
       state.userDetails = null
       state.token = null
-      location.reload() 
     }
   },
   actions: {

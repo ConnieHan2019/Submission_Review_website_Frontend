@@ -1,6 +1,34 @@
 <script>
+import Information from './Information'
+import Invite from './Invite'
+import ContactState from './ContactState'
 export default {
-  name: 'Personal'
+  name: 'Personal',
+  components:{
+    Information,
+    Invite,
+    ContactState
+  },
+  data(){
+    return{
+      currentComponent:Information
+    }
+  },
+  methods:{
+    information(){
+      this.currentComponent = Information
+    },
+    contactState(){
+      this.currentComponent = ContactState
+    },
+    invite(){
+      this.currentComponent = Invite
+    },
+    logoff(){
+      //注销
+      this.$store.commit('logout')
+    }
+  }
 }
 </script>
 
@@ -11,9 +39,9 @@ export default {
   <el-container>
     <el-aside width="200px">
         <el-menu :default-openeds="['1']">
-        <el-menu-item index="4">我的个人信息</el-menu-item>
+        <el-menu-item index="4" @click='information'>我的个人信息</el-menu-item>
           <el-submenu index="1">
-        <template slot="title">会议事务处理</template>
+        <template slot="title">我参加的会议</template>
         <el-submenu index="1-1">
           <template slot="title">会议一</template>
           <el-menu-item index="1-1">角色1</el-menu-item>
@@ -30,19 +58,21 @@ export default {
           <el-menu-item index="1-2">角色2</el-menu-item>
         </el-submenu>
       </el-submenu>
-        <el-menu-item index="2">会议申请状态</el-menu-item>
-        <el-menu-item index="3">PCmember邀请通知</el-menu-item>
+        <el-menu-item index="2" @click='contactState'>我申请的会议</el-menu-item>
+        <el-menu-item index="3" @click='invite'>PCmember邀请通知</el-menu-item>
+        <el-menu-item index="5" @click='logoff'>注销账号</el-menu-item>
       
     </el-menu>
     </el-aside>
-    <el-main>根据左边的选择确定右边的任务面板</el-main>
+    <el-main><component v-bind:is="currentComponent"></component></el-main>
   </el-container>
+  <el-footer>Footer</el-footer>
 </el-container>
 </div>
 </template>
 
 <style scoped>
-    .el-header, .el-footer {
+    .el-header,.el-footer {
     background-color: #B3C0D1;
     color: #333;
     text-align: center;
@@ -63,8 +93,8 @@ export default {
     line-height: 160px;
   }
   
-  body > .el-container {
-    margin-bottom: 40px;
+  .el-container {
+    height:580px;
   }
   
   .el-container:nth-child(5) .el-aside,

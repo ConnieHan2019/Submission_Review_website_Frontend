@@ -5,6 +5,7 @@ import Login from '@/components/Login'
 import Register from '@/components/Register'
 import Contact from '@/components/Contact'
 import Personal from '@/components/Personal'
+import Admin from '@/components/Admin'
 import store from '../store'
 
 Vue.use(Router)
@@ -16,7 +17,7 @@ export const router = new Router({
       name: 'HelloWorld',
       component: HelloWorld,
       meta: {
-        requireAuth: false // 需要登录权限
+        requireAuth: false 
       }
     },
     {
@@ -42,7 +43,15 @@ export const router = new Router({
       name: 'Personal',
       component: Personal,
       meta: {
-        requireAuth: true
+        requireAuth: false
+      }
+    },
+    {
+      path: '/admin',
+      name: 'Admin',
+      component: Admin,
+      meta: {
+        requireAuth: false
       }
     }
   ]
@@ -52,7 +61,25 @@ export const router = new Router({
 router.beforeEach(function (to, from ,next) {
   if (to.matched.some(record => record.meta.requireAuth)) {
     if (store.state.token) {
-      next()
+      if(store.state.admin){
+        aler("管理员")
+        if(to.fullPath === '/admin'){next()}
+        else{
+          next({
+            path:'/admin'
+          })
+        }
+      }
+      else{
+        alert("普通用户")
+        if(to.fullPath === '/admin'){
+          alert("无权限")
+          next({
+            path:from.fullPath
+          })
+        }
+        else{next()}
+      }
     } else {
       next({
         path: '/login',

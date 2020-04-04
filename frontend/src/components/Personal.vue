@@ -11,6 +11,7 @@ export default {
   <el-container>
     <el-aside width="200px">
         <el-menu :default-openeds="['1']">
+        <el-menu-item index="4">我的个人信息</el-menu-item>
           <el-submenu index="1">
         <template slot="title">会议事务处理</template>
         <el-submenu index="1-1">

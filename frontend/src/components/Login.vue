@@ -25,10 +25,14 @@ export default {
       })
         .then(resp => {
           if (resp.status === 200 && resp.data.hasOwnProperty("token")) {
-            // alert("Log in successfully")
+            alert("Log in successfully")
             this.$store.commit('login', resp.data)
-            this.$router.replace({path:'/'})
-            //this.$router.replace({path: this.$route.query.redirect})
+            if(resp.data.hasOwnProperty("admin")){
+              this.$router.replace({path:'/admin'})
+            }else{
+                this.$router.replace({path:'/'})
+                //this.$router.replace({path: this.$route.query.redirect})
+            }
           }
           else{
             alert('some mistake')

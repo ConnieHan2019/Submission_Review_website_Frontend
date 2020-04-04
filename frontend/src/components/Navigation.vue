@@ -55,7 +55,7 @@ export default {
       msg(){
         return this.$store.state.userDetails?this.$store.state.userDetails:"个人空间"
       },
-      out(){
+      out(){//whether logout or not
         return this.$store.state.userDetails
       } 
     

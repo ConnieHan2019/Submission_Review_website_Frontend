@@ -52,7 +52,7 @@ export default {
       <div class="banner-hny-info">
         <h3>让世界看见你的观点</h3>
         <div class="top-buttons mx-auto text-center mt-md-5 mt-3">
-          <a href="single.html" class="btn more mr-2">投稿</a>
+          <router-link to="contribute" class="btn more mr-2">投稿</router-link>
           <router-link to = "contact" class="btn">申请会议</router-link>
         </div>
       <div class="d-flex banner" style="margin:3em 0 2em 2em">

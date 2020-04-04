@@ -5,6 +5,8 @@ import Login from '@/components/Login'
 import Register from '@/components/Register'
 import Contact from '@/components/Contact'
 import Personal from '@/components/Personal'
+import Contribute from '@/components/Contribute'
+import MeetingDetail from '@/components/MeetingDetail'
 import Admin from '@/components/Admin'
 import store from '../store'
 
@@ -47,12 +49,37 @@ export const router = new Router({
       }
     },
     {
+      path: '/contribute',
+      name: 'Contribute',
+      component: Contribute,
+      meta: {
+        requireAuth: false
+      }
+    },
+    {
+      path: '/contribute',
+      name: 'Contribute',
+      component: Contribute,
+      meta: {
+        requireAuth: false
+      }
+    },
+    {
+      path: '/meetingDetail',
+      name: 'MeetingDetail',
+      component: MeetingDetail,
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
       path: '/admin',
       name: 'Admin',
       component: Admin,
       meta: {
         requireAuth: false
-      }
+      },
+
     }
   ]
 })

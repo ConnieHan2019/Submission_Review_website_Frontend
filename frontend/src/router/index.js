@@ -57,14 +57,6 @@ export const router = new Router({
       }
     },
     {
-      path: '/contribute',
-      name: 'Contribute',
-      component: Contribute,
-      meta: {
-        requireAuth: false
-      }
-    },
-    {
       path: '/meetingDetail',
       name: 'MeetingDetail',
       component: MeetingDetail,

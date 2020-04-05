@@ -2,16 +2,33 @@
 import Information from './Information'
 import Invite from './Invite'
 import ContactState from './ContactState'
+import Chair from './Chair'
 export default {
   name: 'Personal',
   components:{
     Information,
     Invite,
-    ContactState
+    ContactState,
+    Chair
   },
   data(){
     return{
-      currentComponent:Information
+      currentComponent:Information,
+      currentContact:'',
+      needContactName:false,//子组件是否需要会议名，默认个人页面不需要
+      contacts:[{
+        shortname:'会议1',
+        roles:['Chair','角色2']
+      },{
+        shortname:'会议2',
+        roles:['角色1','角色2']
+      },{
+        shortname:'会议3',
+        roles:['角色1','角色2']
+      },{
+        shortname:'会议4',
+        roles:['角色1','角色2']
+      }]
     }
   },
   methods:{
@@ -27,6 +44,21 @@ export default {
     logoff(){
       //注销
       this.$store.commit('logout')
+    },
+    transaction(shortname,role){
+      //alert(shortname)
+      //alert(role)
+      this.needContactName = true
+      this.currentContact = shortname
+      if(role == 'Chair'){
+        this.currentComponent = Chair
+      }
+      else if(role == 'PCmember'){
+        //PCmember
+      }
+      else{
+        //author
+      }
     }
   }
 }
@@ -38,33 +70,25 @@ export default {
   <el-header></el-header>
   <el-container>
     <el-aside width="200px">
-        <el-menu :default-openeds="['1']">
-        <el-menu-item index="4" @click='information'>我的个人信息</el-menu-item>
-          <el-submenu index="1">
+        <el-menu>
+        <el-menu-item index="information" @click='information'>我的个人信息</el-menu-item>
+        <el-submenu index="transaction">
         <template slot="title">我参加的会议</template>
-        <el-submenu index="1-1">
-          <template slot="title">会议一</template>
-          <el-menu-item index="1-1">角色1</el-menu-item>
-          <el-menu-item index="1-2">角色2</el-menu-item>
+        <el-submenu v-for="contact in contacts" v-bind:index="contact.shortname" v-bind:key="contact.shortname">
+          <template slot="title">{{contact.shortname}}</template>
+          <el-menu-item v-for="role in contact.roles" v-bind:key="role"  v-bind:index="role" @click='transaction(contact.shortname,role)'>{{role}}</el-menu-item>
         </el-submenu>
-        <el-submenu index="1-2">
-          <template slot="title">会议二</template>
-          <el-menu-item index="1-1">角色1</el-menu-item>
-          <el-menu-item index="1-2">角色2</el-menu-item>
         </el-submenu>
-        <el-submenu index="1-3">
-          <template slot="title">会议三</template>
-          <el-menu-item index="1-1">角色1</el-menu-item>
-          <el-menu-item index="1-2">角色2</el-menu-item>
-        </el-submenu>
-      </el-submenu>
-        <el-menu-item index="2" @click='contactState'>我申请的会议</el-menu-item>
-        <el-menu-item index="3" @click='invite'>PCmember邀请通知</el-menu-item>
-        <el-menu-item index="5" @click='logoff'>注销账号</el-menu-item>
+        <el-menu-item index="contactState" @click='contactState'>我申请的会议</el-menu-item>
+        <el-menu-item index="invite" @click='invite'>PCmember邀请通知</el-menu-item>
+        <el-menu-item index="logoff" @click='logoff'>注销账号</el-menu-item>
       
     </el-menu>
     </el-aside>
-    <el-main><component v-bind:is="currentComponent"></component></el-main>
+    <el-main>
+    <component v-if="needContactName" v-bind:is="currentComponent" :contactName='currentContact'></component>
+    <component v-else v-bind:is="currentComponent" ></component>    
+    </el-main>
   </el-container>
   <el-footer>Footer</el-footer>
 </el-container>
@@ -92,11 +116,9 @@ export default {
     text-align: center;
     line-height: 160px;
   }
-  
   .el-container {
-    height:580px;
-  }
-  
+    min-height:460px;
+  }  
   .el-container:nth-child(5) .el-aside,
   .el-container:nth-child(6) .el-aside {
     line-height: 260px;

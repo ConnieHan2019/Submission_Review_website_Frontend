@@ -18,18 +18,46 @@ export default {
       needContactName:false,//子组件是否需要会议名，默认个人页面不需要
       contacts:[{
         shortname:'会议1',
+        fullname:'bababab会议',
         roles:['Chair','角色2']
       },{
         shortname:'会议2',
+        fullname:'bababab会议',
         roles:['角色1','角色2']
       },{
         shortname:'会议3',
+        fullname:'bababab会议',
         roles:['角色1','角色2']
       },{
         shortname:'会议4',
+        fullname:'bababab会议',
         roles:['角色1','角色2']
       }]
     }
+  },
+  created:function(){
+    this.$axios.post('/personal',{
+      username:this.$store.state.userDetails
+    })
+    .then(resp => {
+      if (resp.status === 200 && resp.data.hasOwnProperty("respContactData")){
+        this.contacts = resp.data.respContactData
+      }
+      else{
+        alert('Personal error')
+        console.log(resp)
+      }
+    })
+    .catch(error => {
+      if(error.response){
+      // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+      console.log(error.response)
+      } else {
+      // Something happened in setting up the request that triggered an Error
+      console.log('Error', error.message)
+      }
+      console.log(error.config);
+    })
   },
   methods:{
     information(){
@@ -45,11 +73,11 @@ export default {
       //注销
       this.$store.commit('logout')
     },
-    transaction(shortname,role){
+    transaction(fullname,role){
       //alert(shortname)
       //alert(role)
       this.needContactName = true
-      this.currentContact = shortname
+      this.currentContact = fullname
       if(role == 'Chair'){
         this.currentComponent = Chair
       }
@@ -76,7 +104,7 @@ export default {
         <template slot="title">我参加的会议</template>
         <el-submenu v-for="contact in contacts" v-bind:index="contact.shortname" v-bind:key="contact.shortname">
           <template slot="title">{{contact.shortname}}</template>
-          <el-menu-item v-for="role in contact.roles" v-bind:key="role"  v-bind:index="role" @click='transaction(contact.shortname,role)'>{{role}}</el-menu-item>
+          <el-menu-item v-for="role in contact.roles" v-bind:key="role"  v-bind:index="role" @click='transaction(contact.fullname,role)'>{{role}}</el-menu-item>
         </el-submenu>
         </el-submenu>
         <el-menu-item index="contactState" @click='contactState'>我申请的会议</el-menu-item>
@@ -114,7 +142,6 @@ export default {
     background-color: #E9EEF3;
     color: #333;
     text-align: center;
-    line-height: 160px;
   }
   .el-container {
     min-height:460px;

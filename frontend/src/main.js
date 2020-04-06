@@ -60,7 +60,8 @@ axios.interceptors.response.use(
     }
      */
     //这里之后还要修改，等后端的exception写好后再处理
-    return Promise.reject(error.response.data)
+    return Promise.reject(error)
+    //return Promise.reject(error.response.data)
   }
 )
 

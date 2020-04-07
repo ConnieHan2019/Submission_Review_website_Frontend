@@ -3,13 +3,15 @@ import Information from './Information'
 import Invite from './Invite'
 import ContactState from './ContactState'
 import Chair from './Chair'
+import MyEssayState from "./MyEssayState";
 export default {
   name: 'Personal',
   components:{
     Information,
     Invite,
     ContactState,
-    Chair
+    Chair,
+    MyEssayState
   },
   data(){
     return{
@@ -68,6 +70,9 @@ export default {
     },
     invite(){
       this.currentComponent = Invite
+    },
+    myEssayState(){
+      this.currentComponent = MyEssayState
     },
     logoff(){
         this.$confirm('此操作将永久删除当前用户, 是否继续?', '确认注销', {
@@ -138,6 +143,7 @@ export default {
         </el-submenu>
         </el-submenu>
         <el-menu-item index="contactState" @click='contactState'>我申请的会议</el-menu-item>
+        <el-menu-item index="myEssayState" @click='myEssayState'>我投稿的论文</el-menu-item>
         <el-menu-item index="invite" @click='invite'>PCmember邀请通知</el-menu-item>
         <el-menu-item index="logoff" @click='logoff'>注销账号</el-menu-item>
       

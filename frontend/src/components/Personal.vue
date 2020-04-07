@@ -4,6 +4,7 @@ import Invite from './Invite'
 import ContactState from './ContactState'
 import Chair from './Chair'
 import MyEssayState from "./MyEssayState";
+import Audit from "./Audit";
 export default {
   name: 'Personal',
   components:{
@@ -11,7 +12,8 @@ export default {
     Invite,
     ContactState,
     Chair,
-    MyEssayState
+    MyEssayState,
+    Audit
   },
   data(){
     return{
@@ -21,19 +23,19 @@ export default {
       contacts:[{
         shortname:'会议1',
         fullname:'bababab会议',
-        roles:['Chair','角色2']
+        roles:['Chair']
       },{
         shortname:'会议2',
         fullname:'bababab会议',
-        roles:['角色1','角色2']
+        roles:['PCmember','author']
       },{
         shortname:'会议3',
         fullname:'bababab会议',
-        roles:['角色1','角色2']
+        roles:['PCmember']
       },{
         shortname:'会议4',
         fullname:'bababab会议',
-        roles:['角色1','角色2']
+        roles:['author']
       }]
     }
   },
@@ -70,9 +72,6 @@ export default {
     },
     invite(){
       this.currentComponent = Invite
-    },
-    myEssayState(){
-      this.currentComponent = MyEssayState
     },
     logoff(){
         this.$confirm('此操作将永久删除当前用户, 是否继续?', '确认注销', {
@@ -118,9 +117,14 @@ export default {
       }
       else if(role == 'PCmember'){
         //PCmember
+        this.currentComponent = Audit
+      }
+      else if(role == 'author'){
+        //author
+        this.currentComponent = MyEssayState
       }
       else{
-        //author
+        alert('invalid role')
       }
     }
   }
@@ -143,8 +147,7 @@ export default {
         </el-submenu>
         </el-submenu>
         <el-menu-item index="contactState" @click='contactState'>我申请的会议</el-menu-item>
-        <el-menu-item index="myEssayState" @click='myEssayState'>我投稿的论文</el-menu-item>
-        <el-menu-item index="invite" @click='invite'>PCmember邀请通知</el-menu-item>
+        <el-menu-item index="invite" @click='invite'>我受到的邀请</el-menu-item>
         <el-menu-item index="logoff" @click='logoff'>注销账号</el-menu-item>
       
     </el-menu>

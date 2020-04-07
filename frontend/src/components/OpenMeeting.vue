@@ -10,7 +10,8 @@ export default{
               deadline:'2020-12-08',
               resultReleaseTime:'2021-1-1',
               organizationTime: '2021-2-1',
-              place: 'China'
+              place: 'China',
+              state:false
             }
         }
     },
@@ -32,11 +33,16 @@ export default{
     },
     methods:{
         open(){
-            //验证是否过时
+          if(new Date(this.contactInformation.deadline).getTime() > new Date().getTime()){
             this.$message({
-                message:'成功',
+                message:'开启会议成功',
                 type:'success'
             })
+            this.contactInformation.state = true
+          }
+          else{
+            this.$message.error('已过投稿截止时间，无法再开启会议')
+          } 
         }
     }
 }
@@ -47,7 +53,7 @@ export default{
 <el-card class="box-card">
   <div slot="header" class="clearfix">
     <span>会议基本信息</span>
-    <el-button style="float: right; padding: 3px 0" type="text" @click='open'>开启会议</el-button>
+    <el-button style="float: right; padding: 3px 0" type="text" @click='open' :disabled='contactInformation.state'>开启会议</el-button>
   </div>
   <div class="text item">
     <i class="el-icon-s-opportunity"></i>会议简称：{{contactInformation.shortname}}
@@ -71,9 +77,10 @@ export default{
 </div>
 </template>
 
-<style>
+<style scoped>
   .text {
     font-size: 14px;
+    text-align:left;
   }
 
   .item {
@@ -90,6 +97,8 @@ export default{
   }
 
   .box-card {
-    width: 480px;
+    width: 350px;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .44), 0 0 6px rgba(0, 0, 0, .44);
   }
 </style>

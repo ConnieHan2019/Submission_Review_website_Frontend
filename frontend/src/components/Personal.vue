@@ -70,8 +70,38 @@ export default {
       this.currentComponent = Invite
     },
     logoff(){
-      //注销
-      this.$store.commit('logout')
+        this.$confirm('此操作将永久删除当前用户, 是否继续?', '确认注销', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$axios.post('/logoff',{
+            username: this.$store.state.userDetails
+          })
+          .then(resp => {
+            if (resp.status === 200){
+               this.$store.commit('logout')
+               this.$message({
+                 type: 'success',
+                 message: '注销成功'
+               })
+               this.$router.replace({path:'/'})
+            }
+            else{
+              this.$message.error('注销失败')
+              console.log(error)
+            }
+          })
+          .catch(error => {
+            this.$message.error('注销失败')
+            console.log(error)
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '注销取消'
+          });          
+        });
     },
     transaction(fullname,role){
       //alert(shortname)
@@ -118,7 +148,7 @@ export default {
     <component v-else v-bind:is="currentComponent" ></component>    
     </el-main>
   </el-container>
-  <el-footer>Footer</el-footer>
+  <el-footer></el-footer>
 </el-container>
 </div>
 </template>

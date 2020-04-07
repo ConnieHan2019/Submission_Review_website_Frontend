@@ -66,7 +66,7 @@
                   auto-complete="off" placeholder="sector"></el-input>
       </el-form-item>
       <el-form-item prop="country" >
-      <el-cascader v-model="registerForm.country" :options="options" :props="{ expandTrigger: 'hover' }"></el-cascader>
+      <el-cascader v-model="registerForm.country" :options="options" :props="{ expandTrigger: 'hover' }" placeholder="country"></el-cascader>
       </el-form-item>
 
       <el-form-item style="width: 100%">
@@ -150,19 +150,22 @@ export default {
               // 根据后端的返回数据修改
               if(resp.status === 200 && resp.data.hasOwnProperty("id")) {
                 // 跳转到login
-                // alert('successful registration')
+                this.$message({
+                  message:'注册成功，快去登录吧',
+                  type:'success'
+                })
                 this.$router.replace('/login')
               }
               else{
-                alert('some mistake')
+                this.$message.error('返回数据异常，注册失败')
               }
             })
             .catch(error => {
               console.log(error)
-              alert('register error')
+              this.$message.error('连接服务器异常，注册失败')
             })
         } else {
-          alert('wrong submit')
+          this.$message.error('请提交正确的格式')
         }
       })
     }

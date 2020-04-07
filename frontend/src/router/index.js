@@ -37,7 +37,7 @@ export const router = new Router({
       name: 'Contact',
       component: Contact,
       meta: {
-        requireAuth: true
+        requireAuth: false
       }
     },
     {
@@ -61,7 +61,7 @@ export const router = new Router({
       name: 'MeetingDetail',
       component: MeetingDetail,
       meta: {
-        requireAuth: true
+        requireAuth: false
       }
     },
     {

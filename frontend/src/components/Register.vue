@@ -66,7 +66,7 @@
                   auto-complete="off" placeholder="sector"></el-input>
       </el-form-item>
       <el-form-item prop="country" >
-      <el-cascader v-model="registerForm.country" :options="options" :props="{ expandTrigger: 'hover' }" placeholder="country"></el-cascader>
+      <el-cascader v-model="registerForm.country" :options="options" :props="{ expandTrigger: 'hover' }" placeholder="country" style='width:100%'  :show-all-levels=false></el-cascader>
       </el-form-item>
 
       <el-form-item style="width: 100%">
@@ -84,6 +84,7 @@
 
 <script>
 import {usernameValid, passwordValid, emailValid} from '../assets/js/dataValid';
+import {countries} from '../assets/js/countries';
 
 export default {
   name: 'Register',
@@ -105,30 +106,7 @@ export default {
         fullname: [{required: true, message: '', trigger: 'blur'}]
       },
       loading: false,
-      options:[{
-        value:'Asia',
-        label:'Asia',
-        children:[{
-          value:'China',
-          label:'China'
-        },
-        {
-          value:'India',
-          label:'India'
-        }]
-      },
-      {
-        value:'Europe',
-        label:'Europe',
-        children:[{
-          value:'England',
-          label:'England'
-        },
-        {
-          value:'France',
-          label:'France'
-        }]
-      }]
+      options:countries
     }
   },
   methods: {

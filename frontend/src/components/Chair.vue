@@ -1,7 +1,12 @@
 <script>
+import OpenMeeting from './OpenMeeting'
+
 export default{
     name: 'Chair',
     props:['contactName'],
+    components:{
+      OpenMeeting
+    },
     data(){
         return{
             activeName:'PCmember',
@@ -48,7 +53,7 @@ export default{
         this.PCmembers = resp.data.respPCmembers
       }
       else{
-        this.$message.error('PCmember加载失败')
+        console.log('PCmember加载失败')
         console.log(resp)
       }
     })
@@ -202,7 +207,7 @@ export default{
   </el-table>
 </div>
     </el-tab-pane>
-    <el-tab-pane label="开启会议" name="openMeeting" :disabled=false >角色管理</el-tab-pane>
+    <el-tab-pane label="开启会议" name="openMeeting" :disabled=false ><OpenMeeting :contactName='contactName'></OpenMeeting></el-tab-pane>
   </el-tabs>
 </div>
 </template>

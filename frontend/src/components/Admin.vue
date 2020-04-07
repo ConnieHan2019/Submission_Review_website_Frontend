@@ -6,13 +6,19 @@ export default {
           contactData:[{
               shortname:'shortname',
               fullname:'fullname',
-              deadline:'deadline',
-              applicant:'applicant'
+              deadline:'2020-12-08',
+              resultReleaseTime:'2021-1-1',
+              organizationTime: '2021-2-1',
+              place: 'China',
+              applicant:'applicant1'
           },{
               shortname:'shortname',
               fullname:'fullname',
               deadline:'deadline',
-              applicant:'applicant'
+              resultReleaseTime:'2021-1-1',
+              organizationTime: '2021-2-1',
+              place: 'China',
+              applicant:'applicant2'
           }]
       }
   },
@@ -69,17 +75,27 @@ export default {
     style="width: 100%">
     <el-table-column
       prop="shortname"
-      label="会议简称"
-      width="180">
+      label="会议简称">
     </el-table-column>
     <el-table-column
       prop="fullname"
-      label="会议全称"
-      width="180">
+      label="会议全称">
     </el-table-column>
     <el-table-column
       prop="deadline"
       label="投稿截止日期">
+    </el-table-column>
+    <el-table-column
+      prop="resultReleaseTime"
+      label="结果发布日期">
+    </el-table-column>
+    <el-table-column
+      prop="organizationTime"
+      label="举办时间">
+    </el-table-column>
+    <el-table-column
+      prop="place"
+      label="举办地点">
     </el-table-column>
     <el-table-column
       prop="applicant"
@@ -87,8 +103,7 @@ export default {
     </el-table-column>
     <el-table-column
       fixed="right"
-      label="操作"
-      width="100">
+      label="操作">
       <template slot-scope="scope">
         <el-button @click="pass(scope.row)" type="text" size="small">通过</el-button>
         <el-button @click="refuse(scope.row)" type="text" size="small">驳回</el-button>

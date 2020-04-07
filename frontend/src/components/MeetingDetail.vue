@@ -8,6 +8,7 @@
           <el-aside width="300px">
             <p></p>
 
+
             <p class="member">Chair:<span class="members">{{chair}}</span></p>
             <p class="member">PC Member:<span class="members">{{pcMembers}}</span></p>
             <p class="member">Author:<span class="members">{{authors}}</span></p>

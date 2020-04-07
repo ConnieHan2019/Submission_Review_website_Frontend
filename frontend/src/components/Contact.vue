@@ -71,36 +71,45 @@
       </el-form-item>
       <el-form-item prop="deadline" style="font-size:15px;color:#f00;margin-bottom:25px">
         <label class="lb">投稿截止日期:</label>
-        <el-input type="text"
-                  class="textW"
-                  v-model="contactForm.deadline"
-                  auto-complete="off"
-                  placeholder="  按照年-月-日的格式"></el-input>
+        <el-date-picker
+          v-model="contactForm.deadline"
+          align="right"
+          type="date"
+          placeholder="选择日期"
+          :picker-options="pickerOptions"
+          format="yyyy-MM-dd "
+          value-format="yyyy-MM-dd">
+        </el-date-picker>
       </el-form-item>
       <el-form-item prop="resultReleaseTime" style="font-size:15px;color:#f00;margin-bottom:25px">
         <label class="lb">结果发布日期:</label>
-        <el-input type="text"
-                  class="textW"
-                  v-model="contactForm.resultReleaseTime"
-                  auto-complete="off"
-                  placeholder="  按照年-月-日的格式"></el-input>
+        <el-date-picker
+          v-model="contactForm.resultReleaseTime"
+          align="right"
+          type="date"
+          placeholder="选择日期"
+          :picker-options="pickerOptions1"
+          format="yyyy-MM-dd "
+          value-format="yyyy-MM-dd">
+        </el-date-picker>
       </el-form-item>
       <el-form-item prop="organizationTime" style="font-size:15px;color:#f00;margin-bottom:25px">
         <label class="lb">举办时间:</label>
-        <el-input type="text"
-                  class="textW"
-                  v-model="contactForm.organizationTime"
-                  auto-complete="off"
-                  placeholder="  按照年-月-日的格式"></el-input>
+        <el-date-picker
+          v-model="contactForm.organizationTime"
+          align="right"
+          type="date"
+          placeholder="选择日期"
+          :picker-options="pickerOptions2"
+          format="yyyy-MM-dd "
+          value-format="yyyy-MM-dd">
+        </el-date-picker>
       </el-form-item>
       <el-form-item prop="place" style="font-size:15px;color:#f00;margin-bottom:25px">
         <label class="lb">举办地点:</label>
-        <el-input type="text"
-                  class="textW"
-                  v-model="contactForm.place"
-                  auto-complete="off"
-                  placeholder="  城市与国家用逗号分开，如“ Seoul, South Korea”"></el-input>
+        <el-cascader v-model="contactForm.place" :options="options" :props="{ expandTrigger: 'hover' }" placeholder="举办地点"></el-cascader>
       </el-form-item>
+
       <el-form-item style="width: 100%">
         <el-button type="primary"
                    class="btn more mr-2"
@@ -124,26 +133,67 @@ export default {
   name: 'Contact',
   data () {
     return {
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() < Date.now();
+        },
+      },
+      pickerOptions1: {
+        disabledDate(time) {
+         /* if (this.contactForm.deadline) {
+           return (time.getTime() < (new Date(this.contactForm.deadline).getTime() - 24 * 60 * 60 * 1000));
+          }
+          else{*/
+            return time.getTime() < Date.now();
+      //   }
+        },
+      },
+      pickerOptions2: {
+        disabledDate(time) {
+         /* if (this.contactForm.deadline) {
+            return (time.getTime() < (new Date(this.contactForm.deadline).getTime() - 24 * 60 * 60 * 1000));
+          }
+          else{*/
+            return time.getTime() < Date.now();
+         // }
+        },
+      },
       contactForm: {
         shortname: '',
         fullname: '',
         deadline: '',
         resultReleaseTime: '',
         organizationTime: '',
-        place: ''
+        place: '',
       },
+      options:[{
+                value:'Asia',
+                label:'Asia',
+                children:[{ value:'China', label:'China'},
+                          {value:'India', label:'India'},
+                ]
+               },
+              {
+                value:'Europe',
+                label:'Europe',
+                children:[{ value:'England', label:'England'},
+                          {value:'France', label:'France'},
+                         ]
+             }],
       rules: {
         shortname: [{required: true, message: '', trigger: 'blur'}],
         fullname: [{required: true, message: '', trigger: 'blur'}],
-        deadline: [{required: true, message: '', trigger: 'blur'}, {validator: timeValid, trigger: 'blur'}],
-        resultReleaseTime: [{required: true, message: '', trigger: 'blur'}, {validator: timeValid, trigger: 'blur'}],
-        organizationTime: [{required: true, message: '', trigger: 'blur'}, {validator: timeValid, trigger: 'blur'}],
-        place: [{required: true, message: '', trigger: 'blur'}, {validator: placeeValid, trigger: 'blur'}]
+        deadline: [{required: true, message: '', trigger: 'blur'}, { trigger: 'blur'}],
+        resultReleaseTime: [{required: true, message: '', trigger: 'blur'}, { trigger: 'blur'}],
+        organizationTime: [{required: true, message: '', trigger: 'blur'}, { trigger: 'blur'}],
+         // place: [{required: true, message: '', trigger: 'blur'}, { trigger: 'blur'}]
       },
       loading: false
     }
   },
   methods: {
+    userTypeChange() {
+    },
     contact (formName) {
       this.$refs[formName].validate(valid => {
         if(valid){
@@ -208,5 +258,6 @@ export default {
     position:absolute;
     left:433px;
   }
+
   
 </style>

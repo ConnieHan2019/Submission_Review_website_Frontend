@@ -43,6 +43,8 @@
       </div>
     </div>
     <div id="base_contact">
+      <el-button :plain="true" @click="contactError"></el-button>
+      <el-button :plain="true" @click="wrongSubmit"></el-button>
     <el-form :model="contactForm"
              :rules="rules"
              class="contact_container"
@@ -194,6 +196,21 @@ export default {
   methods: {
     userTypeChange() {
     },
+    contactError() {
+      this.$message({
+        showClose: true,
+        message: 'contact error',
+        type: 'warning'
+      });
+    },
+
+    wrongSubmit() {
+      this.$message({
+        showClose: true,
+        message: 'wrong submit',
+        type: 'error'
+      });
+    },
     contact (formName) {
       this.$refs[formName].validate(valid => {
         if(valid){
@@ -216,10 +233,12 @@ export default {
         })
         .catch(error => {
           console.log(error)
-          alert('contact error')
+          this.contactError()
+          //alert('contact error')
         })
         } else {
-          alert('wrong submit')
+          this.wrongSubmit()
+          //alert('wrong submit')
         }
       })
       

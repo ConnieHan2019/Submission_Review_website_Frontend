@@ -7,12 +7,23 @@
         <el-container>
           <el-aside width="300px">
             <p></p>
+            <el-collapse v-model="activeNames" @change="handleChange" >
+              <el-collapse-item title="Chair:" name="1">
+                <span class="members" >{{chair}}</span>
+              </el-collapse-item>
+              <el-collapse-item title="PC Member:" name="2">
+                <span class="members" v-for="pcm in pcMembers" v-bind:key="pcm.name" v-bind:index="pcm.name">{{pcm.name}}、</span>
 
+              </el-collapse-item>
+              <el-collapse-item title="Author:" name="3">
+                <span class="members" v-for="aus in authors" v-bind:key="aus.name" v-bind:index="aus.name">{{aus.name}}、</span>
 
-            <p class="member">Chair:<span class="members">{{chair}}</span></p>
-            <p class="member">PC Member:<span class="members">{{pcMembers}}</span></p>
-            <p class="member">Author:<span class="members">{{authors}}</span></p>
-            <p class="member"> State:<span style="color: red">{{ state }}</span></p>
+              </el-collapse-item>
+              <el-collapse-item title="State:" name="4">
+                <span style="color: red">{{ state }}</span>
+              </el-collapse-item>
+            </el-collapse>
+
           </el-aside>
           <el-container>
             <el-main>
@@ -52,17 +63,25 @@
         return {
           FullName:'第32届全国互联网顶尖人才大会',
           chair:'Root',
-          pcMembers:['A','B','C'],
-          authors:['D','E','F'],
+          pcMembers:[
+            {name:'A'},{name:'B'},{name:'C'}
+          ],
+          authors:[
+            {name:'D'},{name:'F'},{name:'E'}
+          ],
           state:'已通过',
-
+          activeNames: ['1'],
           tableData: [{
             ShortName:'互联网大会',
             BeginTime:'2019-10-18',
             ContributeDDL:'2019-11-12',
             ReleaseResultTime:'2019-12-3',
             Place:'上海'
-          }, ]
+          }],
+
+
+
+
         };
       },
     }
@@ -134,6 +153,10 @@
   }
   .el-button{
     margin-right: 100px;
+  }
+  .el-collapse-item{
+    padding: 15px;
+
   }
 
 </style>

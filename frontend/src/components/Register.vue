@@ -139,8 +139,16 @@ export default {
               }
             })
             .catch(error => {
+              if(error.response){
+                if(error.response.status === 400){
+                  this.$message.error('用户名已被使用，注册失败')
+                  console.log(error.response.data)
+                }
+              } else {
+                     // Something happened in setting up the request that triggered an Error
+                    console.log('Error', error.message)
+              }
               console.log(error)
-              this.$message.error('连接服务器异常，注册失败')
             })
         } else {
           this.$message.error('请提交正确的格式')

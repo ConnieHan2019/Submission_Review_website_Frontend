@@ -43,9 +43,25 @@ export default {
           }
         })
         .catch(error => {
-          console.log('login error')
+          if(error.response){
+            if(error.response.status === 404){
+              this.$message.error('用户名不存在')
+              console.log(error.response.data)
+            }
+            else if(error.response.status === 403){
+              this.$message.error('密码错误')
+              console.log(error.response.data)
+            }
+            else{
+              this.$message.error('登录失败')
+            }
+          }
+          else{
+            this.$message.error('登录失败')
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message)
+          }
           console.log(error)
-          alert('login error')
         })
         } else {
           this.$message.error('请提交正确的格式')

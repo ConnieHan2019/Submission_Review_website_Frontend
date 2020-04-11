@@ -21,7 +21,8 @@ export default {
                 this.personalInformation = resp.data.personalInformation
             }
             else{
-                console.log('会议信息加载失败')
+                console.log('个人信息加载失败')
+                console.log(resp)
             }
         })
         .catch(error => {

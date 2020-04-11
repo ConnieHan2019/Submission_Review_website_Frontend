@@ -45,7 +45,7 @@ export const router = new Router({
       name: 'Personal',
       component: Personal,
       meta: {
-        requireAuth: false
+        requireAuth: true
       }
     },
     {
@@ -81,7 +81,7 @@ router.beforeEach(function (to, from ,next) {
   if (to.matched.some(record => record.meta.requireAuth)) {
     if (store.state.token) {
       if(store.state.admin){
-        alert("管理员")
+        console.log("管理员")
         if(to.fullPath === '/admin'){next()}
         else{
           next({
@@ -90,9 +90,9 @@ router.beforeEach(function (to, from ,next) {
         }
       }
       else{
-        alert("普通用户")
+        console.log("普通用户")
         if(to.fullPath === '/admin'){
-          alert("无权限")
+          console.log("无权限")
           next({
             path:from.fullPath
           })

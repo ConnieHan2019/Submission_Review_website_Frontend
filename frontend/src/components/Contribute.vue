@@ -3,8 +3,32 @@
 
   <div id="showArea">
     <el-autocomplete
-      v-model="state" :fetch-suggestions="querySearchAsync" placeholder="请输入会议" @select="handleSelect" ></el-autocomplete>
+      v-model="state" :fetch-suggestions="querySearchAsync" placeholder="请输入会议" @select="handleSelect" @focus="showDialog(false)" ></el-autocomplete>
+    <el-button icon="el-icon-search" circle @click="showDialog(true)"></el-button>
+    <div id="searchedArea" v-show="dialog_visible">
+      <el-divider  content-position="left"><span>搜索结果</span></el-divider>
+      <div class="MeetingBox">
+        <el-table
+          :data="tableData"
+          stripe
+          style="width: 100%">
+          <el-table-column prop="FullName" label="会议全称" width="180"></el-table-column>
+          <el-table-column prop="ShortName" label="会议简称" width="180"></el-table-column>
+          <el-table-column prop="BeginTime" label="举办日期" width="180"></el-table-column>
+          <el-table-column prop="ContributeDDL" label="投稿截止日期" width="180"></el-table-column>
+          <el-table-column prop="ReleaseResultTime" label="结果发布日期" width="180"></el-table-column>
+
+        </el-table>
+        <router-link to ="meetingDetail" ><el-button type="primary" class="enterMeetingBt">进入会议</el-button></router-link>
+
+      </div>
+    </div>
+
+
     <el-divider content-position="left"><span>推荐</span></el-divider>
+
+
+
     <div class="MeetingBox">
       <el-table
         :data="tableData"
@@ -18,23 +42,6 @@
 
       </el-table>
       <router-link to ="meetingDetail" ><el-button type="primary" class="enterMeetingBt">进入会议</el-button></router-link>
-
-    </div>
-
-
-    <div class="MeetingBox">
-      <el-table
-        :data="tableData"
-        stripe
-        style="width: 100%">
-        <el-table-column prop="FullName" label="会议全称" width="180"></el-table-column>
-        <el-table-column prop="ShortName" label="会议简称" width="180"></el-table-column>
-        <el-table-column prop="BeginTime" label="举办日期" width="180"></el-table-column>
-        <el-table-column prop="ContributeDDL" label="投稿截止日期" width="180"></el-table-column>
-        <el-table-column prop="ReleaseResultTime" label="结果发布日期" width="180"></el-table-column>
-
-      </el-table>
-      <el-button type="primary" class="enterMeetingBt">进入会议</el-button>
     </div>
   </div>
 
@@ -48,6 +55,7 @@
 <script>
   export default {
     name: "Contribute",
+
     data() {
       return {
         meetings: [],
@@ -59,10 +67,14 @@
           BeginTime:'2019-10-18',
           ContributeDDL:'2019-11-12',
           ReleaseResultTime:'2019-12-3'
-        }, ]
+        }],
+        dialog_visible:false,
       };
     },
     methods: {
+      showDialog(visible) {
+        this.dialog_visible = visible;
+      },
       loadAll() {
         return [
           { "value": "物理大佬会", "address": "北京市宣武区" },

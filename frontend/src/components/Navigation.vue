@@ -25,7 +25,6 @@
               <ul>
 
                 <li><a href="" class="drop-text">如何投稿</a></li>
-                <li><a href="" class="drop-text">查看我的审稿进度</a></li>
                 <li><a href="" class="drop-text">如何开办会议</a></li>
                 <li><a href="" class="drop-text">账号丢失</a></li>
                 <li><a href="" class="drop-text">人工服务</a></li>
@@ -62,7 +61,23 @@ export default {
   },
   methods:{
     logout(){
-      this.$store.commit('logout')
+      this.$confirm('您确定要退出登录吗？', '确认登出', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+           this.$store.commit('logout')
+          this.$message({
+            type: 'success',
+            message: '登出成功'
+          }); 
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '登出取消'
+          });          
+        });
+     
     }
   }
 

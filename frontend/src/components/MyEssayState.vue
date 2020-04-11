@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-divider content-position="left"><span style="font-family: 'Comic Sans MS'">My Essay</span></el-divider>
+    <el-divider content-position="left"><span>My Essay</span></el-divider>
     <div class="essayBlock" v-for="essayState in  myEssayState" v-bind:key="essayState.FullName" v-bind:index="essayState.FullName">
       <h5>会议主题：<span style="color:#5b25ff;">{{essayState.FullName}}</span></h5><br>
       <h5>审核状态：<span style="color:#ff1e1a;">{{essayState.contactState}}</span></h5>

@@ -69,7 +69,7 @@ export default {
 
 <template>
 <div id = "ContactState">
-  <el-divider content-position="left"><span style="font-family: 'Comic Sans MS'">My Contribution</span></el-divider>
+  <el-divider content-position="left"><span>My Contribution</span></el-divider>
   <div class="myContribution" v-for="conState in myContactState" v-bind:key="conState.contactState" v-bind:index="conState.contactState">
     <el-table
       :data="conState.tableData"

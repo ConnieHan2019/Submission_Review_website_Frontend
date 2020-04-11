@@ -42,19 +42,19 @@ export default {
     <span><b><i class="el-icon-postcard"></i>基本信息</b></span>
   </div>
   <div class="text item">
-    <i class="el-icon-user-solid"></i>用户名：{{personalInformation.username}}
+    <i class="el-icon-user-solid"></i><b>用户名：</b>{{personalInformation.username}}
   </div>
   <div class="text item">
-   <i class="el-icon-user"></i>姓名：{{personalInformation.fullname}}
+   <i class="el-icon-user"></i><b>姓名：</b>{{personalInformation.fullname}}
   </div>
   <div class="text item">
-    <i class="el-icon-message"></i>邮箱：{{personalInformation.email}}
+    <i class="el-icon-message"></i><b>邮箱：</b>{{personalInformation.email}}
   </div>
   <div class="text item">
-    <i class="el-icon-place"></i>单位：{{personalInformation.sector}}
+    <i class="el-icon-place"></i><b>单位：</b>{{personalInformation.sector}}
   </div>
   <div class="text item">
-    <i class="el-icon-location-information"></i>区域：{{personalInformation.country}}
+    <i class="el-icon-location-information"></i><b>区域：</b>{{personalInformation.country}}
   </div>
 </el-card>
 </div>
@@ -84,7 +84,9 @@ export default {
   .box-card {
     width:350px;
     border-radius: 2px;
+    border-color:#333A56;
     box-shadow: 0 2px 4px rgba(0, 0, 0, .44), 0 0 6px rgba(0, 0, 0, .44);
-    margin:auto
+    margin:auto;
+    margin-top:50px;
   }
 </style>

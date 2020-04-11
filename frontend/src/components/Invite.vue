@@ -59,7 +59,7 @@ export default {
 <template>
 <div id = "Invite">
   <el-badge :value=inviteCount class="item" >
-    <el-button size="big" @click="showDialog(true)"><span style="font-family: 'Comic Sans MS'">New Invitation</span></el-button>
+    <el-button size="big" @click="showDialog(true)"><span>New Invitation</span></el-button>
   </el-badge>
 
   <div class="invitation" v-show="dialog_visible" v-for="ins in invites" v-bind:key="ins.FullName" v-bind:index="ins.FullName">
@@ -74,7 +74,6 @@ export default {
 </template>
 <style scoped>
   .ivt{
-    font-family: 'Comic Sans MS';
     color: #c69500;
   }
   .invitation{

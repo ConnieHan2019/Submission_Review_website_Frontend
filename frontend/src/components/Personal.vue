@@ -173,21 +173,21 @@ export default {
 
 <style scoped>
     .el-header,.el-footer {
-    background-color: #67809f;
+    background-color: #52658F;
     color: #333;
     text-align: center;
     line-height: 60px;
   }
   
   .el-aside {
-    background-color: #D3DCE6;
+    background-color: #E8E8E8;
     color: #333;
     text-align: center;
     line-height: 200px;
   }
   
   .el-main {
-    background-color: #E9EEF3;
+    background-color: #F7F5E6;
     color: #333;
     text-align: center;
   }

@@ -4,7 +4,7 @@
         <h5>会议主题：<span style="color:#5b25ff;">{{audata.FullName}}</span></h5><br>
         <el-divider></el-divider>
         <div  v-for="aus in audata" v-bind:key="aus.name" v-bind:index="aus.name">
-          <p ><i class="el-icon-user"></i><span style="font-family: 'Comic Sans MS'">Author:</span>{{aus.name}} <el-link type="primary">文章链接</el-link></p>
+          <p ><i class="el-icon-user"></i><span >Author:</span>{{aus.name}} <el-link type="primary">文章链接</el-link></p>
           <el-button-group>
             <el-button type="success">通过</el-button>
             <el-button type="danger">驳回</el-button>

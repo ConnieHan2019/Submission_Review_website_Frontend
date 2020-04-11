@@ -2,305 +2,305 @@ export const countries = [{
     value:'',
     label:'A',
     children:[
-                    {value:'Angola',label:'安哥拉'},
-					{value:'Afghanistan',label:'阿富汗'},
-					{value:'Albania',label:'阿尔巴尼亚'},
-					{value:'Algeria',label:'阿尔及利亚'},
-					{value:'Andorra',label:'安道尔共和国'},
-					{value:'Anguilla',label:'安圭拉岛'},
-					{value:'Antigua and Barbuda',label:'安提瓜和巴布达'},
-					{value:'Argentina',label:'阿根廷'},
-					{value:'Armenia',label:'亚美尼亚'},
-					{value:'Ascension',label:'阿森松'},
-					{value:'Australia',label:'澳大利亚'},
-					{value:'Austria',label:'奥地利'},
-					{value:'Azerbaijan',label:'阿塞拜疆'}
+                    {value:'Angola',label:'Angola'},
+					{value:'Afghanistan',label:'Afghanistan'},
+					{value:'Albania',label:'Albania'},
+					{value:'Algeria',label:'Algeria'},
+					{value:'Andorra',label:'Andorra'},
+					{value:'Anguilla',label:'Anguilla'},
+					{value:'Antigua and Barbuda',label:'Antigua and Barbuda'},
+					{value:'Argentina',label:'Argentina'},
+					{value:'Armenia',label:'Armenia'},
+					{value:'Ascension',label:'Ascension'},
+					{value:'Australia',label:'Australia'},
+					{value:'Austria',label:'Austria'},
+					{value:'Azerbaijan',label:'Azerbaijan'}
     ]
 },{
     value:'',
     label:'B',
     children:[
-                    {value:'Bahrain',label:'巴林'},
-					{value:'Bangladesh',label:'孟加拉国'},
-					{value:'Barbados',label:'巴巴多斯'},
-					{value:'Belarus',label:'白俄罗斯'},
-					{value:'Belgium',label:'比利时'},
-					{value:'Belize',label:'伯利兹'},
-					{value:'Benin',label:'贝宁'},
-					{value:'Bermuda Is',label:'百慕大群岛'},
-					{value:'Bolivia',label:'玻利维亚'},
-					{value:'Botswana',label:'博茨瓦纳'},
-					{value:'Brazil',label:'巴西'},
-					{value:'Brunei',label:'文莱'},
-					{value:'Bulgaria',label:'保加利亚'},
-					{value:'Burkina Faso',label:'布基纳法索'},
-					{value:'Burma',label:'缅甸'},
-					{value:'Burundi',label:'布隆迪'}
+                    {value:'Bahrain',label:'Bahrain'},
+					{value:'Bangladesh',label:'Bangladesh'},
+					{value:'Barbados',label:'Barbados'},
+					{value:'Belarus',label:'Belarus'},
+					{value:'Belgium',label:'Belgium'},
+					{value:'Belize',label:'Belize'},
+					{value:'Benin',label:'Benin'},
+					{value:'Bermuda Is',label:'Bermuda Is'},
+					{value:'Bolivia',label:'Bolivia'},
+					{value:'Botswana',label:'Botswana'},
+					{value:'Brazil',label:'Brazil'},
+					{value:'Brunei',label:'Brunei'},
+					{value:'Bulgaria',label:'Bulgaria'},
+					{value:'Burkina Faso',label:'Burkina Faso'},
+					{value:'Burma',label:'Burma'},
+					{value:'Burundi',label:'Burundi'}
     ]
 },{
     value:'',
     label:'C',
     children:[                    
-					{value:'Cameroon',label:'喀麦隆'},
-					{value:'Canada',label:'加拿大'},
-					{value:'Cayman Is',label:'开曼群岛'},
-					{value:'Central African Republic',label:'中非共和国'},
-					{value:'Chad',label:'乍得'},
-					{value:'Chile',label:'智利'},
-					{value:'China',label:'中国'},
-					{value:'Colombia',label:'哥伦比亚'},
-					{value:'Congo',label:'刚果'},
-					{value:'Cook Is',label:'库克群岛'},
-					{value:'Costa Rica',label:'哥斯达黎加'},
-					{value:'Cuba',label:'古巴'},
-					{value:'Cyprus',label:'塞浦路斯'},
-					{value:'Czech Republic',label:'捷克'}
+					{value:'Cameroon',label:'Cameroon'},
+					{value:'Canada',label:'Canada'},
+					{value:'Cayman Is',label:'Cayman Is'},
+					{value:'Central African Republic',label:'Central African Republic'},
+					{value:'Chad',label:'Chad'},
+					{value:'Chile',label:'Chile'},
+					{value:'China',label:'China'},
+					{value:'Colombia',label:'Colombia'},
+					{value:'Congo',label:'Congo'},
+					{value:'Cook Is',label:'Cook Is'},
+					{value:'Costa Rica',label:'Costa Rica'},
+					{value:'Cuba',label:'Cuba'},
+					{value:'Cyprus',label:'Cyprus'},
+					{value:'Czech Republic',label:'Czech'}
     ]
 },{
     value:'',
     label:'D',
     children:[					
-					{value:'Denmark',label:'丹麦'},
-					{value:'Djibouti',label:'吉布提'},
-					{value:'Dominica Rep',label:'多米尼加共和国'}
+					{value:'Denmark',label:'Denmark'},
+					{value:'Djibouti',label:'Djibouti'},
+					{value:'Dominica Rep',label:'Dominica'}
 
     ]
 },{
     value:'',
     label:'E',
     children:[
-					{value:'Ecuador',label:'厄瓜多尔'},
-					{value:'Egypt',label:'埃及'},
-					{value:'EI Salvador',label:'萨尔瓦多'},
-					{value:'Estonia',label:'爱沙尼亚'},
-					{value:'Ethiopia',label:'埃塞俄比亚'}
+					{value:'Ecuador',label:'Ecuador'},
+					{value:'Egypt',label:'Egypt'},
+					{value:'EI Salvador',label:'EI Salvador'},
+					{value:'Estonia',label:'Estonia'},
+					{value:'Ethiopia',label:'Ethiopia'}
 
     ]
 },{
     value:'',
     label:'F',
     children:[
-					{value:'Fiji',label:'斐济'},
-					{value:'Finland',label:'芬兰'},
-					{value:'France',label:'法国'},
-					{value:'French Guiana',label:'法属圭亚那'},
-					{value:'French Polynesia',label:'法属玻利尼西亚'}
+					{value:'Fiji',label:'Fiji'},
+					{value:'Finland',label:'Finland'},
+					{value:'France',label:'France'},
+					{value:'French Guiana',label:'French Guiana'},
+					{value:'French Polynesia',label:'French Polynesia'}
 
     ]
 },{
     value:'',
     label:'G',
     children:[
-					{value:'Gabon',label:'加蓬'},
-					{value:'Gambia',label:'冈比亚'},
-					{value:'Georgia',label:'格鲁吉亚'},
-					{value:'Germany',label:'德国'},
-					{value:'Ghana',label:'加纳'},
-					{value:'Gibraltar',label:'直布罗陀'},
-					{value:'Greece',label:'希腊'},
-					{value:'Grenada',label:'格林纳达'},
-					{value:'Guam',label:'关岛'},
-					{value:'Guatemala',label:'危地马拉'},
-					{value:'Guinea',label:'几内亚'},
-					{value:'Guyana',label:'圭亚那'}
+					{value:'Gabon',label:'Gabon'},
+					{value:'Gambia',label:'Gambia'},
+					{value:'Georgia',label:'Georgia'},
+					{value:'Germany',label:'Germany'},
+					{value:'Ghana',label:'Ghana'},
+					{value:'Gibraltar',label:'Gibraltar'},
+					{value:'Greece',label:'Greece'},
+					{value:'Grenada',label:'Grenada'},
+					{value:'Guam',label:'Guam'},
+					{value:'Guatemala',label:'Guatemala'},
+					{value:'Guinea',label:'Guinea'},
+					{value:'Guyana',label:'Guyana'}
 
     ]
 },{
     value:'',
     label:'H',
     children:[
-					{value:'Haiti',label:'海地'},
-					{value:'Honduras',label:'洪都拉斯'},
-					{value:'Hungary',label:'匈牙利'}
+					{value:'Haiti',label:'Haiti'},
+					{value:'Honduras',label:'Honduras'},
+					{value:'Hungary',label:'Hungary'}
 
     ]
 },{
     value:'',
     label:'I',
     children:[
-					{value:'Iceland',label:'冰岛'},
-					{value:'India',label:'印度'},
-					{value:'Indonesia',label:'印度尼西亚'},
-					{value:'Iran',label:'伊朗'},
-					{value:'Iraq',label:'伊拉克'},
-					{value:'Ireland',label:'爱尔兰'},
-					{value:'Israel',label:'以色列'},
-					{value:'Italy',label:'意大利'},
-					{value:'Ivory Coast',label:'科特迪瓦'}
+					{value:'Iceland',label:'Iceland'},
+					{value:'India',label:'India'},
+					{value:'Indonesia',label:'Indonesia'},
+					{value:'Iran',label:'Iran'},
+					{value:'Iraq',label:'Iraq'},
+					{value:'Ireland',label:'Ireland'},
+					{value:'Israel',label:'Israel'},
+					{value:'Italy',label:'Italy'},
+					{value:'Ivory Coast',label:'Ivory Coast'}
 
     ]
 },{
     value:'',
     label:'J',
     children:[
-					{value:'Jamaica',label:'牙买加'},
-					{value:'Japan',label:'日本'},
-					{value:'Jordan',label:'约旦'}
+					{value:'Jamaica',label:'Jamaica'},
+					{value:'Japan',label:'Japan'},
+					{value:'Jordan',label:'Jordan'}
 
     ]
 },{
     value:'',
     label:'K',
     children:[
-					{value:'Kampuchea (Cambodia )',label:'柬埔寨'},
-					{value:'Kazakstan',label:'哈萨克斯坦'},
-					{value:'Kenya',label:'肯尼亚'},
-					{value:'Korea',label:'韩国'},
-					{value:'Kuwait',label:'科威特'},
-					{value:'Kyrgyzstan',label:'吉尔吉斯坦'}
+					{value:'Kampuchea (Cambodia )',label:'Kampuchea (Cambodia )'},
+					{value:'Kazakstan',label:'Kazakstan'},
+					{value:'Kenya',label:'Kenya'},
+					{value:'Korea',label:'Korea'},
+					{value:'Kuwait',label:'Kuwait'},
+					{value:'Kyrgyzstan',label:'Kyrgyzstan'}
 
     ]
 },{
     value:'',
     label:'L',
     children:[
-					{value:'Laos',label:'老挝'},
-					{value:'Latvia',label:'拉脱维亚'},
-					{value:'Lebanon',label:'黎巴嫩'},
-					{value:'Lesotho',label:'莱索托'},
-					{value:'Liberia',label:'利比里亚'},
-					{value:'Libya',label:'利比亚'},
-					{value:'Liechtenstein',label:'列支敦士登'},
-					{value:'Lithuania',label:'立陶宛'},
-					{value:'Luxembourg',label:'卢森堡'}
+					{value:'Laos',label:'Laos'},
+					{value:'Latvia',label:'Latvia'},
+					{value:'Lebanon',label:'Lebanon'},
+					{value:'Lesotho',label:'Lesotho'},
+					{value:'Liberia',label:'Liberia'},
+					{value:'Libya',label:'Libya'},
+					{value:'Liechtenstein',label:'Liechtenstein'},
+					{value:'Lithuania',label:'Lithuania'},
+					{value:'Luxembourg',label:'Luxembourg'}
 
     ]
 },{
     value:'',
     label:'M',
     children:[
-					{value:'Madagascar',label:'马达加斯加'},
-					{value:'Malawi',label:'马拉维'},
-					{value:'Malaysia',label:'马来西亚'},
-					{value:'Maldives',label:'马尔代夫'},
-					{value:'Mali',label:'马里'},
-					{value:'Malta',label:'马耳他'},
-					{value:'Mariana Is',label:'马里亚那群岛'},
-					{value:'Martinique',label:'马提尼克'},
-					{value:'Mauritius',label:'毛里求斯'},
-					{value:'Mexico',label:'墨西哥'},
-					{value:'Moldova',label:'摩尔多瓦'},
-					{value:'Monaco',label:'摩纳哥'},
-					{value:'Mongolia',label:'蒙古'},
-					{value:'Montserrat Is',label:'蒙特塞拉特岛'},
-					{value:'Morocco',label:'摩洛哥'},
-					{value:'Mozambique',label:'莫桑比克'}
+					{value:'Madagascar',label:'Madagascar'},
+					{value:'Malawi',label:'Malawi'},
+					{value:'Malaysia',label:'Malaysia'},
+					{value:'Maldives',label:'Maldives'},
+					{value:'Mali',label:'Mali'},
+					{value:'Malta',label:'Malta'},
+					{value:'Mariana Is',label:'Mariana Is'},
+					{value:'Martinique',label:'Martinique'},
+					{value:'Mauritius',label:'Mauritius'},
+					{value:'Mexico',label:'Mexico'},
+					{value:'Moldova',label:'Moldova'},
+					{value:'Monaco',label:'Monaco'},
+					{value:'Mongolia',label:'Mongolia'},
+					{value:'Montserrat Is',label:'Montserrat Is'},
+					{value:'Morocco',label:'Morocco'},
+					{value:'Mozambique',label:'Mozambique'}
     ]
 },{
     value:'',
     label:'N',
     children:[
-					{value:'Namibia',label:'纳米比亚'},
-					{value:'Nauru',label:'瑙鲁'},
-					{value:'Nepal',label:'尼泊尔'},
-					{value:'Netheriands Antilles',label:'荷属安的列斯'},
-					{value:'Netherlands',label:'荷兰'},
-					{value:'New Zealand',label:'新西兰'},
-					{value:'Nicaragua',label:'尼加拉瓜'},
-					{value:'Niger',label:'尼日尔'},
-					{value:'Nigeria',label:'尼日利亚'},
-					{value:'North Korea',label:'朝鲜'},
-					{value:'Norway',label:'挪威'}
+					{value:'Namibia',label:'Namibia'},
+					{value:'Nauru',label:'Nauru'},
+					{value:'Nepal',label:'Nepal'},
+					{value:'Netheriands Antilles',label:'Netheriands Antilles'},
+					{value:'Netherlands',label:'Netherlands'},
+					{value:'New Zealand',label:'New Zealand'},
+					{value:'Nicaragua',label:'Nicaragua'},
+					{value:'Niger',label:'Niger'},
+					{value:'Nigeria',label:'Nigeria'},
+					{value:'North Korea',label:'North Korea'},
+					{value:'Norway',label:'Norway'}
     ]
 },{
     value:'',
     label:'O',
     children:[
-					{value:'Oman',label:'阿曼'}
+					{value:'Oman',label:'Oman'}
     ]
 },{
     value:'',
     label:'P',
     children:[
-					{value:'Pakistan',label:'巴基斯坦'},
-					{value:'Panama',label:'巴拿马'},
-					{value:'Papua New Cuinea',label:'巴布亚新几内亚'},
-					{value:'Paraguay',label:'巴拉圭'},
-					{value:'Peru',label:'秘鲁'},
-					{value:'Philippines',label:'菲律宾'},
-					{value:'Poland',label:'波兰'},
-					{value:'Portugal',label:'葡萄牙'},
-					{value:'Puerto Rico',label:'波多黎各'},
+					{value:'Pakistan',label:'Pakistan'},
+					{value:'Panama',label:'Panama'},
+					{value:'Papua New Cuinea',label:'Papua New Cuinea'},
+					{value:'Paraguay',label:'Paraguay'},
+					{value:'Peru',label:'Peru'},
+					{value:'Philippines',label:'Philippines菲律宾'},
+					{value:'Poland',label:'Poland'},
+					{value:'Portugal',label:'Portugal'},
+					{value:'Puerto Rico',label:'Puerto Rico'},
     ]
 },{
     value:'',
     label:'Q',
     children:[
-					{value:'Qatar',label:'卡塔尔'}
+					{value:'Qatar',label:'Qatar'}
     ]
 },{
     value:'',
     label:'R',
     children:[
-					{value:'Reunion',label:'留尼旺'},
-					{value:'Romania',label:'罗马尼亚'},
-					{value:'Russia',label:'俄罗斯'}
+					{value:'Reunion',label:'Reunion'},
+					{value:'Romania',label:'Romania'},
+					{value:'Russia',label:'Russia'}
     ]
 },{
     value:'',
     label:'S',
     children:[
-					{value:'Saint Lueia',label:'圣卢西亚'},
-					{value:'Saint Vincent',label:'圣文森特岛'},
-					{value:'Samoa Eastern',label:'东萨摩亚(美)'},
-					{value:'Samoa Western',label:'西萨摩亚'},
-					{value:'San Marino',label:'圣马力诺'},
-					{value:'Sao Tome and Principe',label:'圣多美和普林西比'},
-					{value:'Saudi Arabia',label:'沙特阿拉伯'},
-					{value:'Senegal',label:'塞内加尔'},
-					{value:'Seychelles',label:'塞舌尔'},
-					{value:'Sierra Leone',label:'塞拉利昂'},
-					{value:'Singapore',label:'新加坡'},
-					{value:'Slovakia',label:'斯洛伐克'},
-					{value:'Slovenia',label:'斯洛文尼亚'},
-					{value:'Solomon Is',label:'所罗门群岛'},
-					{value:'Somali',label:'索马里'},
-					{value:'South Africa',label:'南非'},
-					{value:'Spain',label:'西班牙'},
-					{value:'SriLanka',label:'斯里兰卡'},
-					{value:'St.Lucia',label:'圣卢西亚'},
-					{value:'St.Vincent',label:'圣文森特'},
-					{value:'Sudan',label:'苏丹'},
-					{value:'Suriname',label:'苏里南'},
-					{value:'Swaziland',label:'斯威士兰'},
-					{value:'Sweden',label:'瑞典'},
-					{value:'Switzerland',label:'瑞士'},
-					{value:'Syria',label:'叙利亚'}
+					{value:'Saint Lueia',label:'Saint Lueia'},
+					{value:'Saint Vincent',label:'Saint Vincent'},
+					{value:'Samoa Eastern',label:'Samoa Eastern'},
+					{value:'Samoa Western',label:'Samoa Western'},
+					{value:'San Marino',label:'San Marino'},
+					{value:'Sao Tome and Principe',label:'Sao Tome and Principe'},
+					{value:'Saudi Arabia',label:'Saudi Arabia'},
+					{value:'Senegal',label:'Senegal'},
+					{value:'Seychelles',label:'Seychelles'},
+					{value:'Sierra Leone',label:'Sierra Leone'},
+					{value:'Singapore',label:'Singapore'},
+					{value:'Slovakia',label:'Slovakia'},
+					{value:'Slovenia',label:'Slovenia'},
+					{value:'Solomon Is',label:'Solomon Is'},
+					{value:'Somali',label:'Somali'},
+					{value:'South Africa',label:'South Africa'},
+					{value:'Spain',label:'Spain'},
+					{value:'SriLanka',label:'SriLanka'},
+					{value:'St.Lucia',label:'St.Lucia'},
+					{value:'St.Vincent',label:'St.Vincent'},
+					{value:'Sudan',label:'Sudan'},
+					{value:'Suriname',label:'Suriname'},
+					{value:'Swaziland',label:'Swaziland'},
+					{value:'Sweden',label:'Sweden'},
+					{value:'Switzerland',label:'Switzerland'},
+					{value:'Syria',label:'Syria'}
 
     ]
 },{
     value:'',
     label:'T',
     children:[
-					{value:'Tajikstan',label:'塔吉克斯坦'},
-					{value:'Tanzania',label:'坦桑尼亚'},
-					{value:'Thailand',label:'泰国'},
-					{value:'Togo',label:'多哥'},
-					{value:'Tonga',label:'汤加'},
-					{value:'Trinidad and Tobago',label:'特立尼达和多巴哥'},
-					{value:'Tunisia',label:'突尼斯'},
-					{value:'Turkey',label:'土耳其'},
-					{value:'Turkmenistan',label:'土库曼斯坦'}
+					{value:'Tajikstan',label:'Tajikstan'},
+					{value:'Tanzania',label:'Tanzania'},
+					{value:'Thailand',label:'Thailand'},
+					{value:'Togo',label:'Togo'},
+					{value:'Tonga',label:'Tonga'},
+					{value:'Trinidad and Tobago',label:'Trinidad and Tobago'},
+					{value:'Tunisia',label:'Tunisia'},
+					{value:'Turkey',label:'Turkey'},
+					{value:'Turkmenistan',label:'Turkmenistan'}
 
     ]
 },{
     value:'',
     label:'U',
     children:[
-					{value:'Uganda',label:'乌干达'},
-					{value:'Ukraine',label:'乌克兰'},
-					{value:'United Arab Emirates',label:'阿拉伯联合酋长国'},
-					{value:'United Kiongdom',label:'英国'},
-					{value:'United States of America',label:'美国'},
-					{value:'Uruguay',label:'乌拉圭'},
-					{value:'Uzbekistan',label:'乌兹别克斯坦'}
+					{value:'Uganda',label:'Uganda'},
+					{value:'Ukraine',label:'Ukraine'},
+					{value:'United Arab Emirates',label:'United Arab Emirates'},
+					{value:'United Kiongdom',label:'United Kiongdom'},
+					{value:'United States of America',label:'United States of America'},
+					{value:'Uruguay',label:'Uruguay'},
+					{value:'Uzbekistan',label:'Uzbekistan'}
     ]
 },{
     value:'',
     label:'V',
     children:[
-					{value:'Venezuela',label:'委内瑞拉'},
-					{value:'Vietnam',label:'越南'}
+					{value:'Venezuela',label:'Venezuela'},
+					{value:'Vietnam',label:'Vietnam'}
     ]
 },{
     value:'',
@@ -314,16 +314,16 @@ export const countries = [{
     value:'',
     label:'Y',
     children:[
-					{value:'Yemen',label:'也门'},
-					{value:'Yugoslavia',label:'南斯拉夫'}
+					{value:'Yemen',label:'Yemen'},
+					{value:'Yugoslavia',label:'Yugoslavia'}
     ]
 },{
     value:'',
     label:'Z',
     children:[
-					{value:'Zimbabwe',label:'津巴布韦'},
-					{value:'Zaire',label:'扎伊尔'},
-					{value:'Zambia',label:'赞比亚'}
+					{value:'Zimbabwe',label:'Zimbabwe'},
+					{value:'Zaire',label:'Zaire'},
+					{value:'Zambia',label:'Zambia'}
 
     ]
 }]

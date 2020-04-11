@@ -3,13 +3,7 @@ export default {
   name: 'Information',
   data(){
     return{
-      personalInformation:{
-              username:'ZZYYRR',
-              fullname:'张育茹',
-              email:'zhangyuru@fudan.edu.cn',
-              sector:'Fudan',
-              country:'China'
-      }
+      personalInformation:null
     }
   },
     created:function(){

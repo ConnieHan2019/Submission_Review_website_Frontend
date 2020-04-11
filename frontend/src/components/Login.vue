@@ -22,7 +22,7 @@ export default {
           this.$axios.post('/login', {
         username: this.loginForm.username,
         password: this.loginForm.password,
-        indentity:status
+        identity:status
       })
         .then(resp => {
           if (resp.status === 200 && resp.data.hasOwnProperty("token")) {

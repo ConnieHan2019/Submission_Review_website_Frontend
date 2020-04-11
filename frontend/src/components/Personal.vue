@@ -48,7 +48,8 @@ export default {
         this.contacts = resp.data.respContactData
       }
       else{
-        alert('Personal error')
+        this.personalError(),
+        //alert('Personal error')
         console.log(resp)
       }
     })
@@ -64,6 +65,14 @@ export default {
     })
   },
   methods:{
+    personalError() {
+      this.$message({
+        showClose: true,
+        message: 'Personal error',
+        type: 'warning'
+      });
+    },
+    
     information(){
       this.currentComponent = Information
     },

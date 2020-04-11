@@ -17,7 +17,7 @@
                         class="textW"
                         v-model="contactForm.shortname"
                         auto-complete="off"
-                        placeholder="  如ICSE2020"></el-input>
+                        placeholder="请填写会议简称"></el-input>
             </el-form-item>
             <el-form-item prop="fullname" style="font-size:15px;color:#f00;margin-bottom:25px">
               <label class="lb">会议全称:</label>
@@ -25,7 +25,7 @@
                         class="textW"
                         v-model="contactForm.fullname"
                         auto-complete="off"
-                        placeholder="  如The 42nd Conference on Software Engineering"></el-input>
+                        placeholder="请填写会议全称"></el-input>
             </el-form-item>
             <el-form-item prop="deadline" style="font-size:15px;color:#f00;margin-bottom:25px">
               <label class="lb">投稿截止日期:</label>
@@ -234,7 +234,7 @@ export default {
   }
   .textW >>> input{
       border-radius: 5px;
-      width: 400px;
+      width: 250px;
       font-size:17px;
   }
   >>> .el-form-item__error{
@@ -250,7 +250,7 @@ export default {
     padding-left: 10px;
     padding-right: 10px;
     background-color: #67809f;
-    height: 800px;
+    height: 630px;
   }
   #form{
     padding: 20px;

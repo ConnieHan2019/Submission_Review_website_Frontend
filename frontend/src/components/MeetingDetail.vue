@@ -89,7 +89,7 @@
     padding-left: 10px;
     padding-right: 10px;
     background-color: #67809f;
-    height: 900px;
+    height: auto;
   }
   #singleMeeting{
     padding-top: 20px;

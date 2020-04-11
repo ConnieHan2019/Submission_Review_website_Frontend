@@ -34,8 +34,7 @@ export default {
             if(resp.data.hasOwnProperty("admin")){
               this.$router.replace({path:'/admin'})
             }else{
-                this.$router.replace({path:'/'})
-                //this.$router.replace({path: this.$route.query.redirect})
+                this.$router.replace({path: this.$route.query.redirect})
             }
           }
           else{
@@ -55,13 +54,14 @@ export default {
             else{
               this.$message.error('登录失败')
             }
+            console.log(error)
           }
           else{
             this.$message.error('登录失败')
             // Something happened in setting up the request that triggered an Error
-            console.log('Error', error.message)
+            console.log(error)
           }
-          console.log(error)
+          
         })
         } else {
           this.$message.error('请提交正确的格式')

@@ -144,11 +144,15 @@ export default {
                   this.$message.error('用户名已被使用，注册失败')
                   console.log(error.response.data)
                 }
+                else{
+                  this.$message.error('注册失败')
+                  console.log(error)
+                }
               } else {
                      // Something happened in setting up the request that triggered an Error
-                    console.log('Error', error.message)
+                  this.$message.error('注册失败')
+                    console.log(error)
               }
-              console.log(error)
             })
         } else {
           this.$message.error('请提交正确的格式')

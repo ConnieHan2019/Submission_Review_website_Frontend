@@ -33,12 +33,26 @@ export default{
     },
     methods:{
         open(){
-          if(new Date(this.contactInformation.deadline).getTime() > new Date().getTime()){
-            this.$message({
+        if(new Date(this.contactInformation.deadline).getTime() > new Date().getTime()){
+            this.$axios.post('/openMeeting',{
+            contactFullName:this.contactName
+        })
+        .then(resp => {
+            if (resp.status === 200){
+                this.$message({
                 message:'开启会议成功',
                 type:'success'
-            })
-            this.contactInformation.state = true
+                })
+                this.contactInformation.state = true
+            }
+            else{
+              this.$message.error('开启会议失败')
+              console.log(resp)
+            }
+        })
+        .catch(error => {
+            console.log(error)
+        })
           }
           else{
             this.$message.error('已过投稿截止时间，无法再开启会议')

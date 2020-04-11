@@ -44,24 +44,21 @@ axios.interceptors.response.use(
   },
   error => {
     console.log("response 拦截器")
-    console.log(error.response)
-    //处理一般的error，特殊的error返回给各自处理
-    /**
-     * if(error) {
-      
-      // 清除token 如果不是register/login, 跳转至login
-      store.commit('logout')
-      router.currentRoute.path !== '/login' &&
-      router.currentRoute.path !== '/register' &&
-      router.replace({
-        path: '/login',
-        query: { redirect: router.currentRoute.path }
-      })
+    if(error.response){
+      if(error.response.status === 555){
+        //token过期
+        this.$message.error('身份过期，请重新登录')
+        store.commit('logout')
+        router.currentRoute.path !== '/login' &&
+        router.currentRoute.path !== '/register' &&
+        router.replace({
+          path:'/login',
+          query: { redirect: router.currentRoute.path }
+        })
+      }
     }
-     */
-    //这里之后还要修改，等后端的exception写好后再处理
+    console.log("return error下级错误处理")
     return Promise.reject(error)
-    //return Promise.reject(error.response.data)
   }
 )
 

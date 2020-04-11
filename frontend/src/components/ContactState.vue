@@ -85,7 +85,7 @@ export default {
 
 <b class="state">审核状态：<span style="color: blue">{{conState.contactState}}</span></b>
   </div>
-  
+
 </div>
 </template>
 <style scoped>

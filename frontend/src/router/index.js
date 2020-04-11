@@ -19,7 +19,7 @@ export const router = new Router({
       name: 'HelloWorld',
       component: HelloWorld,
       meta: {
-        requireAuth: false 
+        requireAuth: false
       }
     },
     {
@@ -37,7 +37,7 @@ export const router = new Router({
       name: 'Contact',
       component: Contact,
       meta: {
-        requireAuth: true
+        requireAuth: false
       }
     },
     {
@@ -45,7 +45,7 @@ export const router = new Router({
       name: 'Personal',
       component: Personal,
       meta: {
-        requireAuth: true
+        requireAuth: false
       }
     },
     {
@@ -53,7 +53,7 @@ export const router = new Router({
       name: 'Contribute',
       component: Contribute,
       meta: {
-        requireAuth: true
+        requireAuth: false
       }
     },
     {
@@ -61,7 +61,7 @@ export const router = new Router({
       name: 'MeetingDetail',
       component: MeetingDetail,
       meta: {
-        requireAuth: true
+        requireAuth: false
       }
     },
     {
@@ -69,7 +69,7 @@ export const router = new Router({
       name: 'Admin',
       component: Admin,
       meta: {
-        requireAuth: true
+        requireAuth: false
       },
 
     }

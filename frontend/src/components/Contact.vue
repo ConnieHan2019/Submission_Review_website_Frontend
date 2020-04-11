@@ -1,140 +1,99 @@
 <template>
-  <div class="contact">
-  <!-- home -->
-<div id="home">
-  
-  <!-- banner slider -->
-  <div id="homepage-slider" class="st-slider">
-    <input type="radio" class="cs_anchor radio" name="slider" id="play1" checked="" />
-    <input type="radio" class="cs_anchor radio" name="slider" id="slide1" />
-    <input type="radio" class="cs_anchor radio" name="slider" id="slide2" />
-    <input type="radio" class="cs_anchor radio" name="slider" id="slide3" />
-    <div class="images">
-      <div class="images-inner">
-        <div class="image-slide">
-          <div class="banner-w3pvt-1">
-            <div class="overlay-w3ls">
+  <div id="Page"  >
 
-            </div>
 
-          </div>
-        </div>
-        <div class="image-slide">
-          <div class="banner-w3pvt-2">
-            <div class="overlay-w3ls">
+      <div id="form">
 
-            </div>
-          </div>
-        </div>
-        <div class="image-slide">
-          <div class="banner-w3pvt-3">
-            <div class="overlay-w3ls">
+        <el-form :model="contactForm"
+                 :rules="rules"
+                 class="contact_container"
+                 label-position="left"
+                 label-width="0px"
+                 v-loading="loading"
+                 :ref="contactForm">
+          <el-form-item prop="shortname" style="margin-bottom:25px">
+              <label class="lb">会议简称:</label>
+              <el-input type="text"
+                        class="textW"
+                        v-model="contactForm.shortname"
+                        auto-complete="off"
+                        placeholder="  如ICSE2020"></el-input>
+            </el-form-item>
+            <el-form-item prop="fullname" style="font-size:15px;color:#f00;margin-bottom:25px">
+              <label class="lb">会议全称:</label>
+              <el-input type="text"
+                        class="textW"
+                        v-model="contactForm.fullname"
+                        auto-complete="off"
+                        placeholder="  如The 42nd Conference on Software Engineering"></el-input>
+            </el-form-item>
+            <el-form-item prop="deadline" style="font-size:15px;color:#f00;margin-bottom:25px">
+              <label class="lb">投稿截止日期:</label>
+              <el-date-picker
+                v-model="contactForm.deadline"
+                align="right"
+                type="date"
+                placeholder="选择日期"
+                :picker-options="pickerOptions"
+                format="yyyy-MM-dd "
+                value-format="yyyy-MM-dd">
+              </el-date-picker>
+            </el-form-item>
+            <el-form-item prop="resultReleaseTime" style="font-size:15px;color:#f00;margin-bottom:25px">
+              <label class="lb">结果发布日期:</label>
+              <el-date-picker
+                v-model="contactForm.resultReleaseTime"
+                align="right"
+                type="date"
+                placeholder="选择日期"
+                :picker-options="pickerOptions1"
+                format="yyyy-MM-dd "
+                value-format="yyyy-MM-dd">
+              </el-date-picker>
+            </el-form-item>
+            <el-form-item prop="organizationTime" style="font-size:15px;color:#f00;margin-bottom:25px">
+              <label class="lb">举办时间:</label>
+              <el-date-picker
+                v-model="contactForm.organizationTime"
+                align="right"
+                type="date"
+                placeholder="选择日期"
+                :picker-options="pickerOptions2"
+                format="yyyy-MM-dd "
+                value-format="yyyy-MM-dd">
+              </el-date-picker>
+            </el-form-item>
+            <el-form-item prop="place" style="font-size:15px;color:#f00;margin-bottom:25px">
+              <label class="lb">举办地点:</label>
+              <el-cascader v-model="contactForm.place" :options="options" :props="{ expandTrigger: 'hover' }" placeholder="举办地点" :show-all-levels=false></el-cascader>
+            </el-form-item>
 
-            </div>
-          </div>
-        </div>
+            <el-form-item style="width: 100%">
+              <el-button type="primary"
+                         class="btn more mr-2"
+                         style="width: 20%;background: #afb4db;border: none;font-size:15px;font-weight:600"
+                         v-on:click="contact(contactForm)">申请会议</el-button>
+            </el-form-item>
+
+          <!-- //banner-hny-info -->
+        </el-form>
+        <el-button v-show="bt_visible" :plain="true" @click="contactError"></el-button>
+        <el-button v-show="bt_visible" :plain="true" @click="wrongSubmit"></el-button>
       </div>
     </div>
-    <div class="labels">
-      <div class="fake-radio">
-        <label for="slide1" class="radio-btn"></label>
-        <label for="slide2" class="radio-btn"></label>
-        <label for="slide3" class="radio-btn"></label>
-      </div>
-    </div>
-    <div id="base_contact">
-      <el-button :plain="true" @click="contactError"></el-button>
-      <el-button :plain="true" @click="wrongSubmit"></el-button>
-    <el-form :model="contactForm"
-             :rules="rules"
-             class="contact_container"
-             label-position="left"
-             label-width="0px"
-             v-loading="loading"
-             :ref="contactForm">
-    <!-- banner-hny-info -->
-    <div class="banner-hny-info" style="padding-bottom: 0px;padding-top: 100px" >
-      
-      <el-form-item prop="shortname" style="margin-bottom:25px">
-      <label class="lb">会议简称:</label>
-        <el-input type="text"
-                  class="textW"
-                  v-model="contactForm.shortname"
-                  auto-complete="off"
-                  placeholder="  如ICSE2020"></el-input>
-      </el-form-item>
-      <el-form-item prop="fullname" style="font-size:15px;color:#f00;margin-bottom:25px">
-        <label class="lb">会议全称:</label>
-        <el-input type="text"
-                  class="textW"
-                  v-model="contactForm.fullname"
-                  auto-complete="off"
-                  placeholder="  如The 42nd Conference on Software Engineering"></el-input>
-      </el-form-item>
-      <el-form-item prop="deadline" style="font-size:15px;color:#f00;margin-bottom:25px">
-        <label class="lb">投稿截止日期:</label>
-        <el-date-picker
-          v-model="contactForm.deadline"
-          align="right"
-          type="date"
-          placeholder="选择日期"
-          :picker-options="pickerOptions"
-          format="yyyy-MM-dd "
-          value-format="yyyy-MM-dd">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item prop="resultReleaseTime" style="font-size:15px;color:#f00;margin-bottom:25px">
-        <label class="lb">结果发布日期:</label>
-        <el-date-picker
-          v-model="contactForm.resultReleaseTime"
-          align="right"
-          type="date"
-          placeholder="选择日期"
-          :picker-options="pickerOptions1"
-          format="yyyy-MM-dd "
-          value-format="yyyy-MM-dd">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item prop="organizationTime" style="font-size:15px;color:#f00;margin-bottom:25px">
-        <label class="lb">举办时间:</label>
-        <el-date-picker
-          v-model="contactForm.organizationTime"
-          align="right"
-          type="date"
-          placeholder="选择日期"
-          :picker-options="pickerOptions2"
-          format="yyyy-MM-dd "
-          value-format="yyyy-MM-dd">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item prop="place" style="font-size:15px;color:#f00;margin-bottom:25px">
-        <label class="lb">举办地点:</label>
-        <el-cascader v-model="contactForm.place" :options="options" :props="{ expandTrigger: 'hover' }" placeholder="举办地点"></el-cascader>
-      </el-form-item>
 
-      <el-form-item style="width: 100%">
-        <el-button type="primary"
-                   class="btn more mr-2"
-                   style="width: 20%;background: #afb4db;border: none;font-size:15px;font-weight:600"
-                   v-on:click="contact(contactForm)">申请会议</el-button>
-      </el-form-item>
-    </div>
-    <!-- //banner-hny-info -->
-    </el-form>
-  </div>
-  </div>
-  <!-- //banner slider -->
-</div>
-  </div>
+
+
 </template>
 
 <script>
 import {timeValid,placeeValid} from '../assets/js/dataValid';
-
+import {countries} from '../assets/js/countries';
 export default {
   name: 'Contact',
   data () {
     return {
+      bt_visible:false,
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() < Date.now();
@@ -168,20 +127,7 @@ export default {
         organizationTime: '',
         place: '',
       },
-      options:[{
-                value:'Asia',
-                label:'Asia',
-                children:[{ value:'China', label:'China'},
-                          {value:'India', label:'India'},
-                ]
-               },
-              {
-                value:'Europe',
-                label:'Europe',
-                children:[{ value:'England', label:'England'},
-                          {value:'France', label:'France'},
-                         ]
-             }],
+      options:countries,
       rules: {
         shortname: [{required: true, message: '', trigger: 'blur'}],
         fullname: [{required: true, message: '', trigger: 'blur'}],
@@ -259,10 +205,11 @@ export default {
     text-align: center;
     color: #494e8f;
   }
-  
+
+
   .lb{
       margin-bottom: 25px;
-      color: white;
+      color: #2e3131;
       position:absolute;
     left:300px;
     font-size:17px;
@@ -277,6 +224,25 @@ export default {
     position:absolute;
     left:433px;
   }
+  .el-form{
+    padding: 20px;
+  }
+
+  #Page{
+    padding-top: 100px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #67809f;
+    height: 800px;
+  }
+  #form{
+    padding: 20px;
+    border-radius: 2px;box-shadow: 0 2px 4px rgba(0, 0, 0, .44), 0 0 6px rgba(0, 0, 0, .44);color: #0c5460;color: black;
+    background-color: #e4e9ed;
+    margin-bottom: 20px;
+  }
+
+
 
   
 </style>

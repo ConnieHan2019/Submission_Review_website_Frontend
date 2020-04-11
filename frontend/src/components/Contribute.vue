@@ -99,7 +99,7 @@
     padding-top: 100px;
     padding-left: 10px;
     padding-right: 10px;
-    background-color: #0badff;
+    background-color: #67809f;
     height: 1000px;
   }
   .MeetingBox{
@@ -113,7 +113,7 @@
     padding-left: 100px;
     padding-right: 100px;
     padding-bottom: 100px;
-    background-color: white;
+    background-color: #e4e9ed;
   }
   .enterMeetingBt{
     margin-top: 10px;

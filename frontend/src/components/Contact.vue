@@ -79,6 +79,8 @@
         </el-form>
         <el-button v-show="bt_visible" :plain="true" @click="contactError"></el-button>
         <el-button v-show="bt_visible" :plain="true" @click="wrongSubmit"></el-button>
+        <el-button v-show="bt_visible" :plain="true" @click="success"></el-button>
+        <el-button v-show="bt_visible" :plain="true" @click="fail"></el-button>
       </div>
     </div>
 
@@ -157,6 +159,19 @@ export default {
         type: 'error'
       });
     },
+    success() {
+      this.$message({
+        showClose: true,
+        message: '申请成功',
+        type: 'success'
+      });
+    },
+    fail() {
+      this.$message({
+        showClose: true,
+        message: '申请失败',
+      });
+    },
     contact (formName) {
       this.$refs[formName].validate(valid => {
         if(valid){
@@ -170,11 +185,13 @@ export default {
       })
         .then(resp => {
           if (resp.status === 200 ) {
-            alert("申请成功")
+            this.success()
+           // alert("申请成功")
              this.$router.replace({path:'/'})
           } 
           else{
-            alert('申请失败')
+            this.fail()
+           // alert('申请失败')
           }
         })
         .catch(error => {

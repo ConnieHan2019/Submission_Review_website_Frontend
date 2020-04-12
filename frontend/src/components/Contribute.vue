@@ -1,54 +1,54 @@
 <template>
-<div id="allMeetingPage"  >
+  <div id="allMeetingPage"  >
 
-  <div id="showArea">
-    <el-input
-      v-model="inputFullName"  placeholder="请输入会议全名进行搜索"></el-input>
-    <el-button icon="el-icon-search" circle @click="searchTheMeeting()"></el-button>
-    <div id="searchedArea" v-show="dialog_visible">
-      <el-divider  content-position="left"><span>搜索结果</span></el-divider>
+    <div id="showArea">
+      <el-input
+        v-model="inputFullName"  placeholder="请输入会议全名进行搜索"></el-input>
+      <el-button icon="el-icon-search" circle @click="searchTheMeeting()"></el-button>
+      <div id="searchedArea" v-show="dialog_visible">
+        <el-divider  content-position="left"><span>搜索结果</span></el-divider>
+        <div class="MeetingBox">
+          <el-table
+            :data="tableData"
+            stripe
+            style="width: 100%">
+            <el-table-column prop="FullName" label="会议全称" width="180"></el-table-column>
+            <el-table-column prop="ShortName" label="会议简称" width="180"></el-table-column>
+            <el-table-column prop="BeginTime" label="举办日期" width="180"></el-table-column>
+            <el-table-column prop="ContributeDDL" label="投稿截止日期" width="180"></el-table-column>
+            <el-table-column prop="ReleaseResultTime" label="结果发布日期" width="180"></el-table-column>
+
+          </el-table>
+          <router-link to ="meetingDetail" ><el-button type="primary" class="enterMeetingBt">进入会议</el-button></router-link>
+
+        </div>
+      </div>
+      <el-divider content-position="left"><span>推荐</span></el-divider>
       <div class="MeetingBox">
-        <el-table
-          :data="tableData"
-          stripe
-          style="width: 100%">
-          <el-table-column prop="FullName" label="会议全称" width="180"></el-table-column>
-          <el-table-column prop="ShortName" label="会议简称" width="180"></el-table-column>
-          <el-table-column prop="BeginTime" label="举办日期" width="180"></el-table-column>
-          <el-table-column prop="ContributeDDL" label="投稿截止日期" width="180"></el-table-column>
-          <el-table-column prop="ReleaseResultTime" label="结果发布日期" width="180"></el-table-column>
-
-        </el-table>
-        <router-link to ="meetingDetail" ><el-button type="primary" class="enterMeetingBt">进入会议</el-button></router-link>
-
+        <div class="text item">
+          <b>会议简称</b><span class="para">{{contactInformation.shortname}}</span>
+        </div>
+        <div class="text item">
+          <b>会议全名</b><span class="para">{{contactInformation.fullname}}</span>
+        </div>
+        <div class="text item">
+          <b>投稿截止日期</b><span class="para">{{contactInformation.deadline}}</span>
+        </div>
+        <div class="text item">
+          <b>结果发布日期</b><span class="para">{{contactInformation.resultReleaseTime}}</span>
+        </div>
+        <div class="text item">
+          <b>会议举办日期</b><span class="para">{{contactInformation.organizationTime}}</span>
+        </div>
+        <el-button type="primary" class="enterMeetingBt" @click="seeDetail()">进入会议</el-button>
       </div>
     </div>
-    <el-divider content-position="left"><span>推荐</span></el-divider>
-    <div class="MeetingBox">
-      <div class="text item">
-        <b>会议简称</b><span class="para">{{contactInformation.shortname}}</span>
-      </div>
-      <div class="text item">
-        <b>会议全名</b><span class="para">{{contactInformation.fullname}}</span>
-      </div>
-      <div class="text item">
-        <b>投稿截止日期</b><span class="para">{{contactInformation.deadline}}</span>
-      </div>
-      <div class="text item">
-        <b>结果发布日期</b><span class="para">{{contactInformation.resultReleaseTime}}</span>
-      </div>
-      <div class="text item">
-       <b>会议举办日期</b><span class="para">{{contactInformation.organizationTime}}</span>
-      </div>
-      <router-link to ="meetingDetail" ><el-button type="primary" class="enterMeetingBt">进入会议</el-button></router-link>
-    </div>
+
+
+
+
   </div>
 
-
-
-
-</div>
-    
 </template>
 
 <script>
@@ -79,6 +79,9 @@
       };
     },
     methods: {
+      seeDetail(){
+        this.$router.push({path: '/meetingDetail',query:{name:this.contactInformation.fullname}});
+      },
       showDialog(visible) {
         this.dialog_visible = visible;
       },
@@ -92,7 +95,7 @@
               this.contactInformation= resp.data.searchMeetingData
             }
             else{
-             // alert('Meeting-search error')
+              // alert('Meeting-search error')
               this.$message({
                 showClose: true,
                 message: 'Meeting-search error',
@@ -145,16 +148,15 @@
     background:#feac00;
     border-color:#feac00;
   }
-.el-input{
-  width: 200px;
-}
-.text item{
-  margin-top: 20px;
-}
+  .el-input{
+    width: 200px;
+  }
+  .text item{
+    margin-top: 20px;
+  }
   .para{
     margin-left: 30px;
     font-family: "Comic Sans MS";
     color: #c69500;
   }
-
 </style>

@@ -30,6 +30,7 @@ axios.interceptors.request.use(
       // 判断是否有token，若存在，每个http header加上token
       config.headers.Authorization = 'Bearer:'+store.state.token;
     }
+    //console.log(config)
     return config
   },
   error => {

@@ -1,14 +1,14 @@
 <template>
   <div id="uploadWindow">
     <div id="window">
-      <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item label="论文标题">
+      <el-form :ref="form" :model="form" label-width="80px" :rules="rules">
+        <el-form-item label="论文标题" prop="title">
           <el-input type="text"
                     v-model="form.title"
                     placeholder="请输入论文标题"
           ></el-input>
         </el-form-item>
-        <el-form-item label="摘要">
+        <el-form-item label="摘要" prop="extract">
           <el-input type="textarea"
                     v-model="form.extract"
                     autosize
@@ -26,7 +26,7 @@
   :file-list="fileList"
   :auto-upload="false">
   <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-  <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+  <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload(form)">上传到服务器</el-button>
 </el-upload>
         </el-form-item>
       </el-form>
@@ -43,33 +43,19 @@
         form: {
           title: '',
           extract: '',
-        }
+        },
+      rules: {
+        title: [{required: true, message: '', trigger: 'blur'}],
+        extract: [{required: true, message: '', trigger: 'blur'}]
+      }
       }
     },
     methods: {
       submitUpload(formName) {
-        this.$refs.upload.submit();
         this.$refs[formName].validate(valid => {
-          this.$axios.post('/contribute', {
-            username: this.$store.state.userDetails,
-            title: this.form.title,
-            extract: this.form.extract,
-          })
-            .then(resp => {
-              if (resp.status === 200) {
-                this.success()
-                // alert("申请成功")
-                this.$router.replace({path: '/'})
-              } else {
-                this.fail()
-                // alert('申请失败')
-              }
-            })
-            .catch(error => {
-              console.log(error)
-              this.contactError()
-              //alert('contact error')
-            })
+          if(valid){
+             this.$refs.upload.submit();
+          }
         })
       },
       handleRemove(file, fileList) {
@@ -79,11 +65,15 @@
         console.log(file);
       },
       uploadFileMethod(param){
-          alert('自定义上传方法')
             let fileObject = param.file;
             let formData = new FormData();
             formData.append("file", fileObject);
-            this.$axios.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+            formData.append('title',this.form.title)
+            formData.append('authorname',this.$store.state.userDetails)
+            formData.append('summary',this.form.extract)
+            formData.append('meetingFullname','a meetingFullname')
+            console.log(formData.get('file'))
+            this.$axios.post('/upload', formData)
             .then(resp => {
               if(resp.status === 200){
                 alert('success')

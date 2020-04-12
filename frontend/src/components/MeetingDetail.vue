@@ -2,48 +2,51 @@
   <div id="page">
     <div id="singleMeeting">
       <el-container>
-        <el-header><h2 style="color: rgba(0, 25, 52, 0.7);">{{FullName}}</h2>
+        <el-header><h2 style="color: rgba(0, 25, 52, 0.7);">{{this.$route.query.name}}</h2>
         </el-header>
         <el-container>
           <el-aside width="300px">
             <p></p>
-            <el-collapse v-model="activeNames"  >
+            <el-collapse>
               <el-collapse-item title="Chair:" name="1">
-                <span class="members" >{{chair}}</span>
+                <span class="members" >{{verDetailContactData.chair}}</span>
               </el-collapse-item>
               <el-collapse-item title="PC Member:" name="2">
-                <span class="members" v-for="pcm in pcMembers" v-bind:key="pcm.name" v-bind:index="pcm.name">{{pcm.name}}、</span>
+                <span class="members" v-for="pcm in verDetailContactData.pcMembers" v-bind:key="pcm.name" v-bind:index="pcm.name">{{pcm.name}}、</span>
 
               </el-collapse-item>
               <el-collapse-item title="Author:" name="3">
-                <span class="members" v-for="aus in authors" v-bind:key="aus.name" v-bind:index="aus.name">{{aus.name}}、</span>
+                <span class="members" v-for="aus in verDetailContactData.authors" v-bind:key="aus.name" v-bind:index="aus.name">{{aus.name}}、</span>
 
               </el-collapse-item>
               <el-collapse-item title="State:" name="4">
-                <span style="color: red">{{ state }}</span>
+                <span style="color: red">{{ verDetailContactData.state }}</span>
               </el-collapse-item>
             </el-collapse>
 
           </el-aside>
           <el-container>
             <el-main>
-              <el-table
-                :data="tableData"
-                stripe
-                style="width: 100%">
-                <el-table-column prop="ShortName" label="会议简称" width="150"></el-table-column>
-                <el-table-column prop="BeginTime" label="举办日期" width="150"></el-table-column>
-                <el-table-column prop="ContributeDDL" label="投稿截止日期" width="150"></el-table-column>
-                <el-table-column prop="ReleaseResultTime" label="结果发布日期" width="150"></el-table-column>
-                <el-table-column prop="Place" label="举办地点" width="150"></el-table-column>
+              <div id="meeting">
+                <p><label>会议简称:</label><span class="tableDT">{{verDetailContactData.tableData.ShortName}}</span></p>
 
-              </el-table>
+                <p> <label>举办日期:</label><span class="tableDT">{{verDetailContactData.tableData.BeginTime}}</span></p>
+
+                <p><label>投稿截止日期:</label><span class="tableDT">{{verDetailContactData.tableData.ContributeDDL}}</span></p>
+
+                <p><label>结果发布日期:</label><span class="tableDT">{{verDetailContactData.tableData.ReleaseResultTime}}</span></p>
+
+                <p><label>举办地点:</label><span class="tableDT">{{verDetailContactData.tableData.Place}}</span></p>
+
+              </div>
+
+
             </el-main>
             <el-footer>
 
 
-                <router-link to ="upload"><el-button type="warning">投稿</el-button></router-link>
-                <router-link to ="contribute" >  <el-button type="primary">返回搜索页面</el-button></router-link>
+              <el-button type="warning" @click="up()">投稿</el-button>
+              <router-link to ="contribute" >  <el-button type="primary">返回搜索页面</el-button></router-link>
 
 
 
@@ -53,14 +56,42 @@
       </el-container>
     </div>
   </div>
-    
+
 </template>
 
 <script>
-    export default {
-        name: "MeetingDetail",
-      data() {
-        return {
+  export default {
+    name: "MeetingDetail",
+    created: function () {
+      this.$axios.post('/meetingDetail', {
+        fullName:this.$route.query.name
+      })
+        .then(resp => {
+          if (resp.status === 200 && resp.data.hasOwnProperty("veryDetailContactData")) {
+            this.veryDetailContactData = resp.data.veryDetailContactData
+          } else {
+            this.$message({
+              showClose: true,
+              message: 'detail error',
+              type: 'warning'
+            });
+            console.log(resp)
+          }
+        })
+        .catch(error => {
+          if (error.response) {
+            // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+            console.log(error.response)
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message)
+          }
+          console.log(error.config);
+        })
+    },
+    data() {
+      return {
+        verDetailContactData:{
           FullName:'第32届全国互联网顶尖人才大会',
           chair:'Root',
           pcMembers:[
@@ -70,18 +101,23 @@
             {name:'D'},{name:'F'},{name:'E'}
           ],
           state:'已通过',
-          activeNames: ['1'],
-          tableData: [{
+          tableData: {
             ShortName:'互联网大会',
             BeginTime:'2019-10-18',
             ContributeDDL:'2019-11-12',
             ReleaseResultTime:'2019-12-3',
             Place:'上海'
-          }],
-        };
-      },
-      methods:{}
+          },
+        },
+
+      };
+    },
+    methods:{
+      up(){
+        this.$router.push({path: '/upload',query:{name:this.$route.query.name}});
+      }
     }
+  }
 </script>
 
 <style scoped>
@@ -115,7 +151,7 @@
     text-align: center;
 
   }
-   .el-footer {
+  .el-footer {
     padding: 10px;
     background-color: #B3C0D1;
     color: #333;
@@ -154,6 +190,17 @@
   .el-collapse-item{
     padding: 15px;
 
+  }
+  .tableDT{
+    color: #c69500;
+    font-family: "Comic Sans MS";
+    align-items: center;
+  }
+  #meeting{
+    padding: 20px;
+    border-radius: 2px;box-shadow: 0 2px 4px rgba(0, 0, 0, .44), 0 0 6px rgba(0, 0, 0, .44);color: #0c5460;color: black;
+    background-color: white;
+    margin: 20px;
   }
 
 </style>

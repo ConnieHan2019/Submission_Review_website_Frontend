@@ -41,6 +41,9 @@ export default {
       })
   },
   methods:{
+    seeDetail(){
+      this.$router.push({path: '/meetingDetail',query:{name:this.contactName}});
+    },
     showDialog(visible) {
       this.dialog_visible = visible;
     },
@@ -65,7 +68,7 @@ export default {
   <div class="invitation" v-show="dialog_visible" v-for="ins in invites" v-bind:key="ins.FullName" v-bind:index="ins.FullName">
     <p><i class="el-icon-user"></i><span class="ivt">Chair:</span>{{ins.chair}}</p>
     <p><i class="el-icon-notebook-1"></i><span class="ivt">Meeting's FullName:</span>{{ins.FullName}}</p>
-    <router-link to ="meetingDetail" ><el-button type="warning" class="goTo">去投稿</el-button></router-link>
+    <el-button type="warning" class="goTo" @click="seeDetail">去投稿</el-button>
   </div>
 
 

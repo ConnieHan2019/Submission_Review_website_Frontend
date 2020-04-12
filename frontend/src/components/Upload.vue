@@ -1,6 +1,7 @@
 <template>
   <div id="uploadWindow">
     <div id="window">
+      <p>投稿会议名：<span style="color: #0c5460">{{this.$route.query.name}}</span></p>
       <el-form :ref="form" :model="form" label-width="80px" :rules="rules">
         <el-form-item label="论文标题" prop="title">
           <el-input type="text"

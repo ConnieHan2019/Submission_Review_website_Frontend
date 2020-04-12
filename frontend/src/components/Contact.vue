@@ -176,6 +176,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if(valid){
           this.$axios.post('/contact', {
+            applicant:this.$store.state.userDetails,
         shortname: this.contactForm.shortname,
         fullname: this.contactForm.fullname,
         deadline: this.contactForm.deadline,
@@ -195,8 +196,18 @@ export default {
           }
         })
         .catch(error => {
+          if(error.response){
+            if(error.response.status === 400){
+              this.$message.error(error.response.data.message)
+            }
+            else{
+               this.contactError()
+            }
+          }
+          else{
+            this.contactError()
+          }
           console.log(error)
-          this.contactError()
           //alert('contact error')
         })
         } else {

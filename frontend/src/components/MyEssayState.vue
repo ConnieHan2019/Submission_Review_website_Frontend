@@ -6,7 +6,7 @@
       <h5>审核状态：<span style="color:#ff1e1a;">{{myEssayState}}</span></h5>
 
       <el-divider></el-divider>
-      <router-link to ="meetingDetail"><el-button type="primary" class="enterMeetingBt">进入会议</el-button></router-link>
+      <el-button type="primary" class="enterMeetingBt" @click="seeDetail()">进入会议</el-button>
     </div>
   </div>
 
@@ -47,6 +47,9 @@
           })
       },
       methods: {
+        seeDetail(){
+          this.$router.push({path: '/meetingDetail',query:{name:this.contactName}});
+        },
         essayStateError() {
           this.$message({
             showClose: true,

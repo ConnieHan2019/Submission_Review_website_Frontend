@@ -45,7 +45,7 @@
             <el-footer>
 
 
-              <router-link to ="upload"><el-button type="warning">投稿</el-button></router-link>
+              <el-button type="warning" @click="up()">投稿</el-button>
               <router-link to ="contribute" >  <el-button type="primary">返回搜索页面</el-button></router-link>
 
 
@@ -112,7 +112,11 @@
 
       };
     },
-    methods:{}
+    methods:{
+      up(){
+        this.$router.push({path: '/upload',query:{name:this.$route.query.name}});
+      }
+    }
   }
 </script>
 

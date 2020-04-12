@@ -12,7 +12,7 @@
         </div>
 
         <el-divider></el-divider>
-        <router-link to ="meetingDetail" ><el-button type="primary" class="enterMeetingBt">进入会议</el-button></router-link>
+        <el-button type="primary" class="enterMeetingBt" @click="seeDetail">进入会议</el-button>
       </div>
     </div>
 </template>
@@ -55,6 +55,9 @@
           })
       },
       methods: {
+        seeDetail(){
+          this.$router.push({path: '/meetingDetail',query:{name:this.contactName}});
+        },
         auditError() {
           this.$message({
             showClose: true,

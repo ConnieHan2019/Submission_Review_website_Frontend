@@ -39,6 +39,7 @@
       onSubmit(formName) {
         this.$refs[formName].validate(valid => {
           this.$axios.post('/contact', {
+            username: this.$store.state.userDetails,
             title: this.form.title,
             extract: this.form.extract,
           })

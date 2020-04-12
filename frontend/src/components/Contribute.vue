@@ -2,9 +2,9 @@
 <div id="allMeetingPage"  >
 
   <div id="showArea">
-    <el-autocomplete
-      v-model="state" :fetch-suggestions="querySearchAsync" placeholder="请输入会议" @select="handleSelect" @focus="showDialog(false)" ></el-autocomplete>
-    <el-button icon="el-icon-search" circle @click="showDialog(true)"></el-button>
+    <el-input
+      v-model="inputFullName"  placeholder="请输入会议全名进行搜索"></el-input>
+    <el-button icon="el-icon-search" circle @click="searchTheMeeting()"></el-button>
     <div id="searchedArea" v-show="dialog_visible">
       <el-divider  content-position="left"><span>搜索结果</span></el-divider>
       <div class="MeetingBox">
@@ -23,12 +23,7 @@
 
       </div>
     </div>
-
-
     <el-divider content-position="left"><span>推荐</span></el-divider>
-
-
-
     <div class="MeetingBox">
       <el-table
         :data="tableData"
@@ -59,8 +54,7 @@
     data() {
       return {
         meetings: [],
-        state: '',
-        timeout:  null,
+        inputFullName: '',
         tableData: [{
           FullName:'第32届全国互联网顶尖人才大会',
           ShortName:'互联网大会',
@@ -75,33 +69,38 @@
       showDialog(visible) {
         this.dialog_visible = visible;
       },
-      loadAll() {
-        return [
-          { "value": "物理大佬会", "address": "北京市宣武区" },
-          { "value": "高数大佬会", "address": "上海市杨浦区" },
-          { "value": "程设大佬会", "address": "上海市虹口区" },
-        ];
-      },
-      querySearchAsync(queryString, cb) {
-        var meetings = this.meetings;
-        var results = queryString ? meetings.filter(this.createStateFilter(queryString)) : meetings;
-
-        clearTimeout(this.timeout);
-        this.timeout = setTimeout(() => {
-          cb(results);
-        }, 3000 * Math.random());
-      },
-      createStateFilter(queryString) {
-        return (state) => {
-          return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-        };
-      },
-      handleSelect(item) {
-        console.log(item);
+      searchTheMeeting(){
+        this.showDialog(true);
+        this.$axios.post('/searchMeeting',{
+          fullName:this.inputFullName
+        })
+          .then(resp => {
+            if (resp.status === 200 && resp.data.hasOwnProperty("searchMeetingData")){
+              this.tableData= resp.data.searchMeetingData
+            }
+            else{
+             // alert('Meeting-search error')
+              this.$message({
+                showClose: true,
+                message: 'Meeting-search error',
+                type: 'warning'
+              });
+              console.log(resp)
+            }
+          })
+          .catch(error => {
+            if(error.response){
+              // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+              this.$message.error('请求已发出，但服务器响应的状态码不在 2xx 范围内')
+              console.log(error.response)
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.log('Error', error.message)
+            }
+            console.log(error.config);
+          })
       }
-    },
-    mounted() {
-      this.meetings = this.loadAll();
+
     }
   };
 </script>
@@ -131,5 +130,7 @@
     margin-top: 10px;
     margin-bottom: 10px;
   }
-
+.el-input{
+  width: 200px;
+}
 </style>

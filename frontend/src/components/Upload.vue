@@ -16,8 +16,18 @@
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit(form)">上传文件</el-button>
-          <el-button>取消</el-button>
+<el-upload
+  class="upload-demo"
+  ref="upload"
+  action=""
+  :http-request='uploadFileMethod'
+  :on-preview="handlePreview"
+  :on-remove="handleRemove"
+  :file-list="fileList"
+  :auto-upload="false">
+  <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+  <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+</el-upload>
         </el-form-item>
       </el-form>
     </div>
@@ -29,6 +39,7 @@
     name: "Upload",
     data() {
       return {
+        fileList:[],
         form: {
           title: '',
           extract: '',
@@ -36,9 +47,10 @@
       }
     },
     methods: {
-      onSubmit(formName) {
+      submitUpload(formName) {
+        this.$refs.upload.submit();
         this.$refs[formName].validate(valid => {
-          this.$axios.post('/contact', {
+          this.$axios.post('/contribute', {
             username: this.$store.state.userDetails,
             title: this.form.title,
             extract: this.form.extract,
@@ -59,16 +71,40 @@
               //alert('contact error')
             })
         })
-
-
-      }
+      },
+      handleRemove(file, fileList) {
+        console.log(file, fileList);
+      },
+      handlePreview(file) {
+        console.log(file);
+      },
+      uploadFileMethod(param){
+          alert('自定义上传方法')
+            let fileObject = param.file;
+            let formData = new FormData();
+            formData.append("file", fileObject);
+            this.$axios.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+            .then(resp => {
+              if(resp.status === 200){
+                alert('success')
+              }
+              else{
+                alert('fail')
+              }
+              console.log(resp)
+            })
+            .catch(error => {
+              alert('error')
+              console.log(error.response)
+            })
+        }
     }
   }
 </script>
 
 <style scoped>
   #uploadWindow{
-    background-color: #67809f;
+    background-color: #52658F;
     padding-top: 70px;
     padding-left: 100px;
     padding-right: 100px;
@@ -79,5 +115,9 @@
     border-radius: 2px;box-shadow: 0 2px 4px rgba(0, 0, 0, .44), 0 0 6px rgba(0, 0, 0, .44);color: #0c5460;color: black;
     background-color: white;
     margin: 20px;
+  }
+  .el-button--success{
+    background-color:#feac00;
+    border-color:#feac00;
   }
 </style>

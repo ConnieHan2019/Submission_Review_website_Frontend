@@ -44,18 +44,7 @@
 
                 <router-link to ="upload"><el-button type="warning">投稿</el-button></router-link>
                 <router-link to ="contribute" >  <el-button type="primary">返回搜索页面</el-button></router-link>
-<el-upload
-  class="upload-demo"
-  ref="upload"
-  action=""
-  :http-request='uploadFileMethod'
-  :on-preview="handlePreview"
-  :on-remove="handleRemove"
-  :file-list="fileList"
-  :auto-upload="false">
-  <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-  <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
-</el-upload>
+
 
 
             </el-footer>
@@ -72,7 +61,6 @@
         name: "MeetingDetail",
       data() {
         return {
-          fileList:[],
           FullName:'第32届全国互联网顶尖人才大会',
           chair:'Root',
           pcMembers:[
@@ -92,37 +80,7 @@
           }],
         };
       },
-      methods:{
-        uploadFileMethod(param){
-          alert('自定义上传方法')
-            let fileObject = param.file;
-            let formData = new FormData();
-            formData.append("file", fileObject);
-            this.$axios.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
-            .then(resp => {
-              if(resp.status === 200){
-                alert('success')
-              }
-              else{
-                alert('fail')
-              }
-              console.log(resp)
-            })
-            .catch(error => {
-              alert('error')
-              console.log(error.response)
-            })
-        },
-        submitUpload() {
-        this.$refs.upload.submit();
-      },
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
-      },
-      handlePreview(file) {
-        console.log(file);
-      }
-      }
+      methods:{}
     }
 </script>
 
@@ -131,7 +89,7 @@
     padding-top: 100px;
     padding-left: 10px;
     padding-right: 10px;
-    background-color: #67809f;
+    background-color: #52658F;
     height: auto;
   }
   #singleMeeting{
@@ -173,7 +131,7 @@
 
   .el-main {
     padding: 10px;
-    background-color: #E9EEF3;
+    background-color: #F7F5E6;
     color: #333;
     text-align: center;
     line-height: 160px;

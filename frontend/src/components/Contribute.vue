@@ -123,7 +123,7 @@
     padding-top: 100px;
     padding-left: 10px;
     padding-right: 10px;
-    background-color: #67809f;
+    background-color: #52658F;
     height: auto;
   }
   .MeetingBox{
@@ -137,11 +137,13 @@
     padding-left: 100px;
     padding-right: 100px;
     padding-bottom: 100px;
-    background-color: #e4e9ed;
+    background-color: #F7F5E6;
   }
   .enterMeetingBt{
     margin-top: 10px;
     margin-bottom: 10px;
+    background:#feac00;
+    border-color:#feac00;
   }
 .el-input{
   width: 200px;

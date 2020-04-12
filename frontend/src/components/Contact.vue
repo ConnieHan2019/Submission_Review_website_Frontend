@@ -71,7 +71,7 @@
             <el-form-item style="width: 100%">
               <el-button type="primary"
                          class="btn more mr-2"
-                         style="width: 20%;background: #afb4db;border: none;font-size:15px;font-weight:600"
+                         style="width: 20%;background: #feac00;border: none;font-size:15px;font-weight:600"
                          v-on:click="contact(contactForm)">申请会议</el-button>
             </el-form-item>
 
@@ -224,7 +224,7 @@ export default {
   .contact_container{
     border-radius: 15px;
     background-clip: padding-box;
-    background: #fff;
+    background: #F7F5E6;
     border: 1px solid #eaeaea;
     box-shadow: 0 0 25px #cac6c6;
   }
@@ -260,7 +260,7 @@ export default {
     padding-top: 100px;
     padding-left: 10px;
     padding-right: 10px;
-    background-color: #67809f;
+    background-color: #52658F;
     height: 630px;
   }
   #form{

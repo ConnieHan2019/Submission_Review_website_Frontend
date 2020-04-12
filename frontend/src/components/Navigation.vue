@@ -32,7 +32,7 @@
             </li>
             <li><a href="">ENGLISH</a></li>
             <li><a href="">关于我们</a></li>
-            <li class="social-icons ml-lg-3"><router-link to='/' @click.native='logout' v-if='out' >登出</router-link><router-link to='login' v-else>登录/注册</router-link></li>
+            <li class="social-icons ml-lg-3"><router-link v-bind:to='path' @click.native='logout' v-if='out' >登出</router-link><router-link to='login' v-else>登录/注册</router-link></li>
             
 
           </ul>
@@ -50,13 +50,15 @@
 export default {
   name: 'Navigation',
   computed:{
-    
       msg(){
         return this.$store.state.userDetails?this.$store.state.userDetails:"个人空间"
       },
       out(){//whether logout or not
         return this.$store.state.userDetails
-      } 
+      },
+      path(){
+        return this.$route.path
+      }
     
   },
   methods:{
@@ -67,6 +69,7 @@ export default {
           type: 'warning'
         }).then(() => {
            this.$store.commit('logout')
+           this.$router.replace({path:'/'})
           this.$message({
             type: 'success',
             message: '登出成功'

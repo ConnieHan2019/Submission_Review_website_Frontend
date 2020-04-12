@@ -30,11 +30,18 @@ export default {
               message: '登录成功',
               type: 'success'
             })
-            this.$store.commit('login', resp.data)
             if(status == 'admin'){
               this.$router.replace({path:'/admin'})
+            this.$store.commit('login', {
+              data:resp.data,
+              isAdmin:true
+            })
             }else{
                 this.$router.replace({path: this.$route.query.redirect?this.$route.query.redirect:'/'})
+            this.$store.commit('login',{
+              data:resp.data,
+              isAdmin:false
+            })
             }
           }
           else{

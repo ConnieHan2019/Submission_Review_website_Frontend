@@ -37,7 +37,7 @@ export const router = new Router({
       name: 'Contact',
       component: Contact,
       meta: {
-        requireAuth: false
+        requireAuth: true
       }
     },
     {
@@ -53,7 +53,7 @@ export const router = new Router({
       name: 'Contribute',
       component: Contribute,
       meta: {
-        requireAuth: false
+        requireAuth: true
       }
     },
     {
@@ -61,7 +61,7 @@ export const router = new Router({
       name: 'MeetingDetail',
       component: MeetingDetail,
       meta: {
-        requireAuth: false
+        requireAuth: true
       }
     },
     {
@@ -69,7 +69,7 @@ export const router = new Router({
       name: 'Admin',
       component: Admin,
       meta: {
-        requireAuth: false
+        requireAuth: true
       },
 
     }
@@ -80,10 +80,11 @@ export const router = new Router({
 router.beforeEach(function (to, from ,next) {
   if (to.matched.some(record => record.meta.requireAuth)) {
     if (store.state.token) {
-      if(store.state.admin){
+      if(store.state.status === 'admin'){
         console.log("管理员")
         if(to.fullPath === '/admin'){next()}
         else{
+          //console.log("无权限")
           next({
             path:'/admin'
           })
@@ -92,7 +93,7 @@ router.beforeEach(function (to, from ,next) {
       else{
         console.log("普通用户")
         if(to.fullPath === '/admin'){
-          console.log("无权限")
+          //console.log("无权限")
           next({
             path:from.fullPath
           })

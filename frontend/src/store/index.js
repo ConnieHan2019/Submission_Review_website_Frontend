@@ -6,19 +6,21 @@ export default new Vuex.Store({
   state: {//响应式状态
     token: localStorage.getItem('token') || null,//若未定义则会返回undefined，||null则得到null
     userDetails: localStorage.getItem('userDetails') || null,
-    admin: false
+    status: localStorage.getItem('status') || null
   },
   mutations: {
-    login(state, data){
-      localStorage.setItem('token', data.token)
-      localStorage.setItem('userDetails', data.userDetails)
-      state.userDetails = data.userDetails
-      state.token = data.token
-      if(data.hasOwnProperty("admin")){
-        state.admin = true
+    login(state,payload){
+      localStorage.setItem('token', payload.data.token)
+      localStorage.setItem('userDetails', payload.data.userDetails)
+      state.userDetails = payload.data.userDetails
+      state.token = payload.data.token
+      if(payload.isAdmin){
+        state.status = 'admin'
+        localStorage.setItem('status', 'admin')
       }
       else{
-        state.admin = false
+        state.status = 'user'
+        localStorage.setItem('status', 'user')
       }
     },
     logout(state) {

@@ -129,7 +129,7 @@ export default {
         //PCmember
         this.currentComponent = Audit
       }
-      else if(role == 'author'){
+      else if(role == 'Author'){
         //author
         this.currentComponent = MyEssayState
       }

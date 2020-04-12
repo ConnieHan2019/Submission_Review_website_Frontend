@@ -26,10 +26,10 @@
     <el-divider content-position="left"><span>推荐</span></el-divider>
     <div class="MeetingBox">
       <div class="text item">
-        <b>会议简称&nbsp&nbsp&nbsp</b><span class="para">{{contactInformation.shortname}}</span>
+        <b>会议简称</b><span class="para">{{contactInformation.shortname}}</span>
       </div>
       <div class="text item">
-        <b>会议全名&nbsp&nbsp&nbsp</b><span class="para">{{contactInformation.fullname}}</span>
+        <b>会议全名</b><span class="para">{{contactInformation.fullname}}</span>
       </div>
       <div class="text item">
         <b>投稿截止日期</b><span class="para">{{contactInformation.deadline}}</span>

@@ -6,6 +6,7 @@ import Register from '@/components/Register'
 import Contact from '@/components/Contact'
 import Personal from '@/components/Personal'
 import Contribute from '@/components/Contribute'
+import Upload from '@/components/Upload'
 import MeetingDetail from '@/components/MeetingDetail'
 import Admin from '@/components/Admin'
 import store from '../store'
@@ -57,6 +58,14 @@ export const router = new Router({
       }
     },
     {
+      path: '/upload',
+      name: 'Upload',
+      component: Upload,
+      meta: {
+        requireAuth: false
+      }
+    },
+    {
       path: '/meetingDetail',
       name: 'MeetingDetail',
       component: MeetingDetail,
@@ -69,7 +78,7 @@ export const router = new Router({
       name: 'Admin',
       component: Admin,
       meta: {
-        requireAuth: true
+        requireAuth: false
       },
 
     }

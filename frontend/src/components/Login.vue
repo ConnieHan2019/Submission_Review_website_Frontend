@@ -31,10 +31,10 @@ export default {
               type: 'success'
             })
             this.$store.commit('login', resp.data)
-            if(resp.data.hasOwnProperty("admin")){
+            if(status == 'admin'){
               this.$router.replace({path:'/admin'})
             }else{
-                this.$router.replace({path: this.$route.query.redirect})
+                this.$router.replace({path: this.$route.query.redirect?this.$route.query.redirect:'/'})
             }
           }
           else{

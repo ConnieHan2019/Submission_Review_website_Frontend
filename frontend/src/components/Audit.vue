@@ -1,9 +1,9 @@
 <template>
     <div id="audit">
-      <div class="meetingBlock" v-for="audata in auditData" v-bind:key="audata.FullName" v-bind:index="audata.FullName">
-        <h5>会议主题：<span style="color:#5b25ff;">{{audata.FullName}}</span></h5><br>
+      <div class="meetingBlock">
+        <h5>会议主题：<span style="color:#5b25ff;">{{contactName}}</span></h5><br>
         <el-divider></el-divider>
-        <div  v-for="aus in audata" v-bind:key="aus.name" v-bind:index="aus.name">
+        <div  v-for="aus in authors" v-bind:key="aus.name" v-bind:index="aus.name">
           <p ><i class="el-icon-user"></i><span >Author:</span>{{aus.name}} <el-link type="primary">文章链接</el-link></p>
           <el-button-group>
             <el-button type="success">通过</el-button>
@@ -20,37 +20,24 @@
 <script>
     export default {
       name: "Audit",
+      props:['contactName'],
       data() {
         return {
-          auditData:[
-            {
-              FullName: '全国互联网大会',
-              authors: [
+          authors: [
                 {name: 'Sam'},
                 {name: 'Joe'},
                 {name: 'Eden'},
-              ],
-            },
-            {
-              FullName: '全国消费者研究大会',
-              authors: [
-                {name: 'Jack'},
-                {name: 'Jeson'},
-                {name: 'Emma'},
-                ]
-            }
-          ],
-
+              ]
         }
-
       },
       created: function () {
         this.$axios.post('/audit', {
-          username: this.$store.state.userDetails
+          username: this.$store.state.userDetails,
+          contactName:this.contactName
         })
           .then(resp => {
             if (resp.status === 200 && resp.data.hasOwnProperty("essayNeedHandle")) {
-              this.auditData = resp.data.essayNeedHandle
+              this.authors = resp.data.essayNeedHandle
             } else {
               this.auditError(),
                 console.log(resp)

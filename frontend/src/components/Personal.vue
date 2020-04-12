@@ -17,6 +17,7 @@ export default {
   },
   data(){
     return{
+      name:'huiyi1',
       currentComponent:Information,
       currentContact:'',
       needContactName:false,//子组件是否需要会议名，默认个人页面不需要

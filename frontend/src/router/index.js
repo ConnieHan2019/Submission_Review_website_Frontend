@@ -45,7 +45,7 @@ export const router = new Router({
       name: 'Personal',
       component: Personal,
       meta: {
-        requireAuth: true
+        requireAuth: false
       }
     },
     {

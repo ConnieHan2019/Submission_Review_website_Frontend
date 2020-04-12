@@ -1,12 +1,12 @@
 <template>
   <div>
     <el-divider content-position="left"><span>My Essay</span></el-divider>
-    <div class="essayBlock" v-for="essayState in  myEssayState" v-bind:key="essayState.FullName" v-bind:index="essayState.FullName">
-      <h5>会议主题：<span style="color:#5b25ff;">{{essayState.FullName}}</span></h5><br>
-      <h5>审核状态：<span style="color:#ff1e1a;">{{essayState.contactState}}</span></h5>
+    <div class="essayBlock">
+      <h5>会议主题：<span style="color:#5b25ff;">{{contactName}}</span></h5><br>
+      <h5>审核状态：<span style="color:#ff1e1a;">{{myEssayState}}</span></h5>
 
       <el-divider></el-divider>
-      <router-link to ="meetingDetail" ><el-button type="primary" class="enterMeetingBt">进入会议</el-button></router-link>
+      <router-link to ="meetingDetail"><el-button type="primary" class="enterMeetingBt">进入会议</el-button></router-link>
     </div>
   </div>
 
@@ -18,22 +18,14 @@
       data(){
         return{
           //这个会议的状态： 审核中、已通过、已驳回
-          myEssayState:[
-            {
-              contactState:'审核中',
-              FullName:'第32届全国互联网顶尖人才大会',
-            },
-            {
-              contactState:'已通过',
-              FullName:'消费者讨论会',
-            }
-
-          ],
+          myEssayState:'审核中',
         }
       },
+      props:['contactName'],
       created: function () {
         this.$axios.post('/userEssayState', {
-          username: this.$store.state.userDetails
+          username: this.$store.state.userDetails,
+          contactName:this.contactName
         })
           .then(resp => {
             if (resp.status === 200 && resp.data.hasOwnProperty("myEssayStateDelivered")) {

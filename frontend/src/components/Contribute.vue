@@ -66,7 +66,7 @@
           ContributeDDL:'2019-11-12',
           ReleaseResultTime:'2019-12-3'
         }],
-        meetingData:{
+        contactInformation:{
           shortname:'shortname',
           fullname:'fullname',
           deadline:'2020-12-08',
@@ -89,7 +89,7 @@
         })
           .then(resp => {
             if (resp.status === 200 && resp.data.hasOwnProperty("searchMeetingData")){
-              this.meetingData= resp.data.searchMeetingData
+              this.contactInformation= resp.data.searchMeetingData
             }
             else{
              // alert('Meeting-search error')

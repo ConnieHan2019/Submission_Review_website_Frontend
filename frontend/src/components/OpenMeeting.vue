@@ -11,10 +11,15 @@ export default{
               resultReleaseTime:'2021-1-1',
               organizationTime: '2021-2-1',
               place: 'China',
-              state:false
+              state:'0'
             }
         }
     },
+  computed:{
+      isDisabled(){
+        return this.contactInformation.state != '0'
+      }
+  },
     created:function(){
         this.$axios.post('/contactInformation',{
             contactFullName:this.contactName
@@ -22,6 +27,7 @@ export default{
         .then(resp => {
             if (resp.status === 200 && resp.data.hasOwnProperty("contactInformation")){
                 this.contactInformation = resp.data.contactInformation
+      console.log(this.contactInformation)
             }
             else{
                 console.log('会议信息加载失败')
@@ -68,7 +74,7 @@ export default{
 <el-card class="box-card">
   <div slot="header" class="clearfix">
     <span>会议基本信息</span>
-    <el-button style="float: right; padding: 3px 0" type="text" @click='open' :disabled='contactInformation.state'>开启会议</el-button>
+    <el-button style="float: right; padding: 3px 0" type="text" @click='open' :disabled='isDisabled'>开启会议</el-button>
   </div>
   <div class="text item">
     <i class="el-icon-s-opportunity"></i><b>会议简称：</b>{{contactInformation.shortname}}

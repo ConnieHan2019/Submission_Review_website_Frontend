@@ -79,9 +79,10 @@ export default{
     .then(resp => {
       if (resp.status === 200 && resp.data.hasOwnProperty("searchResults")){
         this.searchResults = resp.data.searchResults
+        console.log('search success')
       }
       else{
-        alert('Personal error')
+        alert('search error')
         console.log(resp)
       }
     })
@@ -138,7 +139,7 @@ export default{
 
 <template>
 <div id="Chair">
-  <h2>Chair of {{contactName}}</h2>
+  <h3 style="margin:10px;">{{contactName}}</h3>
   <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
     <el-tab-pane label="程序委员会成员" name="PCmember">
     <div style="margin-top: 15px;">

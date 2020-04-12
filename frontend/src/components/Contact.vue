@@ -176,7 +176,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if(valid){
           this.$axios.post('/contact', {
-            applicant:this.$store.state.userDetails,
+            chairname:this.$store.state.userDetails,
         shortname: this.contactForm.shortname,
         fullname: this.contactForm.fullname,
         deadline: this.contactForm.deadline,

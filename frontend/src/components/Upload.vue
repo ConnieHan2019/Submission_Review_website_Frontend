@@ -72,7 +72,7 @@
             formData.append('title',this.form.title)
             formData.append('authorname',this.$store.state.userDetails)
             formData.append('summary',this.form.extract)
-            formData.append('meetingFullname','a meetingFullname')
+            formData.append('meetingFullname',this.$route.query.name)
             console.log(formData.get('file'))
             this.$axios.post('/upload', formData)
             .then(resp => {

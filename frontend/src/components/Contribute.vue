@@ -2,9 +2,9 @@
 <div id="allMeetingPage"  >
 
   <div id="showArea">
-    <el-autocomplete
-      v-model="state" :fetch-suggestions="querySearchAsync" placeholder="请输入会议" @select="handleSelect" @focus="showDialog(false)" ></el-autocomplete>
-    <el-button icon="el-icon-search" circle @click="showDialog(true)"></el-button>
+    <el-input
+      v-model="inputFullName"  placeholder="请输入会议全名进行搜索"></el-input>
+    <el-button icon="el-icon-search" circle @click="searchTheMeeting()"></el-button>
     <div id="searchedArea" v-show="dialog_visible">
       <el-divider  content-position="left"><span>搜索结果</span></el-divider>
       <div class="MeetingBox">
@@ -23,24 +23,23 @@
 
       </div>
     </div>
-
-
     <el-divider content-position="left"><span>推荐</span></el-divider>
-
-
-
     <div class="MeetingBox">
-      <el-table
-        :data="tableData"
-        stripe
-        style="width: 100%">
-        <el-table-column prop="FullName" label="会议全称" width="180"></el-table-column>
-        <el-table-column prop="ShortName" label="会议简称" width="180"></el-table-column>
-        <el-table-column prop="BeginTime" label="举办日期" width="180"></el-table-column>
-        <el-table-column prop="ContributeDDL" label="投稿截止日期" width="180"></el-table-column>
-        <el-table-column prop="ReleaseResultTime" label="结果发布日期" width="180"></el-table-column>
-
-      </el-table>
+      <div class="text item">
+        <b>会议简称</b><span class="para">{{contactInformation.shortname}}</span>
+      </div>
+      <div class="text item">
+        <b>会议全名</b><span class="para">{{contactInformation.fullname}}</span>
+      </div>
+      <div class="text item">
+        <b>投稿截止日期</b><span class="para">{{contactInformation.deadline}}</span>
+      </div>
+      <div class="text item">
+        <b>结果发布日期</b><span class="para">{{contactInformation.resultReleaseTime}}</span>
+      </div>
+      <div class="text item">
+       <b>会议举办日期</b><span class="para">{{contactInformation.organizationTime}}</span>
+      </div>
       <router-link to ="meetingDetail" ><el-button type="primary" class="enterMeetingBt">进入会议</el-button></router-link>
     </div>
   </div>
@@ -59,8 +58,7 @@
     data() {
       return {
         meetings: [],
-        state: '',
-        timeout:  null,
+        inputFullName: '',
         tableData: [{
           FullName:'第32届全国互联网顶尖人才大会',
           ShortName:'互联网大会',
@@ -68,6 +66,15 @@
           ContributeDDL:'2019-11-12',
           ReleaseResultTime:'2019-12-3'
         }],
+        contactInformation:{
+          shortname:'shortname',
+          fullname:'fullname',
+          deadline:'2020-12-08',
+          resultReleaseTime:'2021-1-1',
+          organizationTime: '2021-2-1',
+          place: 'China',
+          state:false//如果已经开启了就是true，还没有开启就是false
+        },
         dialog_visible:false,
       };
     },
@@ -75,33 +82,38 @@
       showDialog(visible) {
         this.dialog_visible = visible;
       },
-      loadAll() {
-        return [
-          { "value": "物理大佬会", "address": "北京市宣武区" },
-          { "value": "高数大佬会", "address": "上海市杨浦区" },
-          { "value": "程设大佬会", "address": "上海市虹口区" },
-        ];
-      },
-      querySearchAsync(queryString, cb) {
-        var meetings = this.meetings;
-        var results = queryString ? meetings.filter(this.createStateFilter(queryString)) : meetings;
-
-        clearTimeout(this.timeout);
-        this.timeout = setTimeout(() => {
-          cb(results);
-        }, 3000 * Math.random());
-      },
-      createStateFilter(queryString) {
-        return (state) => {
-          return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-        };
-      },
-      handleSelect(item) {
-        console.log(item);
+      searchTheMeeting(){
+        this.showDialog(true);
+        this.$axios.post('/searchMeeting',{
+          fullName:this.inputFullName
+        })
+          .then(resp => {
+            if (resp.status === 200 && resp.data.hasOwnProperty("searchMeetingData")){
+              this.contactInformation= resp.data.searchMeetingData
+            }
+            else{
+             // alert('Meeting-search error')
+              this.$message({
+                showClose: true,
+                message: 'Meeting-search error',
+                type: 'warning'
+              });
+              console.log(resp)
+            }
+          })
+          .catch(error => {
+            if(error.response){
+              // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+              this.$message.error('请求已发出，但服务器响应的状态码不在 2xx 范围内')
+              console.log(error.response)
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.log('Error', error.message)
+            }
+            console.log(error.config);
+          })
       }
-    },
-    mounted() {
-      this.meetings = this.loadAll();
+
     }
   };
 </script>
@@ -130,6 +142,17 @@
   .enterMeetingBt{
     margin-top: 10px;
     margin-bottom: 10px;
+  }
+.el-input{
+  width: 200px;
+}
+.text item{
+  margin-top: 20px;
+}
+  .para{
+    margin-left: 30px;
+    font-family: "Comic Sans MS";
+    color: #c69500;
   }
 
 </style>

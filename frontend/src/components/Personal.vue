@@ -17,24 +17,25 @@ export default {
   },
   data(){
     return{
+      name:'huiyi1',
       currentComponent:Information,
       currentContact:'',
       needContactName:false,//子组件是否需要会议名，默认个人页面不需要
       contacts:[{
         shortname:'会议1',
-        fullname:'bababab会议',
+        fullname:'bababab1会议',
         roles:['Chair']
       },{
         shortname:'会议2',
-        fullname:'bababab会议',
+        fullname:'bababab2会议',
         roles:['PCmember','author']
       },{
         shortname:'会议3',
-        fullname:'bababab会议',
+        fullname:'bababab3会议',
         roles:['PCmember']
       },{
         shortname:'会议4',
-        fullname:'bababab会议',
+        fullname:'bababab4会议',
         roles:['author']
       }]
     }

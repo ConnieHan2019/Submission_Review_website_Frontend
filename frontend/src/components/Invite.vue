@@ -18,7 +18,7 @@ export default {
     }
   },
   created: function () {
-    this.$axios.post('/invites', {
+    this.$axios.post('/receivedInvitation', {
       username: this.$store.state.userDetails
     })
       .then(resp => {

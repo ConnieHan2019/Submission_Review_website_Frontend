@@ -7,7 +7,7 @@
         <el-container>
           <el-aside width="300px">
             <p></p>
-            <el-collapse v-model="activeNames" @change="handleChange" >
+            <el-collapse v-model="activeNames"  >
               <el-collapse-item title="Chair:" name="1">
                 <span class="members" >{{chair}}</span>
               </el-collapse-item>
@@ -44,7 +44,18 @@
 
                 <el-button type="warning">投稿</el-button>
                 <router-link to ="contribute" >  <el-button type="primary">返回搜索页面</el-button></router-link>
-
+<el-upload
+  class="upload-demo"
+  ref="upload"
+  action=""
+  :http-request='uploadFileMethod'
+  :on-preview="handlePreview"
+  :on-remove="handleRemove"
+  :file-list="fileList"
+  :auto-upload="false">
+  <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+  <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+</el-upload>
 
 
             </el-footer>
@@ -61,6 +72,7 @@
         name: "MeetingDetail",
       data() {
         return {
+          fileList:[],
           FullName:'第32届全国互联网顶尖人才大会',
           chair:'Root',
           pcMembers:[
@@ -80,6 +92,37 @@
           }],
         };
       },
+      methods:{
+        uploadFileMethod(param){
+          alert('自定义上传方法')
+            let fileObject = param.file;
+            let formData = new FormData();
+            formData.append("file", fileObject);
+            this.$axios.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+            .then(resp => {
+              if(resp.status === 200){
+                alert('success')
+              }
+              else{
+                alert('fail')
+              }
+              console.log(resp)
+            })
+            .catch(error => {
+              alert('error')
+              console.log(error.response)
+            })
+        },
+        submitUpload() {
+        this.$refs.upload.submit();
+      },
+      handleRemove(file, fileList) {
+        console.log(file, fileList);
+      },
+      handlePreview(file) {
+        console.log(file);
+      }
+      }
     }
 </script>
 

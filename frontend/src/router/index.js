@@ -53,7 +53,7 @@ export const router = new Router({
       name: 'Contribute',
       component: Contribute,
       meta: {
-        requireAuth: true
+        requireAuth: false
       }
     },
     {
@@ -61,7 +61,7 @@ export const router = new Router({
       name: 'MeetingDetail',
       component: MeetingDetail,
       meta: {
-        requireAuth: true
+        requireAuth: false
       }
     },
     {

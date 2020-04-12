@@ -3,7 +3,7 @@ export default {
   name: 'Information',
   data(){
     return{
-      personalInformation:null
+      personalInformation:{}
     }
   },
     created:function(){

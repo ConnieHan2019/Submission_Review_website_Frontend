@@ -6,6 +6,7 @@ import Register from '@/components/Register'
 import Contact from '@/components/Contact'
 import Personal from '@/components/Personal'
 import Contribute from '@/components/Contribute'
+import Upload from '@/components/Upload'
 import MeetingDetail from '@/components/MeetingDetail'
 import Admin from '@/components/Admin'
 import store from '../store'
@@ -53,7 +54,15 @@ export const router = new Router({
       name: 'Contribute',
       component: Contribute,
       meta: {
-        requireAuth: true
+        requireAuth: false
+      }
+    },
+    {
+      path: '/upload',
+      name: 'Upload',
+      component: Upload,
+      meta: {
+        requireAuth: false
       }
     },
     {
@@ -61,7 +70,7 @@ export const router = new Router({
       name: 'MeetingDetail',
       component: MeetingDetail,
       meta: {
-        requireAuth: true
+        requireAuth: false
       }
     },
     {
@@ -69,7 +78,7 @@ export const router = new Router({
       name: 'Admin',
       component: Admin,
       meta: {
-        requireAuth: true
+        requireAuth: false
       },
 
     }

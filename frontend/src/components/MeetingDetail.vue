@@ -42,7 +42,7 @@
             <el-footer>
 
 
-                <el-button type="warning">投稿</el-button>
+                <router-link to ="upload"><el-button type="warning">投稿</el-button></router-link>
                 <router-link to ="contribute" >  <el-button type="primary">返回搜索页面</el-button></router-link>
 
 

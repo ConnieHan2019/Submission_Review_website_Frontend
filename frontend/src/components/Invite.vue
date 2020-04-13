@@ -5,7 +5,7 @@ export default {
     return{
       dialog_visible:false,
       invites:[],
-
+      acceptOrRefuse:'拒绝',
     }
   },
   created: function () {
@@ -37,6 +37,44 @@ export default {
       })
   },
   methods:{
+    refuse(refusedMeetingFullName){
+      this.acceptOrRefuse="已拒绝",
+        this.$axios.post('/refuseInvitation', {
+          username: this.$store.state.userDetails,
+          fullame:refusedMeetingFullName
+        })
+          .then(resp => {
+            if (resp.status === 200 && resp.data.hasOwnProperty("invitesData")) {
+              this.$message({
+                showClose: true,
+                message: '成功拒绝',
+                type: 'success'
+              });
+            } else {
+              this.$message({
+                showClose: true,
+                message: 'refuse error',
+                type: 'warning'
+              });
+              console.log(resp)
+            }
+          })
+          .catch(error => {
+            if (error.response) {
+              // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+              this.$message({
+                showClose: true,
+                message: '请求已发出，但服务器响应的状态码不在 2xx 范围内',
+                type: 'warning'
+              });
+              console.log(error.response)
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.log('Error', error.message)
+            }
+            console.log(error.config);
+          })
+    },
     seeDetail(){
       this.$router.push({path: '/meetingDetail',query:{name:this.contactName}});
     },
@@ -64,7 +102,8 @@ export default {
   <div class="invitation" v-show="dialog_visible" v-for="ins in invites" v-bind:key="ins.FullName" v-bind:index="ins.FullName">
     <p><i class="el-icon-user"></i><span class="ivt">Chair:</span>{{ins.chair}}</p>
     <p><i class="el-icon-notebook-1"></i><span class="ivt">Meeting's FullName:</span>{{ins.FullName}}</p>
-    <el-button type="warning" class="goTo" @click="seeDetail">去投稿</el-button>
+    <el-button type="warning" class="goTo" @click="seeDetail()">去投稿</el-button>
+    <el-button type="danger" class="goTo" @click="refuse(ins.FullName)">{{acceptOrRefuse}}</el-button>
   </div>
 
 

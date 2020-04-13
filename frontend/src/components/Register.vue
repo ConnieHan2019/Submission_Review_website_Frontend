@@ -129,6 +129,7 @@ export default {
               if(resp.status === 200 && resp.data.hasOwnProperty("id")) {
                 // 跳转到login
                 this.$message({
+                  showClose: true,
                   message:'注册成功，快去登录吧',
                   type:'success'
                 })

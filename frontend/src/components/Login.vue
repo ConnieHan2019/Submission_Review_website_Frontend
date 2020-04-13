@@ -27,6 +27,7 @@ export default {
         .then(resp => {
           if (resp.status === 200 && resp.data.hasOwnProperty("token")) {
             this.$message({
+              showClose: true,
               message: '登录成功',
               type: 'success'
             })

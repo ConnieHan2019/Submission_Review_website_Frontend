@@ -79,7 +79,7 @@
             formData.append('summary',this.form.extract)
             formData.append('meetingFullname',this.$route.query.name)
             console.log(formData.get('file'))
-            this.$axios.post('/upload', formData)
+            this.$axios.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
             .then(resp => {
               if(resp.status === 200){
                 alert('success')
@@ -91,6 +91,7 @@
             })
             .catch(error => {
               alert('error')
+              console.log(error.response)
               console.log(error.response)
             })
         }

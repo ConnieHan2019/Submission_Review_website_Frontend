@@ -17,8 +17,26 @@ export default{
     },
   computed:{
       isDisabled(){
-        return this.contactInformation.state != '0'
+        return this.contactInformation.state !== '0'
       }
+  },
+  watch:{
+    contactName:function(val){
+        this.$axios.post('/contactInformation',{
+            contactFullName:val
+        })
+        .then(resp => {
+            if (resp.status === 200 && resp.data.hasOwnProperty("contactInformation")){
+                this.contactInformation = resp.data.contactInformation
+            }
+            else{
+                console.log('会议信息加载失败')
+            }
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
   },
     created:function(){
         this.$axios.post('/contactInformation',{
@@ -49,7 +67,7 @@ export default{
                 message:'开启会议成功',
                 type:'success'
                 })
-                this.contactInformation.state = true
+                this.contactInformation.state = '1'
             }
             else{
               this.$message.error('开启会议失败')

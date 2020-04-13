@@ -18,7 +18,7 @@
       data(){
         return{
           //这个会议的状态： 审核中、已通过、已驳回
-          myEssayState:'审核中',
+          myEssayState:'',
         }
       },
       props:['contactName'],

@@ -33,12 +33,7 @@
       props:['contactName'],
       data() {
         return {
-          authors: [
-                {name: 'Sam', extract:'xxxxxxxxxxxxxxx',link: '',title:'wsl'},
-                {name: 'Joe',extract:'xxxxxxxxxxxxxxx',link: '',title:'wsl'},
-                {name: 'Eden',extract:'xxxxxxxxxxxxxxx',link: '',title:'wsl'},
-
-              ]
+          authors: []
         }
       },
       created: function () {
@@ -57,12 +52,14 @@
           .catch(error => {
             if (error.response) {
               // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-              console.log(error.response)
+              if(error.response.status === 404){
+                this.$message('该会议还没有收到投稿哦~')
+              }
+              else{console.log(error.response)}
             } else {
               // Something happened in setting up the request that triggered an Error
               console.log('Error', error.message)
             }
-            console.log(error.config);
           })
       },
       methods: {

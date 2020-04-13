@@ -78,6 +78,7 @@
         .then(resp => {
           if (resp.status === 200 && resp.data.hasOwnProperty("allLegalMeeting")){
             this.allActiveMeeting = resp.data.allLegalMeeting
+            console.log(this.allActiveMeeting)
           }
           else{
             console.log('recommend error')

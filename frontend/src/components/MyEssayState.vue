@@ -27,7 +27,7 @@
         return{
           //这个会议的状态： 审核中、已通过、已驳回
           myEssayState:'',
-          essays:[{title:'asd',summary:'asdfdfdfgdf'},{title:'asd',summary:'asdfdfdfgdf'},{title:'asd',summary:'asdfdfdfgdf'}]
+          essays:[]
         }
       },
       props:['contactName'],
@@ -47,6 +47,9 @@
           .catch(error => {
             if (error.response) {
               // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+              if(error.response.status === 404){
+                this.$message('你还没有在这个会议投稿哦~')
+              }
               console.log(error.response)
             } else {
               // Something happened in setting up the request that triggered an Error

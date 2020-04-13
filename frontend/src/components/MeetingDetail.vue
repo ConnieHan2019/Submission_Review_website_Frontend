@@ -28,7 +28,7 @@
           <el-container>
             <el-main>
               <div id="meeting">
-                <p><label>会议简称:</label><span class="tableDT">{{verDetailContactData.Shortname}}</span></p>
+                <p><label>会议简称:</label><span class="tableDT">{{verDetailContactData.ShortName}}</span></p>
 
                 <p> <label>举办日期:</label><span class="tableDT">{{verDetailContactData.BeginTime}}</span></p>
 

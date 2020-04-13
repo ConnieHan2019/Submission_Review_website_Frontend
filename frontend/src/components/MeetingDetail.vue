@@ -28,15 +28,15 @@
           <el-container>
             <el-main>
               <div id="meeting">
-                <p><label>会议简称:</label><span class="tableDT">{{verDetailContactData.tableData.ShortName}}</span></p>
+                <p><label>会议简称:</label><span class="tableDT">{{verDetailContactData.ShortName}}</span></p>
 
-                <p> <label>举办日期:</label><span class="tableDT">{{verDetailContactData.tableData.BeginTime}}</span></p>
+                <p> <label>举办日期:</label><span class="tableDT">{{verDetailContactData.BeginTime}}</span></p>
 
-                <p><label>投稿截止日期:</label><span class="tableDT">{{verDetailContactData.tableData.ContributeDDL}}</span></p>
+                <p><label>投稿截止日期:</label><span class="tableDT">{{verDetailContactData.ContributeDDL}}</span></p>
 
-                <p><label>结果发布日期:</label><span class="tableDT">{{verDetailContactData.tableData.ReleaseResultTime}}</span></p>
+                <p><label>结果发布日期:</label><span class="tableDT">{{verDetailContactData.ReleaseResultTime}}</span></p>
 
-                <p><label>举办地点:</label><span class="tableDT">{{verDetailContactData.tableData.Place}}</span></p>
+                <p><label>举办地点:</label><span class="tableDT">{{verDetailContactData.Place}}</span></p>
 
               </div>
 
@@ -100,14 +100,13 @@
           authors:[
             {name:'D'},{name:'F'},{name:'E'}
           ],
-          state:'已通过',
-          tableData: {
+            state:'已通过',
             ShortName:'互联网大会',
             BeginTime:'2019-10-18',
             ContributeDDL:'2019-11-12',
             ReleaseResultTime:'2019-12-3',
             Place:'上海'
-          },
+
         },
 
       };

@@ -3,9 +3,8 @@ export default {
   name: 'Invite',
   data(){
     return{
-      dialog_visible:false,
       invites:[],
-      acceptOrRefuse:'拒绝',
+      refuse:'',
     }
   },
   created: function () {
@@ -38,16 +37,16 @@ export default {
   },
   methods:{
     refuse(refusedMeetingFullName){
-      this.acceptOrRefuse="已拒绝",
         this.$axios.post('/refuseInvitation', {
           username: this.$store.state.userDetails,
-          fullame:refusedMeetingFullName
+          fullame:refusedMeetingFullName,
+          refuse:true
         })
           .then(resp => {
-            if (resp.status === 200 && resp.data.hasOwnProperty("invitesData")) {
+            if (resp.status === 200 ) {
               this.$message({
                 showClose: true,
-                message: '成功拒绝',
+                message: '已拒绝',
                 type: 'success'
               });
             } else {
@@ -75,11 +74,46 @@ export default {
             console.log(error.config);
           })
     },
+    agree(agreedMeetingFullName){
+      this.$axios.post('/refuseInvitation', {
+        username: this.$store.state.userDetails,
+        fullame:agreedMeetingFullName,
+        refuse:false
+      })
+        .then(resp => {
+          if (resp.status === 200) {
+            this.$message({
+              showClose: true,
+              message: '已同意',
+              type: 'success'
+            });
+          } else {
+            this.$message({
+              showClose: true,
+              message: 'refuse error',
+              type: 'warning'
+            });
+            console.log(resp)
+          }
+        })
+        .catch(error => {
+          if (error.response) {
+            // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+            this.$message({
+              showClose: true,
+              message: '请求已发出，但服务器响应的状态码不在 2xx 范围内',
+              type: 'warning'
+            });
+            console.log(error.response)
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message)
+          }
+          console.log(error.config);
+        })
+    },
     seeDetail(){
       this.$router.push({path: '/meetingDetail',query:{name:this.contactName}});
-    },
-    showDialog(visible) {
-      this.dialog_visible = visible;
     },
     inviteError() {
       this.$message({
@@ -95,17 +129,14 @@ export default {
 
 <template>
 <div id = "Invite">
-  <el-badge :value=inviteCount class="item" >
-    <el-button size="big" @click="showDialog(true)"><span>New Invitation</span></el-button>
-  </el-badge>
 
-  <div class="invitation" v-show="dialog_visible" v-for="ins in invites" v-bind:key="ins.FullName" v-bind:index="ins.FullName">
+  <h5>审稿邀请</h5>
+  <div class="invitation" v-for="ins in invites" v-bind:key="ins.FullName" v-bind:index="ins.FullName">
     <p><i class="el-icon-user"></i><span class="ivt">Chair:</span>{{ins.chair}}</p>
     <p><i class="el-icon-notebook-1"></i><span class="ivt">Meeting's FullName:</span>{{ins.FullName}}</p>
-    <el-button type="warning" class="goTo" @click="seeDetail()">去投稿</el-button>
-    <el-button type="danger" class="goTo" @click="refuse(ins.FullName)">{{acceptOrRefuse}}</el-button>
+    <el-button type="success" class="goTo" @click="agree(ins.FullName)">同意</el-button>
+    <el-button type="danger" class="goTo" @click="refuse(ins.FullName)">拒绝</el-button>
   </div>
-
 
 
 </div>

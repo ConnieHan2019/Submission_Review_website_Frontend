@@ -6,7 +6,7 @@ export default {
       //这个会议的状态： 审核中、已通过、已驳回
       myContactState:[
         {
-          contactState:'审核中',
+
           tableData: [{
             FullName:'第32届全国互联网顶尖人才大会',
             ShortName:'互联网大会',

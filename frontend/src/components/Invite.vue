@@ -39,7 +39,7 @@ export default {
     refuse(refusedMeetingFullName){
         this.$axios.post('/refuseInvitation', {
           username: this.$store.state.userDetails,
-          fullame:refusedMeetingFullName,
+          fullname:refusedMeetingFullName,
           refutation:true
         })
           .then(resp => {
@@ -77,7 +77,7 @@ export default {
     agree(agreedMeetingFullName){
       this.$axios.post('/refuseInvitation', {
         username: this.$store.state.userDetails,
-        fullame:agreedMeetingFullName,
+        fullname:agreedMeetingFullName,
         refutation:false
       })
         .then(resp => {

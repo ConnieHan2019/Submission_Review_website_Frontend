@@ -48,7 +48,7 @@ axios.interceptors.response.use(
     if(error.response){
       if(error.response.status === 555){
         //token过期
-        this.$message.error('身份过期，请重新登录')
+        alert('身份过期，请重新登录')
         store.commit('logout')
         router.currentRoute.path !== '/login' &&
         router.currentRoute.path !== '/register' &&

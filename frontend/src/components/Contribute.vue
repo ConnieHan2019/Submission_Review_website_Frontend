@@ -106,7 +106,6 @@
         this.dialog_visible = visible;
       },
       searchTheMeeting(){
-        this.showDialog(true);
         this.$axios.post('/searchMeeting',{
           contactFullName:this.inputFullName
         })
@@ -114,6 +113,7 @@
             if (resp.status === 200 && resp.data.hasOwnProperty("contactInformation")){
               this.contactInformation= resp.data.contactInformation
               console.log(this.inputFullName)
+        this.showDialog(true);
             }
             else{
               // alert('Meeting-search error')
@@ -128,7 +128,10 @@
           .catch(error => {
             if(error.response){
               // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-              this.$message.error('请求已发出，但服务器响应的状态码不在 2xx 范围内')
+              if(error.response.status === 404){
+
+              this.$message.error('会议不存在')
+              }
               console.log(error.response)
             } else {
               // Something happened in setting up the request that triggered an Error

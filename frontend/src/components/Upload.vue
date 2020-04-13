@@ -82,16 +82,27 @@
             this.$axios.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
             .then(resp => {
               if(resp.status === 200){
-                alert('success')
+                this.$message({
+                  type:'success',
+                  showClose: true,
+                  message: '上传成功'
+                })
               }
               else{
-                alert('fail')
+                this.$message({
+                  type:'success',
+                  showClose: true,
+                  message: '上传失败'
+                })
               }
               console.log(resp)
             })
             .catch(error => {
-              alert('error')
-              console.log(error.response)
+              this.$message({
+                  type:'success',
+                  showClose: true,
+                  message: '上传失败'
+                })
               console.log(error.response)
             })
         }

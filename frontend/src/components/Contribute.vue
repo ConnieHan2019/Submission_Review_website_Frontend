@@ -108,7 +108,7 @@
       searchTheMeeting(){
         this.showDialog(true);
         this.$axios.post('/searchMeeting',{
-          fullName:this.inputFullName
+          contactFullName:this.inputFullName
         })
           .then(resp => {
             if (resp.status === 200 && resp.data.hasOwnProperty("contactInformation")){

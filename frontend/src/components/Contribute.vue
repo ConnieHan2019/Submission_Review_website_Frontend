@@ -105,8 +105,8 @@
           fullName:this.inputFullName
         })
           .then(resp => {
-            if (resp.status === 200 && resp.data.hasOwnProperty("searchMeetingData")){
-              this.contactInformation= resp.data.searchMeetingData
+            if (resp.status === 200 && resp.data.hasOwnProperty("contactInformation")){
+              this.contactInformation= resp.data.contactInformation
               console.log(this.inputFullName)
             }
             else{

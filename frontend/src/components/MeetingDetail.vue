@@ -12,11 +12,11 @@
                 <span class="members" >{{verDetailContactData.chair}}</span>
               </el-collapse-item>
               <el-collapse-item title="PC Member:" name="2">
-                <span class="members" v-for="pcm in verDetailContactData.pcMembers" v-bind:key="pcm.name" v-bind:index="pcm.name">{{pcm.name}}、</span>
+                <p class="members" v-for="pcm in verDetailContactData.pcMembers" v-bind:key="pcm" v-bind:index="pcm">{{pcm}}</p>
 
               </el-collapse-item>
               <el-collapse-item title="Author:" name="3">
-                <span class="members" v-for="aus in verDetailContactData.authors" v-bind:key="aus.name" v-bind:index="aus.name">{{aus.name}}、</span>
+                <p class="members" v-for="aus in verDetailContactData.authors" v-bind:key="aus" v-bind:index="aus">{{aus}}</p>
 
               </el-collapse-item>
               <el-collapse-item title="State:" name="4">
@@ -28,7 +28,7 @@
           <el-container>
             <el-main>
               <div id="meeting">
-                <p><label>会议简称:</label><span class="tableDT">{{verDetailContactData.ShortName}}</span></p>
+                <p><label>会议简称:</label><span class="tableDT">{{verDetailContactData.Shortname}}</span></p>
 
                 <p> <label>举办日期:</label><span class="tableDT">{{verDetailContactData.BeginTime}}</span></p>
 
@@ -68,7 +68,8 @@
       })
         .then(resp => {
           if (resp.status === 200 && resp.data.hasOwnProperty("veryDetailContactData")) {
-            this.veryDetailContactData = resp.data.veryDetailContactData
+            this.verDetailContactData = resp.data.veryDetailContactData
+            console.log(this.verDetailContactData)
           } else {
             this.$message({
               showClose: true,
@@ -185,5 +186,7 @@
     background-color: white;
     margin: 20px;
   }
-
+  >>> .el-collapse-item__content{
+    padding:0;
+  }
 </style>

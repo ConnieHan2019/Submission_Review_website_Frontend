@@ -8,7 +8,7 @@ export default {
         {
             contactState:'审核中',
             FullName:'第32届全国互联网顶尖人才大会',
-            ShortName:'互联网大会',
+            ShortName:'互联网大会aaa',
             BeginTime:'2019-10-18',
             ContributeDDL:'2019-11-12',
             ReleaseResultTime:'2019-12-3',
@@ -58,8 +58,8 @@ export default {
         type: 'warning'
       });
     },
-    seeDetail(){
-      this.$router.push({path: '/meetingDetail',query:{name:this.conState.FullName}});
+    seeDetail(fullname){
+      this.$router.push({path: '/meetingDetail',query:{name:fullname}});
     }
   }
 
@@ -87,12 +87,12 @@ export default {
         <b>会议举办日期</b><span class="para">{{conState.ReleaseResultTime}}</span>
       </div>
       <div class="text item">
-        <b>审核状态</b><span class="para">{{conState.contactState}}</span>
-      </div>
-      <div class="text item">
         <b>举办地点</b><span class="para">{{conState.Place}}</span>
       </div>
-      <el-button type="primary" class="enterMeetingBt">进入会议</el-button>
+      <div class="text item">
+        <b>审核状态</b><span class="state">{{conState.contactState}}</span>
+      </div>
+
     </div>
 
 </div>
@@ -114,6 +114,10 @@ export default {
   }
   .enterMeetingBt{
     margin-top: 20px;
+  }
+  .state{
+    color: #ff1e1a;
+    margin-left: 30px;
   }
 </style>
 

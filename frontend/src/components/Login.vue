@@ -32,17 +32,17 @@ export default {
               type: 'success'
             })
             if(status == 'admin'){
-              this.$router.replace({path:'/admin'})
             this.$store.commit('login', {
               data:resp.data,
               isAdmin:true
             })
+              this.$router.replace({path:'/admin'})
             }else{
-                this.$router.replace({path: this.$route.query.redirect?this.$route.query.redirect:'/'})
             this.$store.commit('login',{
               data:resp.data,
               isAdmin:false
             })
+                this.$router.replace({path: this.$route.query.redirect?this.$route.query.redirect:'/'})
             }
           }
           else{

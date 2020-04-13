@@ -45,7 +45,6 @@ export default{
         .then(resp => {
             if (resp.status === 200 && resp.data.hasOwnProperty("contactInformation")){
                 this.contactInformation = resp.data.contactInformation
-      console.log(this.contactInformation)
             }
             else{
                 console.log('会议信息加载失败')

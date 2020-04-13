@@ -91,23 +91,7 @@
     },
     data() {
       return {
-        verDetailContactData:{
-          FullName:'第32届全国互联网顶尖人才大会',
-          chair:'Root',
-          pcMembers:[
-            {name:'A'},{name:'B'},{name:'C'}
-          ],
-          authors:[
-            {name:'D'},{name:'F'},{name:'E'}
-          ],
-            state:'已通过',
-            ShortName:'互联网大会',
-            BeginTime:'2019-10-18',
-            ContributeDDL:'2019-11-12',
-            ReleaseResultTime:'2019-12-3',
-            Place:'上海'
-
-        },
+        verDetailContactData:{},
 
       };
     },

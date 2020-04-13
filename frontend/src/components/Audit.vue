@@ -24,9 +24,6 @@
       data() {
         return {
           authors: [
-                {name: 'Sam'},
-                {name: 'Joe'},
-                {name: 'Eden'},
               ]
         }
       },

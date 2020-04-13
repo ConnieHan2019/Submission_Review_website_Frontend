@@ -5,24 +5,6 @@ export default {
     return{
       //这个会议的状态： 审核中、已通过、已驳回
       myContactState:[
-        {
-            contactState:'审核中',
-            FullName:'第32届全国互联网顶尖人才大会',
-            ShortName:'互联网大会aaa',
-            BeginTime:'2019-10-18',
-            ContributeDDL:'2019-11-12',
-            ReleaseResultTime:'2019-12-3',
-            Place:'Asia,ShangHai'
-          },
-       {
-            contactState:'已通过',
-            FullName:'第3届消费者大会',
-            ShortName:'消费者大会',
-            BeginTime:'2016-10-18',
-            ContributeDDL:'2017-9-12',
-            ReleaseResultTime:'2017-12-3',
-            Place:'中国'
-          },
         ],
 
     }

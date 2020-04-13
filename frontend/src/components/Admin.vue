@@ -50,7 +50,8 @@ export default {
       pass(row,index){
           //alert("pass");
           this.$axios.post('/passContact',{
-            fullname:row.fullname
+            fullname:row.fullname,
+            adminName:this.$store.state.userDetails
           })
           .then(resp => {
             if (resp.status === 200){
@@ -77,7 +78,8 @@ export default {
       refuse(row,index){
           //alert("refuse");
           this.$axios.post('/refuseContact',{
-            fullname:row.fullname
+            fullname:row.fullname,
+            adminName:this.$store.state.userDetails
           })
           .then(resp => {
             if (resp.status === 200){

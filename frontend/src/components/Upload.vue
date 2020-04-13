@@ -21,6 +21,7 @@
   class="upload-demo"
   ref="upload"
   action=""
+  accept='.pdf'
   :http-request='uploadFileMethod'
   :on-preview="handlePreview"
   :on-remove="handleRemove"

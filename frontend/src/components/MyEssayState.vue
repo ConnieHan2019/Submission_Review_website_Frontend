@@ -3,8 +3,16 @@
     <el-divider content-position="left"><span>My Essay</span></el-divider>
     <div class="essayBlock">
       <h5>会议主题：<span style="color:#5b25ff;">{{contactName}}</span></h5><br>
-      <h5>审核状态：<span style="color:#ff1e1a;">{{myEssayState}}</span></h5>
-
+      <div v-for='essay in essays' v-bind:key="essay.title" v-bind:index="essay.title">
+      <b>{{essay.title}}</b>
+<el-input
+  type="textarea"
+  :autosize="{ minRows: 2}"
+  v-model="essay.summary"
+  :disabled="true"
+  style="margin-bottom:10px;">
+</el-input>
+      </div>
       <el-divider></el-divider>
       <el-button type="primary" class="enterMeetingBt" @click="seeDetail()">进入会议</el-button>
     </div>
@@ -19,6 +27,7 @@
         return{
           //这个会议的状态： 审核中、已通过、已驳回
           myEssayState:'',
+          essays:[{title:'asd',summary:'asdfdfdfgdf'},{title:'asd',summary:'asdfdfdfgdf'},{title:'asd',summary:'asdfdfdfgdf'}]
         }
       },
       props:['contactName'],
@@ -28,8 +37,8 @@
           contactName:this.contactName
         })
           .then(resp => {
-            if (resp.status === 200 && resp.data.hasOwnProperty("myEssayStateDelivered")) {
-              this.myEssayState = resp.data.myEssayStateDelivered
+            if (resp.status === 200 && resp.data.hasOwnProperty("userEssayStateInformation")) {
+              this.essays = resp.data.userEssayStateInformation
             } else {
               this.essayStateError(),
                 console.log(resp)

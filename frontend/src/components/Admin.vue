@@ -3,23 +3,7 @@ export default {
   name: 'Admin',
   data(){
       return{
-          contactData:[{
-              shortname:'shortname',
-              fullname:'sajhkhfskdfh',
-              deadline:'2020-12-08',
-              resultReleaseTime:'2021-1-1',
-              organizationTime: '2021-2-1',
-              place: 'China',
-              applicant:'applicant1'
-          },{
-              shortname:'shortname',
-              fullname:'fullname',
-              deadline:'deadline',
-              resultReleaseTime:'2021-1-1',
-              organizationTime: '2021-2-1',
-              place: 'China',
-              applicant:'applicant2'
-          }]
+          contactData:[]
       }
   },
   created:function(){
@@ -85,7 +69,7 @@ export default {
             if (resp.status === 200){
               this.$message('succeed to refuse')
               //移除该行
-              row.splice(index, 1)
+              this.contactData.splice(index, 1)
             }
             else{
               this.$message.error('Some mistake, please try again')

@@ -44,7 +44,10 @@
           <div class="text item">
             <b>会议举办日期</b><span class="para">{{met.organizationTime}}</span>
           </div>
-          <el-button type="primary" class="enterMeetingBt" @click="seeDetail()">进入会议</el-button>
+          <div class="text item">
+            <b>会议举办地点</b><span class="para">{{met.place}}</span>
+          </div>
+          <el-button type="primary" class="enterMeetingBt" @click="seeDetailFromRecommend(met.fullname)">进入会议</el-button>
         </div>
       </div>
 
@@ -95,6 +98,9 @@
     methods: {
       seeDetail(){
         this.$router.push({path: '/meetingDetail',query:{name:this.contactInformation.fullname}});
+      },
+      seeDetailFromRecommend(fullname){
+        this.$router.push({path: '/meetingDetail',query:{name:fullname}});
       },
       showDialog(visible) {
         this.dialog_visible = visible;

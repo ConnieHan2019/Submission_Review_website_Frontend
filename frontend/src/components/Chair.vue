@@ -11,36 +11,8 @@ export default{
         return{
             activeName:'PCmember',
             fullname:'',
-            searchResults:[{
-              username:'username',
-              fullname:'fullname',
-              email:'email',
-              country:'country'
-          },{
-              username:'shortname',
-              fullname:'fullname',
-              email:'deadline',
-              country:'applicant'
-          }],
-            PCmembers:[{
-              username:'username',
-              fullname:'fullname',
-              email:'email',
-              country:'country',
-              state:'待确认'
-          },{
-              username:'shortname',
-              fullname:'fullname',
-              email:'deadline',
-              country:'applicant',
-              state:'已同意'
-          },{
-              username:'shortname',
-              fullname:'fullname',
-              email:'deadline',
-              country:'applicant',
-              state:'已拒绝'
-          }],
+            searchResults:[],
+            PCmembers:[],
             toInvite:[]
         }
     },
@@ -179,7 +151,7 @@ export default{
   </div>
 </div>
 <div style='margin-top:50px;'>
-<h4>该会议的程序委员会成员</h4>
+<h4>我发送的PCmember邀请状态</h4>
   <el-table
     :data="PCmembers"
     border

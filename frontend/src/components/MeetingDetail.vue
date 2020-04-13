@@ -64,7 +64,7 @@
     name: "MeetingDetail",
     created: function () {
       this.$axios.post('/meetingDetail', {
-        fullName:this.$route.query.name
+        fullname:this.$route.query.name
       })
         .then(resp => {
           if (resp.status === 200 && resp.data.hasOwnProperty("veryDetailContactData")) {

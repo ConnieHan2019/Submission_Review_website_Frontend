@@ -4,10 +4,20 @@
         <h5>会议主题：<span style="color:#5b25ff;">{{contactName}}</span></h5><br>
         <el-divider></el-divider>
         <div  v-for="aus in authors" v-bind:key="aus.name" v-bind:index="aus.name">
-          <p ><i class="el-icon-user"></i><span >Author:</span>{{aus.name}} <el-link type="primary">文章链接</el-link></p>
+        <h3 style='margin-top:20px'>Title:{{aus.title}}</h3>
+          <p ><i class="el-icon-user"></i><span >Author:</span>{{aus.name}} <el-link type="primary" :href='aus.link'>文章链接</el-link></p>
+<el-input
+  type="textarea"
+  :autosize="{ minRows: 2}"
+  placeholder="请输入内容"
+  v-model="aus.extract"
+  :disabled="true"
+  style="margin-bottom:10px">
+</el-input>
+
           <el-button-group>
-            <el-button type="success">通过</el-button>
-            <el-button type="danger">驳回</el-button>
+            <el-button type="success" @click='passEssay(aus.name,aus.title)'>通过</el-button>
+            <el-button type="danger" @click='refuseEssay(aus.name,aus.title)'>驳回</el-button>
           </el-button-group>
         </div>
 
@@ -24,9 +34,9 @@
       data() {
         return {
           authors: [
-                {name: 'Sam'},
-                {name: 'Joe'},
-                {name: 'Eden'},
+                {name: 'Sam', extract:'xxxxxxxxxxxxxxx',link: '',title:'wsl'},
+                {name: 'Joe',extract:'xxxxxxxxxxxxxxx',link: '',title:'wsl'},
+                {name: 'Eden',extract:'xxxxxxxxxxxxxxx',link: '',title:'wsl'},
               ]
         }
       },
@@ -65,6 +75,70 @@
             type: 'warning'
           });
         },
+        passEssay(name,title){
+          this.$axios.post('/passEssay',{
+          username: this.$store.state.userDetails,
+          contactName:this.contactName,
+          authorName:name,
+          essayTitle:title
+          })
+          .then(resp => {
+            if(resp.status === 200){
+          this.$message({
+            showClose: true,
+            message: '已通过该论文',
+            type: 'success'
+          });
+            }
+            else{
+          this.$message({
+            showClose: true,
+            message: '请求失败',
+            type: 'error'
+          });              
+            }
+          })
+          .catch(error => {         
+            this.$message({
+            showClose: true,
+            message: '请求失败r',
+            type: 'error'
+          });
+            console.log(error)
+          })
+        },
+        refuseEssay(name,title){
+          this.$axios.post('/refuseEssay',{
+          username: this.$store.state.userDetails,
+          contactName:this.contactName,
+          authorName:name,
+          essayTitle:title
+          })
+          .then(resp => {
+            if(resp.status === 200){
+          this.$message({
+            showClose: true,
+            message: '已驳回该论文',
+            type: 'success'
+          });
+            }
+            else{
+          this.$message({
+            showClose: true,
+            message: '请求失败',
+            type: 'error'
+          });              
+            }
+          })
+          .catch(error => {         
+            this.$message({
+            showClose: true,
+            message: '请求失败',
+            type: 'error'
+          });
+            console.log(error)
+          })
+        }
       }
     }
 </script>

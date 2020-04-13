@@ -46,7 +46,7 @@ export const router = new Router({
       name: 'Personal',
       component: Personal,
       meta: {
-        requireAuth: false
+        requireAuth: true
       }
     },
     {
@@ -54,7 +54,7 @@ export const router = new Router({
       name: 'Contribute',
       component: Contribute,
       meta: {
-        requireAuth: false
+        requireAuth: true
       }
     },
     {
@@ -62,7 +62,7 @@ export const router = new Router({
       name: 'Upload',
       component: Upload,
       meta: {
-        requireAuth: false
+        requireAuth: true
       }
     },
     {
@@ -70,7 +70,7 @@ export const router = new Router({
       name: 'MeetingDetail',
       component: MeetingDetail,
       meta: {
-        requireAuth: false
+        requireAuth: true
       }
     },
     {
@@ -78,7 +78,7 @@ export const router = new Router({
       name: 'Admin',
       component: Admin,
       meta: {
-        requireAuth: false
+        requireAuth: true
       },
 
     }

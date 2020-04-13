@@ -4,7 +4,7 @@ export default {
   data(){
     return{
       invites:[],
-      refuse:'',
+      refutation:'',
     }
   },
   created: function () {
@@ -40,7 +40,7 @@ export default {
         this.$axios.post('/refuseInvitation', {
           username: this.$store.state.userDetails,
           fullame:refusedMeetingFullName,
-          refuse:true
+          refutation:true
         })
           .then(resp => {
             if (resp.status === 200 ) {
@@ -78,7 +78,7 @@ export default {
       this.$axios.post('/refuseInvitation', {
         username: this.$store.state.userDetails,
         fullame:agreedMeetingFullName,
-        refuse:false
+        refutation:false
       })
         .then(resp => {
           if (resp.status === 200) {

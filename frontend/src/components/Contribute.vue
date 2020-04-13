@@ -27,6 +27,26 @@
         </div>
       </div>
       <el-divider content-position="left"><span>推荐</span></el-divider>
+      <div id="recommandArea">
+        <div class="MeetingBox" v-for="met in allActiveMeeting" v-bind:key="met.fullname" v-bind:index="met.fullname">
+          <div class="text item">
+            <b>会议简称</b><span class="para">{{met.shortname}}</span>
+          </div>
+          <div class="text item">
+            <b>会议全名</b><span class="para">{{met.fullname}}</span>
+          </div>
+          <div class="text item">
+            <b>投稿截止日期</b><span class="para">{{met.deadline}}</span>
+          </div>
+          <div class="text item">
+            <b>结果发布日期</b><span class="para">{{met.resultReleaseTime}}</span>
+          </div>
+          <div class="text item">
+            <b>会议举办日期</b><span class="para">{{met.organizationTime}}</span>
+          </div>
+          <el-button type="primary" class="enterMeetingBt" @click="seeDetail()">进入会议</el-button>
+        </div>
+      </div>
 
     </div>
 
@@ -43,14 +63,34 @@
 
     data() {
       return {
-        meetings: [],
         inputFullName: '',
         contactInformation:{},
-        allActiveMeeting:{
-
-        },
+        allActiveMeeting:[],
         dialog_visible:false,
       };
+    },
+    created:function(){
+      this.$axios.post('/recommand',{
+      })
+        .then(resp => {
+          if (resp.status === 200 && resp.data.hasOwnProperty("allLegalMeeting")){
+            this.allActiveMeeting = resp.data.allLegalMeeting
+          }
+          else{
+            console.log('recommend error')
+            console.log(resp)
+          }
+        })
+        .catch(error => {
+          if(error.response){
+            // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+            console.log(error.response)
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message)
+          }
+          console.log(error.config);
+        })
     },
     methods: {
       seeDetail(){
@@ -102,7 +142,7 @@
     padding-left: 10px;
     padding-right: 10px;
     background-color: #52658F;
-    height: 630px;
+    min-height: 630px;
   }
   .MeetingBox{
     padding: 20px;
@@ -116,7 +156,7 @@
     padding-right: 100px;
     padding-bottom: 100px;
     background-color: #F7F5E6;
-    height: 630px;
+
   }
   .enterMeetingBt{
     margin-top: 10px;

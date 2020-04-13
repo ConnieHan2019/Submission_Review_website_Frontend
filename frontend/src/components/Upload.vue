@@ -7,6 +7,8 @@
           <el-input type="text"
                     v-model="form.title"
                     placeholder="请输入论文标题"
+                    maxlength="50"
+                    show-word-limit
           ></el-input>
         </el-form-item>
         <el-form-item label="摘要" prop="extract">
@@ -14,6 +16,8 @@
                     v-model="form.extract"
                     autosize
                     placeholder="请输入论文摘要"
+                    maxlength="800"
+                    show-word-limit
           ></el-input>
         </el-form-item>
         <el-form-item>

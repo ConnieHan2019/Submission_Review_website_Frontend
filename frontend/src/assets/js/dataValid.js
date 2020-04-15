@@ -4,7 +4,7 @@ var username;
 export function usernameValid (rule, value, callback) 
 {     
     if (!/^([a-zA-Z]|\-)[A-Za-z0-9_\-]+/.test(value)) {      
-        callback(new Error('Please input correct username'))    
+        callback(new Error('Please input correct username: you can only use what no one used'))
     } else {      
         username = value;
         callback()   
@@ -13,7 +13,7 @@ export function usernameValid (rule, value, callback)
 export function passwordValid (rule, value, callback) 
 {  
     if (!/(?!^(\d+|[a-zA-Z]+|\-+)$)^[\w\-]/.test(value)) {      
-        callback(new Error('Please input correct password'))    
+        callback(new Error('Please input correct password:it can only contain letters、number and underline'))
     } else if(username != undefined && value.indexOf(username) != -1){      
         callback(new Error("Password can not contain username"))   
     }  

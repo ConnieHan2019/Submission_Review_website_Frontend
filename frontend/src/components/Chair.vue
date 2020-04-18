@@ -11,10 +11,67 @@ export default{
         return{
             activeName:'PCmember',
             fullname:'',
-            searchResults:[],
-            PCmembers:[],
-            toInvite:[]
+            searchResults:[{
+              username:'username',
+              fullname:'fullname',
+              email:'email',
+              country:'China'
+          },{
+              username:'shortname',
+              fullname:'fullname',
+              email:'...',
+              country:'...'
+          }],
+            invitedPCmembers:[{
+              username:'username',
+              fullname:'fullname',
+              email:'email',
+              country:'country',
+              state:'待确认'
+          },{
+              username:'shortname',
+              fullname:'fullname',
+              email:'deadline',
+              country:'applicant',
+              state:'已同意'
+          },{
+              username:'shortname',
+              fullname:'fullname',
+              email:'deadline',
+              country:'applicant',
+              state:'已拒绝'
+          }],
+            toInvite:[],
+            confirmedPCmembers:[],
+            confirmedNames:[],
+            refusedPCmembers:[],
+            waitingPCmembers:[] 
         }
+    },
+    watch:{
+      invitedPCmembers:function(val){
+        alert('watch')
+        //清空数组
+        this.confirmedNames=[]
+        this.confirmedPCmembers=[]
+        this.refusedPCmembers=[]
+        this.waitingPCmembers=[]
+        val.forEach(function(item,index,array){
+          if(item.state === '已同意'){
+            this.confirmedPCmembers.push(item)
+            this.confirmedNames.push(item.username)
+          }
+          else if(item.state === '已拒绝'){
+            this.refusedPCmembers.push(item)
+          }
+          else if(item.state === '待确认'){
+            this.waitingPCmembers.push(item)
+          }
+          else{
+            alert('invalid state')
+          }
+        })
+      }
     },
     created:function(){
       this.$axios.post('/PCmember',{
@@ -22,7 +79,7 @@ export default{
     })
     .then(resp => {
       if (resp.status === 200 && resp.data.hasOwnProperty("respPCmembers")){
-        this.PCmembers = resp.data.respPCmembers
+        this.invitedPCmembers = resp.data.respPCmembers
       }
       else{
         console.log('PCmember加载失败')
@@ -39,6 +96,22 @@ export default{
       }
       console.log(error.config);
     })
+    for(var i = 0; i < this.invitedPCmembers.length; i++){
+          var item = this.invitedPCmembers[i]
+          if(item.state === '已同意'){
+            this.confirmedPCmembers.push(item)
+            this.confirmedNames.push(item.username)
+          }
+          else if(item.state === '已拒绝'){
+            this.refusedPCmembers.push(item)
+          }
+          else if(item.state === '待确认'){
+            this.waitingPCmembers.push(item)
+          }
+          else{
+            alert('invalid state')
+          }
+        }
     },
     methods:{
       handleClick(tab, event) {
@@ -68,6 +141,13 @@ export default{
       }
       console.log(error.config);
     })
+    //筛选是否已被同意
+    for(var i = 0;i < this.searchResults.length;i++){
+      if(this.confirmedNames.indexOf(this.searchResults[i].username) > -1 ){
+        this.searchResults.splice(i, 1); 
+        i--;
+      }
+    }
       },
       sendInvitation(){
         if(this.toInvite.length>0){
@@ -78,7 +158,7 @@ export default{
     })
     .then(resp => {
       if (resp.status === 200 && resp.data.hasOwnProperty("respPCmembers")){
-        this.PCmembers = resp.data.respPCmembers
+        this.invitedPCmembers = resp.data.respPCmembers
         this.$message({
           message: '邀请发送成功',
           type: 'success'
@@ -119,7 +199,7 @@ export default{
     <el-button slot="append" icon="el-icon-search" @click='searchUser'></el-button>
   </el-input>
   <div style="margin-top: 15px;" id="searchResults" v-if="searchResults.length > 0">
-  <h4>搜索结果</h4>
+  <el-divider content-position="left"><span>搜索结果</span></el-divider>
   <el-checkbox-group v-model="toInvite">
   <el-table
     :data="searchResults"
@@ -151,10 +231,11 @@ export default{
   </div>
 </div>
 <div style='margin-top:50px;'>
-<h4>我发送的PCmember邀请状态</h4>
-  <el-table
-    :data="PCmembers"
-    border
+<el-divider content-position="left"><span>邀请状态</span></el-divider>
+<el-collapse>
+  <el-collapse-item title="已同意" name="confirmed" >
+    <el-table
+    :data="confirmedPCmembers"
     stripe
     style="width: 100%">
     <el-table-column
@@ -173,11 +254,56 @@ export default{
       prop="country"
       label="区域">
     </el-table-column>
+  </el-table>
+  </el-collapse-item>
+  <el-collapse-item title="已拒绝" name="refused">
+    <el-table
+    :data="refusedPCmembers"
+    stripe
+    style="width: 100%">
     <el-table-column
-      prop="state"
-      label="状态">
+      prop="username"
+      label="用户名">
+    </el-table-column>
+    <el-table-column
+      prop="fullname"
+      label="姓名">
+    </el-table-column>
+    <el-table-column
+      prop="email"
+      label="邮箱">
+    </el-table-column>
+    <el-table-column
+      prop="country"
+      label="区域">
     </el-table-column>
   </el-table>
+  </el-collapse-item>
+  <el-collapse-item title="待确认" name="waiting">
+    <el-table
+    :data="waitingPCmembers"
+    stripe
+    style="width: 100%">
+    <el-table-column
+      prop="username"
+      label="用户名">
+    </el-table-column>
+    <el-table-column
+      prop="fullname"
+      label="姓名">
+    </el-table-column>
+    <el-table-column
+      prop="email"
+      label="邮箱">
+    </el-table-column>
+    <el-table-column
+      prop="country"
+      label="区域">
+    </el-table-column>
+  </el-table>
+  </el-collapse-item>
+</el-collapse>
+  
 </div>
     </el-tab-pane>
     <el-tab-pane label="开启会议" name="openMeeting" :disabled=false ><OpenMeeting :contactName='contactName'></OpenMeeting></el-tab-pane>
@@ -194,5 +320,8 @@ export default{
   }
   h4{
     margin:10px
+  }
+  >>> .el-collapse-item__header{
+    padding-left:10px;
   }
 </style>

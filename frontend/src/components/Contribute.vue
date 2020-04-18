@@ -152,7 +152,8 @@
     padding-left: 10px;
     padding-right: 10px;
     background-color: #52658F;
-    min-height: 630px;
+    min-height: auto;
+    padding-bottom: 30px;
   }
   .MeetingBox{
     padding: 20px;

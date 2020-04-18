@@ -239,9 +239,9 @@ export default {
       margin-bottom: 25px;
       color: #2e3131;
       position:absolute;
-    left:300px;
-    font-size:17px;
-    padding:3px;
+      left:300px;
+      font-size:17px;
+      padding:3px;
   }
   .textW >>> input{
       border-radius: 5px;
@@ -261,7 +261,8 @@ export default {
     padding-left: 10px;
     padding-right: 10px;
     background-color: #52658F;
-    height: 630px;
+    min-height: auto;
+    padding-bottom: 30px;
   }
   #form{
     padding: 20px;

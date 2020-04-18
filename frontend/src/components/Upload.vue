@@ -116,7 +116,8 @@
     padding-top: 70px;
     padding-left: 100px;
     padding-right: 100px;
-    height: 630px;
+    min-height: auto;
+    padding-bottom: 30px;
   }
   #window{
     padding: 20px;

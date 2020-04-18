@@ -110,7 +110,8 @@
     padding-left: 10px;
     padding-right: 10px;
     background-color: #52658F;
-    height: auto;
+    min-height: auto;
+    padding-bottom: 30px;
   }
   #singleMeeting{
     padding-top: 20px;

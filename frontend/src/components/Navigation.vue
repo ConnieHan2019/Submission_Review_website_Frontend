@@ -7,9 +7,9 @@
         <!-- nav -->
         <nav class="wthree-w3ls">
           <div id="logo">
-            <h1> <a class="navbar-brand px-0 mx-0" href="index.html">Infinitude
-            </a>
-            </h1>
+
+            <h1> <a class="navbar-brand px-0 mx-0" href="index.html">首页</a></h1>
+
           </div>
 
           <label for="drop" class="toggle">导航</label>

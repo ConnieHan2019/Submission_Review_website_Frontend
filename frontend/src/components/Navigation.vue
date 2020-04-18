@@ -7,9 +7,9 @@
         <!-- nav -->
         <nav class="wthree-w3ls">
           <div id="logo">
-            <h1> <a class="navbar-brand px-0 mx-0" href="index.html">Infinitude
-            </a>
-            </h1>
+
+            <h1> <a class="navbar-brand px-0 mx-0" href="index.html">首页</a></h1>
+
           </div>
 
           <label for="drop" class="toggle">导航</label>
@@ -30,7 +30,6 @@
                 <li><a href="" class="drop-text">人工服务</a></li>
               </ul>
             </li>
-            <li><a href="">ENGLISH</a></li>
             <li><a href="">关于我们</a></li>
             <li class="social-icons ml-lg-3"><router-link v-bind:to='path' @click.native='logout' v-if='out' >登出</router-link><router-link to='login' v-else>登录/注册</router-link></li>
             

@@ -62,11 +62,22 @@
                   auto-complete="off" placeholder="fullname"></el-input>
       </el-form-item>
       <el-form-item prop="sector" >
-        <el-input type="text" v-model="registerForm.sector" 
-                  auto-complete="off" placeholder="sector"></el-input>
+        <el-cascader v-model="registerForm.sector"
+                     :options="sectorOption"
+                     :props="{ expandTrigger: 'hover' }"
+                     placeholder="sector"
+                     style='width:100%'
+                     :show-all-levels=false
+        ></el-cascader>
       </el-form-item>
       <el-form-item prop="country" >
-      <el-cascader v-model="registerForm.country" :options="options" :props="{ expandTrigger: 'hover' }" placeholder="country" style='width:100%'  :show-all-levels=false></el-cascader>
+      <el-cascader v-model="registerForm.country"
+                   :options="options"
+                   :props="{ expandTrigger: 'hover' }"
+                   placeholder="country"
+                   style='width:100%'
+                   :show-all-levels=false
+      ></el-cascader>
       </el-form-item>
 
       <el-form-item style="width: 100%">
@@ -85,6 +96,7 @@
 <script>
 import {usernameValid, passwordValid, emailValid} from '../assets/js/dataValid';
 import {countries} from '../assets/js/countries';
+import {sectors} from '../assets/js/sectors';
 
 export default {
   name: 'Register',
@@ -106,7 +118,8 @@ export default {
         fullname: [{required: true, message: '', trigger: 'blur'}]
       },
       loading: false,
-      options:countries
+      options:countries,
+      sectorOption:sectors,
     }
   },
   methods: {

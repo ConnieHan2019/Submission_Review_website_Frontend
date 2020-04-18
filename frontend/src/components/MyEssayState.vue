@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-divider content-position="left"><span>My Essay</span></el-divider>
+    <el-divider content-position="left"><span>我的投稿</span></el-divider>
     <div class="essayBlock">
       <h5>会议主题：<span style="color:#5b25ff;">{{contactName}}</span></h5><br>
       <div v-for='essay in essays' v-bind:key="essay.title" v-bind:index="essay.title">

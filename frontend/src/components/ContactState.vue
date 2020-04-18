@@ -51,7 +51,7 @@ export default {
 
 <template>
 <div id = "ContactState">
-  <el-divider content-position="left"><span>My Contribution</span></el-divider>
+  <el-divider content-position="left"><span>我申请的会议状态</span></el-divider>
     <div class="MeetingBox" v-for="conState in myContactState" v-bind:key="conState.ShortName" v-bind:index="conState.ShortName">
       <div class="text item">
         <b>会议简称</b><span class="para">{{conState.ShortName}}</span>

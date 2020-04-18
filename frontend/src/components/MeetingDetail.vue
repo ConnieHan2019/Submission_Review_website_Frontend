@@ -8,18 +8,18 @@
           <el-aside width="300px">
             <p></p>
             <el-collapse>
-              <el-collapse-item title="Chair:" name="1">
+              <el-collapse-item title="会议主席：" name="1">
                 <span class="members" >{{verDetailContactData.chair}}</span>
               </el-collapse-item>
-              <el-collapse-item title="PC Member:" name="2">
+              <el-collapse-item title="审稿人：" name="2">
                 <p class="members" v-for="pcm in verDetailContactData.pcMembers" v-bind:key="pcm" v-bind:index="pcm">{{pcm}}</p>
 
               </el-collapse-item>
-              <el-collapse-item title="Author:" name="3">
+              <el-collapse-item title="投稿人：" name="3">
                 <p class="members" v-for="aus in verDetailContactData.authors" v-bind:key="aus" v-bind:index="aus">{{aus}}</p>
 
               </el-collapse-item>
-              <el-collapse-item title="State:" name="4">
+              <el-collapse-item title="会议状态：" name="4">
                 <span style="color: red">{{ verDetailContactData.state }}</span>
               </el-collapse-item>
             </el-collapse>

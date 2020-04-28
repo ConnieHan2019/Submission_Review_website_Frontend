@@ -21,7 +21,23 @@ export default {
       currentComponent:Information,
       currentContact:'',
       needContactName:false,//子组件是否需要会议名，默认个人页面不需要
-      contacts:[]
+      contacts:[{
+        shortname:'会议1',
+        fullname:'bababab会议',
+        roles:['Chair']
+      },{
+        shortname:'会议2',
+        fullname:'bababwwwab会议',
+        roles:['Author']
+      },{
+        shortname:'会议3',
+        fullname:'babsdfabab会议',
+        roles:['Author','PCmember']
+      },{
+        shortname:'会议4',
+        fullname:'babsdfabab会议',
+        roles:['Chair']
+      }]
     }
   },
   created:function(){
@@ -147,8 +163,8 @@ export default {
     </el-menu>
     </el-aside>
     <el-main>
-    <component v-if="needContactName" v-bind:is="currentComponent" :contactName='currentContact'></component>
-    <component v-else v-bind:is="currentComponent" ></component>    
+    <component v-if="needContactName" v-bind:is="currentComponent" :contactName='currentContact' :key='currentContact'></component>
+    <component v-else v-bind:is="currentComponent" :key='currentContact'></component>    
     </el-main>
   </el-container>
   <el-footer></el-footer>

@@ -32,6 +32,7 @@ export default {
 
 <template>
 <div id = "Information">
+
 <el-card class="box-card">
   <div slot="header" class="clearfix">
     <span><b><i class="el-icon-postcard"></i>基本信息</b></span>

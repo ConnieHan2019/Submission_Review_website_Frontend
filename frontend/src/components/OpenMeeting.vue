@@ -1,58 +1,19 @@
+//这个稿件包含会议信息，开启会议功能
 <script>
 export default{
     name:'OpenMeeting',
-    props:['contactName'],
+    props:{contactInformation:Object},
     data(){
         return{
-            contactInformation:{
-              shortname:'shortname',
-              fullname:'fullname',
-              deadline:'2020-12-08',
-              resultReleaseTime:'2021-1-1',
-              organizationTime: '2021-2-1',
-              place: 'China',
-              state:'0'
-            }
+            
         }
     },
   computed:{
       isDisabled(){
-        return this.contactInformation.state !== '0'
+        return this.contactInformation.state >= 2
       }
   },
-  watch:{
-    contactName:function(val){
-        this.$axios.post('/contactInformation',{
-            contactFullName:val
-        })
-        .then(resp => {
-            if (resp.status === 200 && resp.data.hasOwnProperty("contactInformation")){
-                this.contactInformation = resp.data.contactInformation
-            }
-            else{
-                console.log('会议信息加载失败')
-            }
-        })
-        .catch(error => {
-            console.log(error)
-        })
-    }
-  },
     created:function(){
-        this.$axios.post('/contactInformation',{
-            contactFullName:this.contactName
-        })
-        .then(resp => {
-            if (resp.status === 200 && resp.data.hasOwnProperty("contactInformation")){
-                this.contactInformation = resp.data.contactInformation
-            }
-            else{
-                console.log('会议信息加载失败')
-            }
-        })
-        .catch(error => {
-            console.log(error)
-        })
     },
     methods:{
         open(){
@@ -66,7 +27,7 @@ export default{
                 message:'开启会议成功',
                 type:'success'
                 })
-                this.contactInformation.state = '1'
+                this.contactInformation.state = 2
             }
             else{
               this.$message.error('开启会议失败')
@@ -111,7 +72,19 @@ export default{
   <div class="text item">
     <i class="el-icon-location"></i><b>举办地点：</b>{{contactInformation.place}}
   </div>
+  <div class="text item">
+    <i class="el-icon-notebook-2"></i><b>会议话题：</b>{{contactInformation.topic}}
+  </div>
 </el-card>
+
+<el-steps :active="contactInformation.state" align-center finish-status="success" direction="vertical" style="padding:30px;">
+  <el-step title="通过审核" description="通过审核之后才能开启会议"></el-step>
+  <el-step title="开启会议" description="请进入【会议基本信息】开启会议：必须在投稿截止之前开启会议，且只能开启一次，开启后会议进入投稿状态"></el-step>
+  <el-step title="开启审稿" description="请进入【程序委员会成员】开启审稿：必须在结果发布之前开启审稿，且该会议至少要有3位审稿人，开启后会议进入审稿状态"></el-step>
+  <el-step title="发布结果" description="请进入【稿件基本情况】发布结果：必须在举办会议之前发布结果，且所有稿件都审核完成"></el-step>
+  <el-step title="举办会议" description="发布结果后按照预定时间在预定地点举办线下会议"></el-step>
+  <el-step title="结束会议" description=""></el-step>
+</el-steps>
 </div>
 </template>
 
@@ -140,5 +113,6 @@ export default{
     box-shadow: 0 2px 4px rgba(0, 0, 0, .44), 0 0 6px rgba(0, 0, 0, .44);
     margin:auto;
     margin-top:30px;
+    float:left;
   }
 </style>

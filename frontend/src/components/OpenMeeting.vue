@@ -18,6 +18,7 @@ export default{
     methods:{
         open(){
         if(new Date(this.contactInformation.deadline).getTime() > new Date().getTime()){
+          this.contactInformation.state = 2
             this.$axios.post('/openMeeting',{
             contactFullName:this.contactName
         })

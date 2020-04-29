@@ -2,20 +2,41 @@
     <div id="audit">
       <div class="meetingBlock">
         <h5>会议主题：<span style="color:#5b25ff;">{{contactName}}</span></h5><br>
+<el-button @click="drawer = true" type="primary" style="position:fixed;top:100px;right:40px;">
+  目录
+</el-button>
+
+<el-drawer
+  title="点击标题跳转到相应位置"
+  :visible.sync="drawer"
+  :with-header="false">
+  <div v-for="(aus,index) in authors" :key='index'><el-link type="primary" :href='"#"+index' >{{aus.title}}</el-link></div>
+</el-drawer>
+
         <el-divider></el-divider>
-        <div  v-for="aus in authors" v-bind:key="aus.name" v-bind:index="aus.name">
-        <h3 style='margin-top:20px'>Title:{{aus.title}}</h3>
-          <p ><i class="el-icon-user"></i><span >Author:</span>{{aus.name}} <el-link type="primary" :href='aus.link'>文章链接</el-link></p>
+        <div  v-for="(aus,index) in authors"  :id="index" :key='aus.title'>
+        <h3 style='margin-top:20px'>标题:{{aus.title}}</h3>
+        <p ><i class="el-icon-user"></i><span >作者:</span>{{aus.name}} <a @click.prevent="downloadEssay(aus.link)" type="primary" :href='aus.link'>文章链接</a></p>
+        <div>摘要：
 <el-input
   type="textarea"
-  :autosize="{ minRows: 2}"
-  placeholder="请输入内容"
-  v-model="aus.extract"
+  autosize
+  style="width:80%;"
   :disabled="true"
-  style="margin-bottom:10px">
+  v-model="aus.extract">
 </el-input>
-
-          <el-button-group>
+        </div>
+	<div style="width:93%;border-radius: 4px;box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);margin-top:20px;height: 500px; overflow:scroll">
+		{{currentPage[index]}} / {{pageCount[index]}}
+		<pdf
+			:src="aus.link"
+			@num-pages="pageCount[index] = $event"
+			@page-loaded="currentPage[index] = $event"
+      :page="currentPage[index]"
+		></pdf>
+    <div><span @click='lastPage(index)'><i class="el-icon-arrow-left"></i>上一页</span><i class="el-icon-reading"></i><span  @click='nextPage(index)'>下一页<i class="el-icon-arrow-right"></i></span></div>
+	</div>
+          <el-button-group style="margin-top:20px">
             <el-button type="success" @click='passEssay(aus.name,aus.title)'>通过</el-button>
             <el-button type="danger" @click='refuseEssay(aus.name,aus.title)'>驳回</el-button>
           </el-button-group>
@@ -28,12 +49,22 @@
 </template>
 
 <script>
+import pdf from 'vue-pdf'
+
     export default {
       name: "Audit",
       props:['contactName'],
+      components:{pdf},
       data() {
         return {
-          authors: []
+          drawer:false,
+          currentPage:[1,2,3],
+          pageCount:[10,10,10],
+          authors:  [
+                {name: 'Sam', extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxsssssssssssssssssssssssssssssssssssssssssssssssssxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',link: 'http://alexandria.tue.nl/openaccess/Metis223041.pdf',title:'wssdffl1'},
+                {name: 'Joe',extract:'xxxxxxxxxxxxxxx',link: 'http://image.cache.timepack.cn/nodejs.pdf',title:'wsdgfssl'},
+                {name: 'Eden',extract:'xxxxxxxxxxxxxxx',link: 'http://image.cache.timepack.cn/nodejs.pdf',title:'wshjjgl'},
+    ]
         }
       },
       created: function () {
@@ -44,6 +75,7 @@
           .then(resp => {
             if (resp.status === 200 && resp.data.hasOwnProperty("essayNeedHandle")) {
               this.authors = resp.data.essayNeedHandle
+              currentPage = new array(this.authors.length)
             } else {
               this.auditError(),
                 console.log(resp)
@@ -63,6 +95,16 @@
           })
       },
       methods: {
+        downloadEssay(url){
+          alert(url)
+          let link = document.createElement('a')
+          fetch(url).then(res => res.blob()).then(blob => { // 将链接地址字符内容转变成blob地址
+            link.href = URL.createObjectURL(blob)
+            console.log(link.href)
+            link.download = ''
+            link.click()
+          })
+        },
         seeDetail(){
           this.$router.push({path: '/meetingDetail',query:{name:this.contactName}});
         },
@@ -136,6 +178,18 @@
           });
             console.log(error)
           })
+        },
+        lastPage(index){
+          alert('last')
+          alert(index)
+          this.currentPage[index]--;
+        },
+        nextPage(index){
+          alert('next')
+          alert(index)
+          alert(this.currentPage[index])
+          this.currentPage[index]++;
+          alert(this.currentPage[index])
         }
       }
     }

@@ -182,8 +182,7 @@ export default{
         }
       },
       startReview(){
-        
-                      //this.$emit('startReview')
+        // this.$emit('startReview')
           if(this.state === 2){
               if(new Date(this.resultReleaseTime).getTime() > new Date().getTime()){
                   if(this.confirmedPCmembers.length >= 3){

@@ -11,10 +11,10 @@
   :visible.sync="drawer"
   :with-header="true"
   size="20%">
-  <div v-for="(aus,index) in authors" :key='"menu"+index'><el-link type="primary" :href='"#"+index' style="float:left;margin-left:30px;font-size:20px">{{index+1}}.{{aus.title}}</el-link></div>
+  <ul><li v-for="(aus,index) in authors" :key='"menu"+index' style="text-align: left;padding-left: 20px;"><el-link type="primary" :href='"#"+index' style="font-size:20px"><i class="el-icon-caret-right"></i>{{aus.title}}</el-link></li></ul>
 </el-drawer>
         <el-divider></el-divider>
-        <div  v-for="(aus,index) in authors"  :id="index" :key='aus.title'>
+        <div  v-for="(aus,index) in authors"  :id="index" :key='aus.title' style="margin-bottom:50px">
         <h3 style='margin-top:20px'>标题:{{aus.title}}</h3>
         <p ><i class="el-icon-user"></i><span >作者:</span>{{aus.name}} <a @click.prevent="downloadEssay(aus.link)" type="primary" :href='aus.link'>点击下载</a></p>
         <div>摘要：

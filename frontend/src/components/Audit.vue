@@ -9,14 +9,14 @@
 <el-drawer
   title="点击标题跳转到相应位置"
   :visible.sync="drawer"
-  :with-header="false">
-  <div v-for="(aus,index) in authors" :key='index'><el-link type="primary" :href='"#"+index' >{{aus.title}}</el-link></div>
+  :with-header="true"
+  size="20%">
+  <div v-for="(aus,index) in authors" :key='"menu"+index'><el-link type="primary" :href='"#"+index' style="float:left;margin-left:30px;font-size:20px">{{index+1}}.{{aus.title}}</el-link></div>
 </el-drawer>
-
         <el-divider></el-divider>
         <div  v-for="(aus,index) in authors"  :id="index" :key='aus.title'>
         <h3 style='margin-top:20px'>标题:{{aus.title}}</h3>
-        <p ><i class="el-icon-user"></i><span >作者:</span>{{aus.name}} <a @click.prevent="downloadEssay(aus.link)" type="primary" :href='aus.link'>文章链接</a></p>
+        <p ><i class="el-icon-user"></i><span >作者:</span>{{aus.name}} <a @click.prevent="downloadEssay(aus.link)" type="primary" :href='aus.link'>点击下载</a></p>
         <div>摘要：
 <el-input
   type="textarea"
@@ -27,14 +27,13 @@
 </el-input>
         </div>
 	<div style="width:93%;border-radius: 4px;box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);margin-top:20px;height: 500px; overflow:scroll">
-		{{currentPage[index]}} / {{pageCount[index]}}
+		共{{pageCount[index]}}页
 		<pdf
 			:src="aus.link"
-			@num-pages="pageCount[index] = $event"
-			@page-loaded="currentPage[index] = $event"
-      :page="currentPage[index]"
+      v-for="i in pageCount[index]"
+      :key="i"
+      :page="i"
 		></pdf>
-    <div><span @click='lastPage(index)'><i class="el-icon-arrow-left"></i>上一页</span><i class="el-icon-reading"></i><span  @click='nextPage(index)'>下一页<i class="el-icon-arrow-right"></i></span></div>
 	</div>
           <el-button-group style="margin-top:20px">
             <el-button type="success" @click='passEssay(aus.name,aus.title)'>通过</el-button>
@@ -58,16 +57,31 @@ import pdf from 'vue-pdf'
       data() {
         return {
           drawer:false,
-          currentPage:[1,2,3],
           pageCount:[10,10,10],
           authors:  [
-                {name: 'Sam', extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxsssssssssssssssssssssssssssssssssssssssssssssssssxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',link: 'http://alexandria.tue.nl/openaccess/Metis223041.pdf',title:'wssdffl1'},
-                {name: 'Joe',extract:'xxxxxxxxxxxxxxx',link: 'http://image.cache.timepack.cn/nodejs.pdf',title:'wsdgfssl'},
-                {name: 'Eden',extract:'xxxxxxxxxxxxxxx',link: 'http://image.cache.timepack.cn/nodejs.pdf',title:'wshjjgl'},
+                {name: 'Sam', extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxsssssssssssssssssssssssssssssssssssssssssssssssssxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',link: '',title:'wssdffl1'},
+                {name: 'AEFam', extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxsssssssssssssssssssssssssssssssssssssssssssssssssxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',link: '',title:'dgdfhdh'},
+                {name: 'Ssdfam', extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxsssssssssssssssssssssssssssssssssssssssssssssssssxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',link: '',title:'retrdfhdfg'},
+
     ]
         }
       },
       created: function () {
+        this.pageCount = new Array(this.authors.length)
+        for(var i = 0; i < this.authors.length;i++){
+          //一定要用闭包或者foreach
+          var auditVM = this;
+          (function(i){
+          //alert('初始元素'+i+":"+auditVM.pageCount[i])
+          auditVM.authors[i].link = pdf.createLoadingTask(auditVM.authors[i].link);
+          auditVM.authors[i].link.promise.then(pdf => {
+            auditVM.pageCount[i] = pdf.numPages
+            //alert('返回元素'+i+":"+auditVM.pageCount[i])
+          })
+          //alert("now:"+auditVM.pageCount[i])
+          })(i)
+
+        }
         this.$axios.post('/audit', {
           username: this.$store.state.userDetails,
           contactName:this.contactName
@@ -75,7 +89,6 @@ import pdf from 'vue-pdf'
           .then(resp => {
             if (resp.status === 200 && resp.data.hasOwnProperty("essayNeedHandle")) {
               this.authors = resp.data.essayNeedHandle
-              currentPage = new array(this.authors.length)
             } else {
               this.auditError(),
                 console.log(resp)
@@ -94,7 +107,16 @@ import pdf from 'vue-pdf'
             }
           })
       },
+      watch:{
+        pageCount:function(newval,oldval){
+          
+        }
+      },
       methods: {
+        aaa(index){
+          alert("pagecout长度："+this.pageCount.length)
+          alert("元素"+index+this.pageCount[index])
+        },
         downloadEssay(url){
           alert(url)
           let link = document.createElement('a')
@@ -187,9 +209,9 @@ import pdf from 'vue-pdf'
         nextPage(index){
           alert('next')
           alert(index)
-          alert(this.currentPage[index])
+          //alert(this.currentPage[index])
           this.currentPage[index]++;
-          alert(this.currentPage[index])
+          //alert(this.currentPage[index])
         }
       }
     }

@@ -317,8 +317,20 @@ export default {
   .el-form{
     padding: 20px;
   }
-  .el-tag{
-    margin-right: 10px;
+  .el-tag + .el-tag {
+    margin-left: 10px;
+  }
+  .button-new-tag {
+    margin-left: 10px;
+    height: 32px;
+    line-height: 30px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .input-new-tag {
+    width: 90px;
+    margin-left: 10px;
+    vertical-align: bottom;
   }
 
   #Page{
@@ -343,8 +355,9 @@ export default {
     border-radius: 4px;
   }
   #inputTopic{
-    height: 40px;
+    height: 48px;
     width: 250px;
+    padding: 2px;
   }
   #topicList{
     padding: 20px;

@@ -68,6 +68,15 @@
               <el-cascader v-model="contactForm.place" :options="options" :props="{ expandTrigger: 'hover' }" placeholder="举办地点" :show-all-levels=false></el-cascader>
             </el-form-item>
 
+          <el-form-item prop="shortname" style="margin-bottom:25px">
+            <label class="lb">会议标签:</label>
+           <div class="window">
+               {{contactForm.topic}}
+           </div>
+            <div class="window">
+              topic 列表
+            </div>
+            </el-form-item>
             <el-form-item style="width: 100%">
               <el-button type="primary"
                          class="btn more mr-2"
@@ -128,6 +137,7 @@ export default {
         resultReleaseTime: '',
         organizationTime: '',
         place: '',
+        topic:['主题一','主题2','主题3',],
       },
       options:countries,
       rules: {
@@ -182,7 +192,8 @@ export default {
         deadline: this.contactForm.deadline,
         resultReleaseTime: this.contactForm.resultReleaseTime,
         organizationTime: this.contactForm.organizationTime,
-        place: this.contactForm.place
+        place: this.contactForm.place,
+        topic: this.contactForm.topic,
       })
         .then(resp => {
           if (resp.status === 200 ) {
@@ -269,6 +280,14 @@ export default {
     border-radius: 2px;box-shadow: 0 2px 4px rgba(0, 0, 0, .44), 0 0 6px rgba(0, 0, 0, .44);color: #0c5460;color: black;
     background-color: #e4e9ed;
     margin-bottom: 20px;
+  }
+  .window{
+    background-color: white;
+    margin: 0 auto;
+    margin-bottom: 25px;
+    border:1px solid lightgrey;
+    border-radius: 4px;
+    width: 250px;
   }
 
 

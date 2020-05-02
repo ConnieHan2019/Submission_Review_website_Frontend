@@ -3,16 +3,22 @@
       <div id="page">
         <el-form :ref="commentForm" :model="commentForm" label-width="80px" :rules="rules">
           <el-form-item label="稿件评分" prop="score">
-            <el-input type="text"
-                      v-model="commentForm.score"
-                      placeholder="请输入论文得分"
-            ></el-input>
+            <el-cascader v-model="commentForm.score"
+                         :options="scoreOption"
+                         :props="{ expandTrigger: 'hover' }"
+                         placeholder="请输入论文得分"
+                         style='width:100%'
+                         :show-all-levels=false
+            ></el-cascader>
           </el-form-item>
           <el-form-item label="confidence" prop="confidence">
-            <el-input type="text"
-                      v-model="commentForm.confidence"
-                      placeholder="请输入论文confidence"
-            ></el-input>
+            <el-cascader v-model="commentForm.confidence"
+                         :options="confidenceOption"
+                         :props="{ expandTrigger: 'hover' }"
+                         placeholder="请输入论文confidence"
+                         style='width:100%'
+                         :show-all-levels=false
+            ></el-cascader>
           </el-form-item>
             <el-form-item label="评语" prop="comment">
               <el-input type="textarea"
@@ -37,6 +43,7 @@
         name: "ReadOver",
        data(){
           return{
+
             commentForm:{
               score:'',
               confidence:'',
@@ -46,7 +53,56 @@
               score: [{required: true, message: '', trigger: 'blur'}],
               confidence: [{required: true, message: '', trigger: 'blur'}],
               comment: [{required: true, message: '', trigger: 'blur'}],
-            }
+            },
+            scoreOption:[
+              {
+                value:'',
+                label:'reject',
+                children:[
+                  {value:'-2',label:'-2'},
+                ]
+              },
+              {
+                value:'',
+                label:'weak reject',
+                children:[
+                  {value:'-1',label:'-1'},
+                ]
+              },
+              {
+                value:'',
+                label:'weak accept',
+                children:[
+                  {value:'1',label:'1'},
+                ]
+              },
+              {
+                value:'',
+                label:'accept',
+                children:[
+                  {value:'2',label:'2'},
+                ]
+              },
+
+            ],
+            confidenceOption:[
+              {
+                value:'very low',
+                label:'very low',
+              },
+              {
+                value:'low',
+                label:'low',
+              },
+              {
+                value:'high',
+                label:'high',
+              },
+              {
+                value:'very high',
+                label:'very high',
+              },
+            ],
           }
        },
       methods:{

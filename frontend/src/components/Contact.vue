@@ -68,42 +68,47 @@
               <el-cascader v-model="contactForm.place" :options="options" :props="{ expandTrigger: 'hover' }" placeholder="举办地点" :show-all-levels=false></el-cascader>
             </el-form-item>
 
-          <el-form-item prop="shortname" style="margin-bottom:25px">
+          <el-form-item prop="topic" style="margin-bottom:25px">
             <label class="lb">会议标签:</label>
            <div class="window" id="inputTopic">
              <el-tag
                :key="tag"
-               v-for="tag in myTags"
+               v-for="tag in contactForm.topic"
                closable
                :disable-transitions="false"
                @close="handleClose(tag)">
                {{tag}}
              </el-tag>
            </div>
-            <div class="window" id="topicList">
 
-             <b>topic 列表</b><br>
-              <el-tag
-              :key="tag"
-              v-for="tag in tagList"
-              :disable-transitions="false"
-              >
-              {{tag}}
-            </el-tag>
-              <el-input
-                class="input-new-tag"
-                v-if="inputVisible"
-                v-model="inputValue"
-                ref="saveTagInput"
-                size="small"
-                @keyup.enter.native="handleInputConfirm"
-                @blur="handleInputConfirm"
-              >
-              </el-input>
-              <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
-
-            </div>
             </el-form-item>
+          <div class="window" id="topicList">
+
+            <b>topic 列表</b><br>
+            <el-tag
+              class="d-tag"
+              :key="defaultTag"
+              v-for="defaultTag in tagList"
+              @click="addTopic(defaultTag)"
+              type="success"
+              @focus="changeHighLight(defaultTag)"
+              :disable-transitions="false"
+            >
+              {{defaultTag}}
+            </el-tag>
+            <el-input
+              class="input-new-tag"
+              v-if="inputVisible"
+              v-model="inputValue"
+              ref="saveTagInput"
+              size="small"
+              @keyup.enter.native="handleInputConfirm"
+              @blur="handleInputConfirm"
+            >
+            </el-input>
+            <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+
+          </div>
             <el-form-item style="width: 100%">
               <el-button type="primary"
                          class="btn more mr-2"
@@ -131,7 +136,6 @@ export default {
   name: 'Contact',
   data () {
     return {
-      myTags:['标签3', '标签4', '标签5'],
       tagList: ['标签一', '标签二', '标签三'],
       inputVisible: false,
       inputValue: '',
@@ -178,14 +182,31 @@ export default {
         resultReleaseTime: [{required: true, message: '', trigger: 'blur'}, { trigger: 'blur'}],
         organizationTime: [{required: true, message: '', trigger: 'blur'}, { trigger: 'blur'}],
          // place: [{required: true, message: '', trigger: 'blur'}, { trigger: 'blur'}]
-        topic: [{required: true, message: '', trigger: 'blur'}, { trigger: 'blur'}],
+       // topic: [{required: true, message: '', trigger: 'blur'}, { trigger: 'blur'}],
       },
       loading: false
     }
   },
+  created:function(){
+    this.$axios.post('/getTagsList',{
+    })
+      .then(resp => {
+        if(resp.status === 200 && resp.data.hasOwnProperty('allTagsInDataBase')){
+          this.tagList = resp.data.allTagsInDataBase
+        }
+        else{
+          console.log('返回标签列表错误')
+          console.log(resp)
+        }
+      })
+      .catch(error => {
+        console.log('加载标签列表加载失败')
+        console.log(error)
+      })
+  },
   methods: {
     handleClose(tag) {
-      this.myTags.splice(this.myTags.indexOf(tag), 1);
+      this.contactForm.topic.splice(this.contactForm.topic.indexOf(tag), 1);
     },
 
     showInput() {
@@ -198,11 +219,17 @@ export default {
     handleInputConfirm() {
       let inputValue = this.inputValue;
       if (inputValue) {
-        this.dynamicTags.push(inputValue);
+        this.tagList.push(inputValue);
       }
       this.inputVisible = false;
       this.inputValue = '';
     },
+
+    addTopic(str){
+        this.contactForm.topic.push(str);
+    },
+
+
     userTypeChange() {
     },
     contactError() {
@@ -355,7 +382,8 @@ export default {
     border-radius: 4px;
   }
   #inputTopic{
-    height: 48px;
+    min-height: 45px;
+    height:auto;
     width: 250px;
     padding: 2px;
   }

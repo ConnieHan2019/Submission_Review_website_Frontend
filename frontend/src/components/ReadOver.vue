@@ -30,7 +30,7 @@
               ></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="success" round>Submit</el-button>
+            <el-button type="success" @click="submit" round>Submit</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -43,7 +43,6 @@
         name: "ReadOver",
        data(){
           return{
-
             commentForm:{
               score:'',
               confidence:'',
@@ -106,6 +105,69 @@
           }
        },
       methods:{
+        submit (formName) {
+              this.$refs[formName].validate(valid => {
+                if(valid){
+                  this.$axios.post('/sendCommentInformation', {
+                    PCmemberFullName:this.$store.state.userDetails,
+                    paperTitle:'文章标题',
+                    meetingFullname:'会议主全名',
+                    reviewStatus:1,
+                    Score:this.commentForm.score,
+                    Confidence:this.commentForm.confidence,
+                    Comments:this.commentForm.comment,
+                  })
+                    .then(resp => {
+                      if (resp.status === 200 ) {
+                        this.$message({
+                          showClose: true,
+                          message: '批阅成功!',
+                          type: 'success'
+                        });
+                        // alert("批阅成功")
+                        this.$router.replace({path:'/personal'})
+                      }
+                      else{
+                        this.$message({
+                          showClose: true,
+                          message: '批阅失败!',
+                          type: 'error'
+                        });
+                        // alert('批阅失败')
+                      }
+                    })
+                    .catch(error => {
+                      if(error.response){
+                        if(error.response.status === 400){
+                          this.$message.error(error.response.data.message)
+                        }
+                        else{
+                          this.$message({
+                            showClose: true,
+                            message: 'read over error',
+                          });
+                        }
+                      }
+                      else{
+                        this.$message({
+                          showClose: true,
+                          message: 'read over error',
+                        });
+                      }
+                      console.log(error)
+                      //alert('contact error')
+                    })
+                } else {
+                  //alert('wrong submit')
+                  this.$message({
+                    showClose: true,
+                    message: 'wrong submit!',
+                    type: 'error'
+                  });
+                }
+              })
+
+            }
 
       }
     }

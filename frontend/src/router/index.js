@@ -9,6 +9,8 @@ import Contribute from '@/components/Contribute'
 import Upload from '@/components/Upload'
 import MeetingDetail from '@/components/MeetingDetail'
 import Admin from '@/components/Admin'
+import ReadOver from '@/components/ReadOver'
+
 import store from '../store'
 
 Vue.use(Router)
@@ -80,7 +82,14 @@ export const router = new Router({
       meta: {
         requireAuth: false
       },
-
+    },
+    {
+      path: '/readOver',
+      name: 'ReadOver',
+      component: ReadOver,
+      meta: {
+        requireAuth: false
+      },
     }
   ]
 })

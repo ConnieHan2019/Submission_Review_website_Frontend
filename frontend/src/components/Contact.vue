@@ -82,6 +82,7 @@
            </div>
 
             </el-form-item>
+
           <div class="window" id="topicList">
 
             <b>topic 列表</b><br>
@@ -109,6 +110,7 @@
             <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
 
           </div>
+
             <el-form-item style="width: 100%">
               <el-button type="primary"
                          class="btn more mr-2"

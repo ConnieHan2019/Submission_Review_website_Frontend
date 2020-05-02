@@ -20,6 +20,42 @@
                     show-word-limit
           ></el-input>
         </el-form-item>
+        <el-form-item label="文章作者" prop="writer">
+          <el-input type="textarea"
+                    v-model="form.writer"
+                    autosize
+                    placeholder="请添加该篇文章的作者"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item label="论文标签" prop="topic">
+          <div class="window" id="inputTopic" style="margin-bottom:25px">
+            <el-tag
+              :key="tag"
+              v-for="tag in form.topic"
+              closable
+              :disable-transitions="false"
+              @close="handleClose(tag)">
+              {{tag}}
+            </el-tag>
+          </div>
+        </el-form-item>
+
+        <div class="window" id="topicList">
+
+          <b>该会议对应topic</b><br>
+          <el-tag
+            class="d-tag"
+            :key="defaultTag"
+            v-for="defaultTag in meetingTags"
+            @click="addTopic(defaultTag)"
+            type="success"
+            :disable-transitions="false"
+          >
+            {{defaultTag}}
+          </el-tag>
+        </div>
+
         <el-form-item>
 <el-upload
   class="upload-demo"
@@ -46,17 +82,48 @@
     data() {
       return {
         fileList:[],
+        meetingTags:['标签1','标签2','标签3','标签4',],
         form: {
           title: '',
           extract: '',
+          writer:[],
+          topic:[]
         },
       rules: {
         title: [{required: true, message: '', trigger: 'blur'}],
-        extract: [{required: true, message: '', trigger: 'blur'}]
+        extract: [{required: true, message: '', trigger: 'blur'}],
+        writer: [{required: true, message: '', trigger: 'blur'}],
+        topic: [{required: true, message: '', trigger: 'blur'}]
       }
       }
     },
+
+    created:function(){
+      this.$axios.post('/getMeetingTags',{
+        fullname:this.$route.query.name
+      })
+        .then(resp => {
+          if(resp.status === 200 && resp.data.hasOwnProperty('allMeetingTags')){
+            this.meetingTags = resp.data.allMeetingTags
+          }
+          else{
+            console.log('返回标签列表错误')
+            console.log(resp)
+          }
+        })
+        .catch(error => {
+          console.log('加载标签列表加载失败')
+          console.log(error)
+        })
+    },
+
     methods: {
+      handleClose(tag) {
+        this.form.topic.splice(this.form.topic.indexOf(tag), 1);
+      },
+      addTopic(str){
+        this.form.topic.push(str);
+      },
       submitUpload(formName) {
         this.$refs[formName].validate(valid => {
           if(valid){
@@ -77,6 +144,8 @@
             formData.append('title',this.form.title)
             formData.append('authorname',this.$store.state.userDetails)
             formData.append('summary',this.form.extract)
+            formData.append('writer',this.form.writer)
+            formData.append('topic',this.form.topic)
             formData.append('meetingFullname',this.$route.query.name)
             console.log(formData.get('file'))
             this.$axios.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
@@ -129,4 +198,22 @@
     background-color:#feac00;
     border-color:#feac00;
   }
+  .el-tag{
+       margin-left: 5px;
+  }
+  .window{
+    background-color: white;
+    margin: 0 auto;
+    margin-bottom: 25px;
+    border:1px solid lightgrey;
+    border-radius: 4px;
+  }
+  #inputTopic{
+    min-height: 45px;
+    height:auto;
+  }
+  #topicList{
+    padding: 20px;
+  }
+
 </style>

@@ -30,7 +30,7 @@
               ></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="success" @click="submit" round>Submit</el-button>
+            <el-button type="success" @click="submit(commentForm)" round>Submit</el-button>
           </el-form-item>
         </el-form>
       </div>

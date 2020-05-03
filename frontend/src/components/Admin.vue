@@ -3,10 +3,39 @@ export default {
   name: 'Admin',
   data(){
       return{
-          contactData:[]
+          contactData:[{
+              shortname:'shortname',
+              fullname:'fullname',
+              deadline:'deadline',
+              resultReleaseTime:'2021-1-1',
+              organizationTime: '2021-2-1',
+              place: 'China',
+              applicant:'applicant',
+              topic:['computer','scope','config']
+          },{
+              shortname:'shortname',
+              fullname:'fullname',
+              deadline:'deadline',
+              resultReleaseTime:'2021-1-1',
+              organizationTime: '2021-2-1',
+              place: 'China',
+              applicant:'applicant',
+              topic:['computer','scope','config']
+          }]
       }
   },
   created:function(){
+    for(var i = 0;i < this.contactData.length; i++){
+      var temp = "";
+      var arrTopic = this.contactData[i].topic;
+      for(var j = 0;j < arrTopic.length; j++){
+        if(j > 0){
+          temp += '/';
+        }
+        temp += arrTopic[j];
+      }
+      this.contactData[i].topic = temp;
+    }
     this.$axios.post('/admin',{
       adminName:this.$store.state.userDetails
     })
@@ -128,8 +157,12 @@ export default {
       label="举办地点">
     </el-table-column>
     <el-table-column
-      prop="applicant"
-      label="申请人">
+      prop="place"
+      label="举办地点">
+    </el-table-column>
+    <el-table-column
+      prop="topic"
+      label="会议主题">
     </el-table-column>
     <el-table-column
       fixed="right"

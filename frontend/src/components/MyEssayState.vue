@@ -3,7 +3,7 @@
     <el-divider content-position="left"><span>我的投稿</span></el-divider>
     <div class="essayBlock">
       <h5>会议主题：<span style="color:#5b25ff;">{{contactName}}</span></h5><br>
-      <div v-for='essay in essays' v-bind:key="essay.title" v-bind:index="essay.title">
+      <div v-for='essay in essays' v-bind:key="essay.title" v-bind:index="essay.title" class="passageBlock">
       <b>{{essay.title}}</b>
 <el-input
   type="textarea"
@@ -12,6 +12,7 @@
   :disabled="true"
   style="margin-bottom:10px;">
 </el-input>
+        <el-button>编辑</el-button>
       </div>
       <el-divider></el-divider>
       <el-button type="primary" class="enterMeetingBt" @click="seeDetail()">进入会议</el-button>
@@ -27,7 +28,17 @@
         return{
           //这个会议的状态： 审核中、已通过、已驳回
           myEssayState:'',
-          essays:[]
+          essays:[
+            {
+              title:'专门为牛会写的文章',
+              summary:'牛牛的会议'
+            },
+            {
+              title:'专门为牛会写的第二篇文章',
+              summary:'牛牛的会议'
+
+            }
+          ],
         }
       },
       props:['contactName'],
@@ -83,5 +94,13 @@
 .enterMeetingBt{
   margin-top: 5px;
   margin-bottom: 5px;
+}
+.passageBlock{
+  padding: 20px;
+  background-color: white;
+  margin: 0 auto;
+  margin-bottom: 25px;
+  border:1px solid lightgrey;
+  border-radius: 4px;
 }
 </style>

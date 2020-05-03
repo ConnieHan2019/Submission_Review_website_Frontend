@@ -120,9 +120,14 @@
     methods: {
       handleClose(tag) {
         this.form.topic.splice(this.form.topic.indexOf(tag), 1);
+        //把删掉的标签扔回未选里面去
+        this.meetingTags.push(tag);
       },
       addTopic(str){
         this.form.topic.push(str);
+        //标签被选过一次就不能再重复选了
+        this.meetingTags.splice(this.meetingTags.indexOf(str), 1);
+
       },
       submitUpload(formName) {
         this.$refs[formName].validate(valid => {

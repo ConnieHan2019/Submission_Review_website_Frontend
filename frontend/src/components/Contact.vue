@@ -209,6 +209,8 @@ export default {
   methods: {
     handleClose(tag) {
       this.contactForm.topic.splice(this.contactForm.topic.indexOf(tag), 1);
+      //把删掉的标签扔回未选里面去
+      this.tagList.push(tag);
     },
 
     showInput() {
@@ -229,6 +231,8 @@ export default {
 
     addTopic(str){
         this.contactForm.topic.push(str);
+        //标签被选过一次就不能再重复选了
+      this.tagList.splice(this.tagList.indexOf(str), 1);
     },
 
 

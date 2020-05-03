@@ -10,6 +10,7 @@ import Upload from '@/components/Upload'
 import MeetingDetail from '@/components/MeetingDetail'
 import Admin from '@/components/Admin'
 import ReadOver from '@/components/ReadOver'
+import EditMyEssay from '@/components/EditMyEssay'
 
 import store from '../store'
 
@@ -87,6 +88,14 @@ export const router = new Router({
       path: '/readOver',
       name: 'ReadOver',
       component: ReadOver,
+      meta: {
+        requireAuth: false
+      },
+    },
+    {
+      path: '/editMyEssay',
+      name: 'EditMyEssay',
+      component: EditMyEssay,
       meta: {
         requireAuth: false
       },

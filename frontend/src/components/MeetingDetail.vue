@@ -107,21 +107,6 @@
     data() {
       return {
         verDetailContactData:{
-          FullName:'第32届全国互联网顶尖人才大会',
-          chair:'Root',
-          pcMembers:[
-            'a','b','c'
-          ],
-          authors:[
-            'a','b'
-          ],
-          state:'已通过',
-          ShortName:'互联网大会',
-          BeginTime:'2019-10-18',
-          ContributeDDL:'2019-11-12',
-          ReleaseResultTime:'2019-12-3',
-          Place:'上海',
-          topic:['吃播','美食'],
         },
         //role表示当前用户在当前会议中的角色，如果他自己是chair的话，投稿功能是禁用的
         role:'',

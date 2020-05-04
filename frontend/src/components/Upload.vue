@@ -142,24 +142,13 @@
         },
         options:countries,
         sectorOption:sectors,
-        meetingTags:['标签1','标签2','标签3','标签4',],
+        meetingTags:[],
 
         fileList:[],
         form: {
           title: '',
           extract: '',
-          writer:[{
-                 writerName:'第一作者',
-                 sector:'复旦大学',
-                 country:'Canada',
-                 email:'333@qq.com',
-                  },
-                 {
-                   writerName:'第二作者',
-                   sector:'吃饭大学',
-                   country:'Canada',
-                   email:'33344@qq.com',
-                 },
+          writer:[
               ],
 
           topic:[],

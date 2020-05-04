@@ -89,23 +89,8 @@
       return {
         inputFullName: '',
         contactInformation:{
-          shortname:'shortname',
-          fullname:'fullname',
-          deadline:'2020-12-08',
-          resultReleaseTime:'2021-1-1',
-          organizationTime: '2021-2-1',
-          place: 'China',
-          topic:['养生旅','游'],
         },
-        allActiveMeeting:[{
-          shortname:'shortname',
-          fullname:'fullname',
-          deadline:'2020-12-08',
-          resultReleaseTime:'2021-1-1',
-          organizationTime: '2021-2-1',
-          place: 'China',
-          topic:['养生旅','游'],
-        },],
+        allActiveMeeting:[],
         dialog_visible:false,
       };
     },

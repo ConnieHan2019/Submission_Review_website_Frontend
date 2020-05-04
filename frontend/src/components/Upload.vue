@@ -20,12 +20,60 @@
                     show-word-limit
           ></el-input>
         </el-form-item>
+
         <el-form-item label="文章作者" prop="writer">
-          <el-input type="textarea"
-                    v-model="form.writer"
-                    autosize
-                    placeholder="请添加该篇文章的作者"
-          ></el-input>
+            <el-tag
+              type="info"
+              v-for="iwriter in form.writer"
+              :disable-transitions="false"
+              :key="iwriter.writerName"
+              closable
+              @close="deleteWriter(iwriter)"
+            >
+              {{iwriter.writerName}}
+            </el-tag>
+          
+          <el-button type="text"
+                     @click="openAddWindow()"
+          >点击添加作者</el-button>
+          <el-dialog
+            title="作者信息"
+            :visible.sync="dialogFormVisible"
+            center>
+            <el-form :model="temp">
+              <el-form-item label="作者姓名" prop="iname" >
+                <el-input type="text" v-model="temp.writerName"
+                          auto-complete="off" placeholder="username,e.g. rjgc2020" ></el-input>
+              </el-form-item>
+              <el-form-item label="单位" prop="isector" >
+                <el-cascader v-model="temp.sector"
+                             :options="sectorOption"
+                             :props="{ expandTrigger: 'hover' }"
+                             placeholder="sector"
+                             style='width:100%'
+                             :show-all-levels=false
+                ></el-cascader>
+              </el-form-item>
+              <el-form-item label="国家" prop="icountry" >
+                <el-cascader v-model="temp.country"
+                             :options="options"
+                             :props="{ expandTrigger: 'hover' }"
+                             placeholder="country"
+                             style='width:100%'
+                             :show-all-levels=false
+                ></el-cascader>
+              </el-form-item>
+              <el-form-item label="邮箱" prop="iemail">
+                <el-input type="email" v-model="temp.email"
+                          auto-complete="off" placeholder="email" ></el-input>
+              </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+              <el-button @click="dialogFormVisible = false">取 消</el-button>
+              <el-button type="primary" @click="addWriter(temp)">确 定</el-button>
+            </div>
+          </el-dialog>
+
         </el-form-item>
 
         <el-form-item label="论文标签" prop="topic">
@@ -77,23 +125,54 @@
 </template>
 
 <script>
+  import {emailValid} from '../assets/js/dataValid';
+  import {countries} from '../assets/js/countries';
+  import {sectors} from '../assets/js/sectors';
+
   export default {
     name: "Upload",
     data() {
       return {
-        fileList:[],
+        dialogFormVisible: false,
+        temp:{
+          writerName:'',
+          sector:'',
+          country:'',
+          email:'',
+        },
+        options:countries,
+        sectorOption:sectors,
         meetingTags:['标签1','标签2','标签3','标签4',],
+
+        fileList:[],
         form: {
           title: '',
           extract: '',
-          writer:[],
+          writer:[{
+                 writerName:'第一作者',
+                 sector:'复旦大学',
+                 country:'Canada',
+                 email:'333@qq.com',
+                  },
+                 {
+                   writerName:'第二作者',
+                   sector:'吃饭大学',
+                   country:'Canada',
+                   email:'33344@qq.com',
+                 },
+              ],
+
           topic:[]
         },
       rules: {
         title: [{required: true, message: '', trigger: 'blur'}],
         extract: [{required: true, message: '', trigger: 'blur'}],
         writer: [{required: true, message: '', trigger: 'blur'}],
-        topic: [{required: true, message: '', trigger: 'blur'}]
+        topic: [{required: true, message: '', trigger: 'blur'}],
+        iname: [{required: true, message: '', trigger: 'blur'}],
+        isector: [{required: true, message: '', trigger: 'blur'}],
+        icountry: [{required: true, message: '', trigger: 'blur'}],
+        iemail: [{required: true, message: '', trigger: 'blur'}, {validator: emailValid, trigger: 'blur'}],
       }
       }
     },
@@ -118,6 +197,17 @@
     },
 
     methods: {
+      deleteWriter(iwriter) {
+        this.form.writer.splice(this.form.writer.indexOf(iwriter), 1);
+      },
+      openAddWindow(){
+        this.dialogFormVisible = true
+      },
+      addWriter(iwriter){
+        this.form.writer.push(iwriter);
+        this.dialogFormVisible = false
+      },
+
       handleClose(tag) {
         this.form.topic.splice(this.form.topic.indexOf(tag), 1);
         //把删掉的标签扔回未选里面去

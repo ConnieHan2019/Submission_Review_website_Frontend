@@ -23,6 +23,16 @@
           <div class="text item">
             <b>会议举办日期</b><span class="para">{{contactInformation.organizationTime}}</span>
           </div>
+          <div class="text item">
+            <b>会议标签</b>
+            <el-tag
+              :key="tag"
+              v-for="tag in contactInformation.topic"
+              :disable-transitions="false"
+            >
+              {{tag}}
+            </el-tag>
+          </div>
           <el-button type="primary" class="enterMeetingBt" @click="seeDetail()">进入会议</el-button>
         </div>
       </div>
@@ -47,6 +57,17 @@
           <div class="text item">
             <b>会议举办地点</b><span class="para">{{met.place}}</span>
           </div>
+          <div class="text item">
+            <b>会议标签</b>
+            <el-tag
+              :key="tag"
+              v-for="tag in met.topic"
+              :disable-transitions="false"
+            >
+              {{tag}}
+            </el-tag>
+          </div>
+
           <el-button type="primary" class="enterMeetingBt" @click="seeDetailFromRecommend(met.fullname)">进入会议</el-button>
         </div>
       </div>
@@ -67,8 +88,24 @@
     data() {
       return {
         inputFullName: '',
-        contactInformation:{},
-        allActiveMeeting:[],
+        contactInformation:{
+          shortname:'shortname',
+          fullname:'fullname',
+          deadline:'2020-12-08',
+          resultReleaseTime:'2021-1-1',
+          organizationTime: '2021-2-1',
+          place: 'China',
+          topic:['养生旅','游'],
+        },
+        allActiveMeeting:[{
+          shortname:'shortname',
+          fullname:'fullname',
+          deadline:'2020-12-08',
+          resultReleaseTime:'2021-1-1',
+          organizationTime: '2021-2-1',
+          place: 'China',
+          topic:['养生旅','游'],
+        },],
         dialog_visible:false,
       };
     },
@@ -147,6 +184,9 @@
 </script>
 
 <style scoped>
+  .el-tag{
+    margin-right: 10px;
+  }
   #allMeetingPage{
     padding-top: 100px;
     padding-left: 10px;

@@ -13,7 +13,7 @@
   style="margin-bottom:10px;">
 </el-input>
         <div>
-          <b style="margin-right: 40px;color: #c69500">论文状态：<span>{{essay.status}}</span></b>
+          <b style="margin-right: 40px;color: #c69500">论文状态：<span style="color: #24fa20">{{essay.status}}</span></b>
           <el-button @click="edit(essay.title)">编辑</el-button>
         </div>
 

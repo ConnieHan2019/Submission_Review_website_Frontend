@@ -32,7 +32,7 @@
             >
               {{iwriter.writerName}}
             </el-tag>
-          
+
           <el-button type="text"
                      @click="openAddWindow()"
           >点击添加作者</el-button>
@@ -40,7 +40,7 @@
             title="作者信息"
             :visible.sync="dialogFormVisible"
             center>
-            <el-form :model="temp">
+            <el-form :ref="temp" :model="temp" :rules="windowRules">
               <el-form-item label="作者姓名" prop="iname" >
                 <el-input type="text" v-model="temp.writerName"
                           auto-complete="off" placeholder="username,e.g. rjgc2020" ></el-input>
@@ -162,13 +162,15 @@
                  },
               ],
 
-          topic:[]
+          topic:[],
         },
       rules: {
         title: [{required: true, message: '', trigger: 'blur'}],
         extract: [{required: true, message: '', trigger: 'blur'}],
         writer: [{required: true, message: '', trigger: 'blur'}],
         topic: [{required: true, message: '', trigger: 'blur'}],
+      },
+      windowRules:{
         iname: [{required: true, message: '', trigger: 'blur'}],
         isector: [{required: true, message: '', trigger: 'blur'}],
         icountry: [{required: true, message: '', trigger: 'blur'}],

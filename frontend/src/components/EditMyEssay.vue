@@ -5,7 +5,7 @@
       <el-form :ref="form" :model="form" label-width="80px" :rules="rules">
         <el-form-item label="论文标题" prop="title">
           <el-input type="text"
-                    v-model="form.title"
+                    v-model="this.$route.query.title"
                     placeholder="请输入论文标题"
                     maxlength="50"
                     show-word-limit
@@ -21,18 +21,73 @@
           ></el-input>
         </el-form-item>
         <el-form-item label="文章作者" prop="writer">
-          <el-input type="textarea"
-                    v-model="form.writer"
-                    autosize
-                    placeholder="请添加该篇文章的作者"
-          ></el-input>
-        </el-form-item>
+          <el-tag
+            type="info"
+            v-for="iwriter in form.writer"
+            :disable-transitions="false"
+            :key="iwriter.writerName"
+            closable
+            @close="deleteWriter(iwriter)"
+          >
+            {{iwriter.writerName}}
+          </el-tag>
 
+          <el-button type="text"
+                     @click="openAddWindow()"
+          >点击添加作者</el-button>
+          <el-dialog
+            title="作者信息"
+            :visible.sync="dialogFormVisible"
+            center>
+            <el-form :ref="temp" :model="temp" :rules="windowRules">
+              <el-form-item label="作者姓名" prop="iname" >
+                <el-input type="text" v-model="temp.writerName"
+                          auto-complete="off" placeholder="username,e.g. rjgc2020" ></el-input>
+              </el-form-item>
+              <el-form-item label="单位" prop="isector" >
+                <el-cascader v-model="temp.sector"
+                             :options="sectorOption"
+                             :props="{ expandTrigger: 'hover' }"
+                             placeholder="sector"
+                             style='width:100%'
+                             :show-all-levels=false
+                ></el-cascader>
+              </el-form-item>
+              <el-form-item label="国家" prop="icountry" >
+                <el-cascader v-model="temp.country"
+                             :options="options"
+                             :props="{ expandTrigger: 'hover' }"
+                             placeholder="country"
+                             style='width:100%'
+                             :show-all-levels=false
+                ></el-cascader>
+              </el-form-item>
+              <el-form-item label="邮箱" prop="iemail">
+                <el-input type="email" v-model="temp.email"
+                          auto-complete="off" placeholder="email" ></el-input>
+              </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+              <el-button @click="dialogFormVisible = false">取 消</el-button>
+              <el-button type="primary" @click="addWriter(temp)">确 定</el-button>
+            </div>
+          </el-dialog>
+
+        </el-form-item>
+        <label>历史论文标签</label>
+        <el-tag
+          type="info"
+          :key="tag"
+          v-for="tag in form.topic"
+          :disable-transitions="false"
+          >
+          {{tag}}
+        </el-tag>
         <el-form-item label="论文标签" prop="topic">
           <div class="window" id="inputTopic" style="margin-bottom:25px">
             <el-tag
               :key="tag"
-              v-for="tag in topic"
+              v-for="tag in form.topic"
               closable
               :disable-transitions="false"
               @close="handleClose(tag)">
@@ -67,7 +122,7 @@
             :on-remove="handleRemove"
             :file-list="fileList"
             :auto-upload="false">
-            <el-button slot="trigger" size="small" type="primary">重新选取选取文件</el-button>
+            <el-button slot="trigger" size="small" type="primary">重新选取文件</el-button>
             <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload(form)">上传到服务器</el-button>
           </el-upload>
         </el-form-item>
@@ -77,60 +132,102 @@
 </template>
 
 <script>
+  import {emailValid} from '../assets/js/dataValid';
+  import {countries} from '../assets/js/countries';
+  import {sectors} from '../assets/js/sectors';
+
   export default {
     name: "EditMyEssay",
     data() {
       return {
+        dialogFormVisible: false,
+        temp:{
+          writerName:'',
+          sector:'',
+          country:'',
+          email:'',
+        },
+        options:countries,
+        sectorOption:sectors,
+
+
         fileList:[],
-        meetingTags:['标签1','标签2','标签3','标签4',],
-        topic:[],
         form: {
-          title: 'aaa',
-          extract: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-          writer:[],
+          extract: '',
+          writer:[{
+            writerName:'第一作者',
+            sector:'复旦大学',
+            country:'Canada',
+            email:'333@qq.com',
+          },
+            {
+              writerName:'第二作者',
+              sector:'吃饭大学',
+              country:'Canada',
+              email:'33344@qq.com',
+            },
+          ],
+          topic:[],
           meetingTags:['标签1','标签2','标签3','标签4',],
         },
         rules: {
           title: [{required: true, message: '', trigger: 'blur'}],
           extract: [{required: true, message: '', trigger: 'blur'}],
           writer: [{required: true, message: '', trigger: 'blur'}],
-          topic: [{required: true, message: '', trigger: 'blur'}]
+          topic: [{required: true, message: '', trigger: 'blur'}],
+        },
+        windowRules:{
+          iname: [{required: true, message: '', trigger: 'blur'}],
+          isector: [{required: true, message: '', trigger: 'blur'}],
+          icountry: [{required: true, message: '', trigger: 'blur'}],
+          iemail: [{required: true, message: '', trigger: 'blur'}, {validator: emailValid, trigger: 'blur'}],
         }
       }
     },
 
     created:function(){
-      this.$axios.post('/editAuthorEssay',{
+      this.$axios.post('/getHistoryUpload',{
         //会议全名
-        fullname:'会议全名',
+        fullname:this.$route.query.name,
         //投稿人的名字
-        author:'投稿人',
-        //投稿的文章名
-        essayTitle:'投稿文章名'
+        author:this.$store.state.userDetails,
+        //投稿文章的标题
+        title:this.$route.query.title,
       })
         .then(resp => {
-          if(resp.status === 200 && resp.data.hasOwnProperty('essaySubmitInformation')){
-            this.form=resp.data.essaySubmitInformation
+          if(resp.status === 200 && resp.data.hasOwnProperty('historyUpload')){
+            this.form = resp.data.historyUpload
           }
           else{
-            console.log('返回投稿信息错误')
+            console.log('返回历史上传错误')
             console.log(resp)
           }
         })
         .catch(error => {
-          console.log('投稿信息加载失败')
+          console.log('历史上传加载失败')
           console.log(error)
         })
     },
 
     methods: {
+      deleteWriter(iwriter) {
+        this.form.writer.splice(this.form.writer.indexOf(iwriter), 1);
+      },
+      openAddWindow(){
+        this.dialogFormVisible = true
+      },
+      addWriter(iwriter){
+        this.form.writer.push(iwriter);
+        this.dialogFormVisible = false
+      },
+
       handleClose(tag) {
-        this.topic.splice(this.topic.indexOf(tag), 1);
+        this.form.topic.splice(this.form.topic.indexOf(tag), 1);
         //把删掉的标签扔回未选里面去
         this.form.meetingTags.push(tag);
       },
       addTopic(str){
-        this.topic.push(str);
+        this.form.topic.push(str);
         //标签被选过一次就不能再重复选了
         this.form.meetingTags.splice(this.form.meetingTags.indexOf(str), 1);
 
@@ -156,7 +253,7 @@
         formData.append('authorname',this.$store.state.userDetails)
         formData.append('summary',this.form.extract)
         formData.append('writer',this.form.writer)
-        formData.append('topic',this.topic)
+        formData.append('topic',this.form.topic)
         formData.append('meetingFullname',this.$route.query.name)
         console.log(formData.get('file'))
         this.$axios.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } })

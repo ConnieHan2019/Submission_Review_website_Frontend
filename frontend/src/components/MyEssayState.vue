@@ -12,7 +12,7 @@
   :disabled="true"
   style="margin-bottom:10px;">
 </el-input>
-        <el-button @click="edit()">编辑</el-button>
+        <el-button @click="edit(essay.title)">编辑</el-button>
       </div>
       <el-divider></el-divider>
       <el-button type="primary" class="enterMeetingBt" @click="seeDetail()">进入会议</el-button>
@@ -70,8 +70,8 @@
           })
       },
       methods: {
-          edit(){
-            this.$router.push({path: '/editMyEssay',query:{name:this.contactName}});
+          edit(essayTitle){
+            this.$router.push({path: '/editMyEssay',query:{name:this.contactName,title:essayTitle}});
           },
         seeDetail(){
           this.$router.push({path: '/meetingDetail',query:{name:this.contactName}});

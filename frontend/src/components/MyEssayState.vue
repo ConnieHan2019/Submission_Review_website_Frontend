@@ -4,7 +4,7 @@
     <div class="essayBlock">
       <h5>会议主题：<span style="color:#5b25ff;">{{contactName}}</span></h5><br>
       <div v-for='essay in essays' v-bind:key="essay.title" v-bind:index="essay.title" class="passageBlock">
-      <b>{{essay.title}}</b>
+      <b class="tit">{{essay.title}}</b>
 <el-input
   type="textarea"
   :autosize="{ minRows: 2}"
@@ -12,7 +12,11 @@
   :disabled="true"
   style="margin-bottom:10px;">
 </el-input>
-        <el-button @click="edit(essay.title)">编辑</el-button>
+        <div>
+          <b style="margin-right: 40px;color: #c69500">论文状态：<span>{{essay.status}}</span></b>
+          <el-button @click="edit(essay.title)">编辑</el-button>
+        </div>
+
       </div>
       <el-divider></el-divider>
       <el-button type="primary" class="enterMeetingBt" @click="seeDetail()">进入会议</el-button>
@@ -26,17 +30,16 @@
         name: "MyEssayState",
       data(){
         return{
-          //这个会议的状态： 审核中、已通过、已驳回
-          myEssayState:'',
           essays:[
             {
               title:'专门为牛会写的文章',
-              summary:'牛牛的会议'
+              summary:'牛牛的会议',
+              status:'待审核'
             },
             {
               title:'专门为牛会写的第二篇文章',
-              summary:'牛牛的会议'
-
+              summary:'牛牛的会议',
+              status:'已驳回',
             }
           ],
         }
@@ -106,4 +109,8 @@
   border:1px solid lightgrey;
   border-radius: 4px;
 }
+  .tit{
+    margin-bottom: 10px;
+    color:#0c5460 ;
+  }
 </style>

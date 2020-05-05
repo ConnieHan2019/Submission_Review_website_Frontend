@@ -36,6 +36,7 @@
 		></pdf>
 	</div>
           <el-button-group style="margin-top:20px">
+
             <el-button type="success" @click='passEssay(aus.name,aus.title)'>通过</el-button>
             <el-button type="danger" @click='refuseEssay(aus.name,aus.title)'>驳回</el-button>
           </el-button-group>
@@ -56,6 +57,9 @@ import pdf from 'vue-pdf'
       components:{pdf},
       data() {
         return {
+
+          essayState:'',
+
           drawer:false,
           pageCount:[10,10,10],
           authors:  [
@@ -140,7 +144,12 @@ import pdf from 'vue-pdf'
             type: 'warning'
           });
         },
+        //跳转到审稿信息提交界面
+        toEdit(name,title){
+          this.$router.push({path: '/readOver',query:{contactName:name,essayTitle:title}});
+        },
         passEssay(name,title){
+
           this.$axios.post('/passEssay',{
           username: this.$store.state.userDetails,
           contactName:this.contactName,
@@ -148,12 +157,23 @@ import pdf from 'vue-pdf'
           essayTitle:title
           })
           .then(resp => {
-            if(resp.status === 200){
-          this.$message({
-            showClose: true,
-            message: '已通过该论文',
-            type: 'success'
-          });
+            if(resp.status === 200&&resp.data.hasOwnProperty("theEssayState")){
+              this.essayState=resp.data.theEssayState
+              if(this.essayState==="1"){
+                this.$message({
+                  showClose: true,
+                  message: '已审核过该论文，无需重复审核！',
+                  type: 'success'
+                });
+              }
+              else{
+                this.$message({
+                  showClose: true,
+                  message: '已驳回该论文，将跳转至审核信息提交页面！',
+                  type: 'success'
+                });
+                this.toEdit(this.contactName,title)
+              }
             }
             else{
           this.$message({
@@ -180,12 +200,24 @@ import pdf from 'vue-pdf'
           essayTitle:title
           })
           .then(resp => {
-            if(resp.status === 200){
-          this.$message({
-            showClose: true,
-            message: '已驳回该论文',
-            type: 'success'
-          });
+            if(resp.status === 200&&resp.data.hasOwnProperty("theEssayState")){
+              this.essayState=resp.data.theEssayState
+              if(this.essayState==="1"){
+                this.$message({
+                  showClose: true,
+                  message: '已审核过该论文，无需重复审核！',
+                  type: 'success'
+                });
+              }
+              else{
+                this.$message({
+                  showClose: true,
+                  message: '已驳回该论文，将跳转至审核信息提交页面！',
+                  type: 'success'
+                });
+                this.toEdit(this.contactName,title)
+              }
+
             }
             else{
           this.$message({

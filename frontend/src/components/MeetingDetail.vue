@@ -62,8 +62,6 @@
 
 
             </el-footer>
-            <p>//pc member提交审稿信息的部分我暂时不知道链接到哪里，audit文件我暂时就不修改了，这个按钮只是测试pc member 审稿信息之用，后面要删掉的</p>
-            <el-button type="info" @click="test()">去具体的审稿页面看看</el-button>
 
           </el-container>
         </el-container>
@@ -113,9 +111,6 @@
       };
     },
     methods:{
-      test(){
-        this.$router.push({path: '/readOver'});
-      },
       up(){
         this.$router.push({path: '/upload',query:{name:this.$route.query.name}});
       }

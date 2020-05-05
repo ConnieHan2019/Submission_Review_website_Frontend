@@ -1,6 +1,8 @@
 <template>
     <div id="examInformation">
       <div id="page">
+        <p>会议名:{{this.$route.query.contactName}}</p>
+        <p>文章标题:{{this.$route.query.essayTitle}}</p>
         <el-form :ref="commentForm" :model="commentForm" label-width="80px" :rules="rules">
           <el-form-item label="稿件评分" prop="score">
             <el-cascader v-model="commentForm.score"
@@ -110,8 +112,8 @@
                 if(valid){
                   this.$axios.post('/sendCommentInformation', {
                     PCmemberFullName:this.$store.state.userDetails,
-                    paperTitle:'文章标题',
-                    meetingFullname:'会议主全名',
+                    paperTitle:this.$route.query.essayTitle,
+                    meetingFullname:this.$route.query.contactName,
                     reviewStatus:1,
                     Score:this.commentForm.score,
                     Confidence:this.commentForm.confidence,

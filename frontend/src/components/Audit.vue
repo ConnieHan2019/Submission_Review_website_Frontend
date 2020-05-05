@@ -11,7 +11,7 @@
   :visible.sync="drawer"
   :with-header="true"
   size="20%">
-  <ul><li v-for="(aus,index) in authors" :key='"menu"+index' style="text-align: left;padding-left: 20px;"><el-link type="primary" :href='"#"+index' style="font-size:20px"><i class="el-icon-caret-right"></i>{{aus.title}}</el-link></li></ul>
+  <ul><li v-for="(aus,index) in authors" :key='"menu"+index' style="text-align: left;padding-left: 20px;" @click='scrollToEssay(index)'><el-link type="primary" style="font-size:20px"><i class="el-icon-caret-right" ></i>{{aus.title}}</el-link></li></ul>
 </el-drawer>
         <el-divider></el-divider>
         <div  v-for="(aus,index) in authors"  :id="index" :key='aus.title' style="margin-bottom:50px">
@@ -62,7 +62,10 @@ import pdf from 'vue-pdf'
                 {name: 'Sam', extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxsssssssssssssssssssssssssssssssssssssssssssssssssxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',link: '',title:'wssdffl1'},
                 {name: 'AEFam', extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxsssssssssssssssssssssssssssssssssssssssssssssssssxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',link: '',title:'dgdfhdh'},
                 {name: 'Ssdfam', extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxsssssssssssssssssssssssssssssssssssssssssssssssssxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',link: '',title:'retrdfhdfg'},
-
+{name: 'AEFam', extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxsssssssssssssssssssssssssssssssssssssssssssssssssxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',link: '',title:'sdfdsdsgg'},
+                {name: 'sefdfsd', extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxsssssssssssssssssssssssssssssssssssssssssssssssssxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',link: '',title:'dgdfggggrrhdh'},
+                {name: 'AwerhkhjkEFam', extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxsssssssssssssssssssssssssssssssssssssssssssssssssxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',link: '',title:'dgdeertefhdh'},
+                
     ]
         }
       },
@@ -201,17 +204,8 @@ import pdf from 'vue-pdf'
             console.log(error)
           })
         },
-        lastPage(index){
-          alert('last')
-          alert(index)
-          this.currentPage[index]--;
-        },
-        nextPage(index){
-          alert('next')
-          alert(index)
-          //alert(this.currentPage[index])
-          this.currentPage[index]++;
-          //alert(this.currentPage[index])
+        scrollToEssay(index){
+          document.getElementById(index).scrollIntoView();
         }
       }
     }

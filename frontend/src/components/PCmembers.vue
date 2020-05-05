@@ -181,14 +181,15 @@ export default{
           this.$message("请选择一名以上用户")
         }
       },
-      startReview(){
+      startReview(wayOfAssignment){
         // this.$emit('startReview')
           if(this.state === 2){
               if(new Date(this.resultReleaseTime).getTime() > new Date().getTime()){
                   if(this.confirmedPCmembers.length >= 3){
                       //上面三个条件都满足才发送请求
               this.$axios.post('startReview',{
-                  contactName:this.contactName
+                  contactName:this.contactName,
+                  way:wayOfAssignment//0代表基于topic，1代表基于负担
               })
               .then(resp => {
                   if (resp.status === 200){
@@ -230,10 +231,12 @@ export default{
           }
       },
         topic(){
-            alert('基于topic相关度')
+            //alert('基于topic相关度')
+            this.startReview(0)
         },
         load(){
-            alert('基于审稿平均负担')
+            //alert('基于审稿平均负担')
+            this.startReview(1)
         }
     }
 }
@@ -353,8 +356,6 @@ export default{
 <el-popconfirm
   confirmButtonText='基于话题相关度'
   cancelButtonText='基于审稿平均负担'
-  icon="el-icon-info"
-  iconColor="red"
   title="选择分配方式"
   @onConfirm='topic'
   @onCancel='load'

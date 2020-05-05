@@ -25,6 +25,12 @@ export default {
       }
   },
   created:function(){
+    this.$axios.post('/admin',{
+      adminName:this.$store.state.userDetails
+    })
+    .then(resp => {
+      if (resp.status === 200 && resp.data.hasOwnProperty("respContactData")){
+        this.contactData = resp.data.respContactData       
     for(var i = 0;i < this.contactData.length; i++){
       var temp = "";
       var arrTopic = this.contactData[i].topic;
@@ -36,12 +42,6 @@ export default {
       }
       this.contactData[i].topic = temp;
     }
-    this.$axios.post('/admin',{
-      adminName:this.$store.state.userDetails
-    })
-    .then(resp => {
-      if (resp.status === 200 && resp.data.hasOwnProperty("respContactData")){
-        this.contactData = resp.data.respContactData
       }
       else{
         this.$message.error('Admin error,try again')

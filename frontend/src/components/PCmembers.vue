@@ -228,7 +228,13 @@ export default{
           else{
               this.$message.error("未开启会议，先去开启会议吧~")
           }
-      }
+      },
+        topic(){
+            alert('基于topic相关度')
+        },
+        load(){
+            alert('基于审稿平均负担')
+        }
     }
 }
 </script>
@@ -344,7 +350,18 @@ export default{
   </el-table>
   </el-collapse-item>
 </el-collapse> 
-  <el-button type="info" icon="el-icon-message" @click='startReview' style='float:right; margin-top:10px'>开启审稿</el-button>
+<el-popconfirm
+  confirmButtonText='基于话题相关度'
+  cancelButtonText='基于审稿平均负担'
+  icon="el-icon-info"
+  iconColor="red"
+  title="选择分配方式"
+  @onConfirm='topic'
+  @onCancel='load'
+>
+  <el-button  slot="reference" type="info" icon="el-icon-message" style='float:right; margin-top:10px'>开启审稿</el-button>
+  <el-button>删除</el-button>
+</el-popconfirm>
 </div>
 </div>
 </template>

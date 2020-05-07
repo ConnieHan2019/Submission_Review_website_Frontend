@@ -75,15 +75,7 @@
           </el-dialog>
 
         </el-form-item>
-        <label>历史论文标签</label>
-        <el-tag
-          type="info"
-          :key="tag"
-          v-for="tag in form.topic"
-          :disable-transitions="false"
-          >
-          {{tag}}
-        </el-tag>
+        
         <el-form-item label="论文标签" prop="topic">
           <div class="window" id="inputTopic" style="margin-bottom:25px">
             <el-tag

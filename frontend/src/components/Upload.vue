@@ -41,11 +41,11 @@
             :visible.sync="dialogFormVisible"
             center>
             <el-form :ref="temp" :model="temp" :rules="windowRules">
-              <el-form-item label="作者姓名" prop="iname" >
+              <el-form-item label="作者姓名" prop="writerName" >
                 <el-input type="text" v-model="temp.writerName"
-                          auto-complete="off" placeholder="username,e.g. rjgc2020" ></el-input>
+                          auto-complete="off" placeholder="作者姓名" ></el-input>
               </el-form-item>
-              <el-form-item label="单位" prop="isector" >
+              <el-form-item label="单位" prop="sector" >
                 <el-cascader v-model="temp.sector"
                              :options="sectorOption"
                              :props="{ expandTrigger: 'hover' }"
@@ -54,7 +54,7 @@
                              :show-all-levels=false
                 ></el-cascader>
               </el-form-item>
-              <el-form-item label="国家" prop="icountry" >
+              <el-form-item label="国家" prop="country" >
                 <el-cascader v-model="temp.country"
                              :options="options"
                              :props="{ expandTrigger: 'hover' }"
@@ -63,7 +63,7 @@
                              :show-all-levels=false
                 ></el-cascader>
               </el-form-item>
-              <el-form-item label="邮箱" prop="iemail">
+              <el-form-item label="邮箱" prop="email">
                 <el-input type="email" v-model="temp.email"
                           auto-complete="off" placeholder="email" ></el-input>
               </el-form-item>
@@ -160,10 +160,10 @@
         topic: [{required: true, message: '', trigger: 'blur'}],
       },
       windowRules:{
-        iname: [{required: true, message: '', trigger: 'blur'}],
-        isector: [{required: true, message: '', trigger: 'blur'}],
-        icountry: [{required: true, message: '', trigger: 'blur'}],
-        iemail: [{required: true, message: '', trigger: 'blur'}, {validator: emailValid, trigger: 'blur'}],
+        writerName: [{required: true, message: '', trigger: 'blur'}],
+        sector: [{required: true, message: '', trigger: 'blur'}],
+        country: [{required: true, message: '', trigger: 'blur'}],
+        email: [{required: true, message: '', trigger: 'blur'}, {validator: emailValid, trigger: 'blur'}],
       }
       }
     },
@@ -194,9 +194,21 @@
       openAddWindow(){
         this.dialogFormVisible = true
       },
-      addWriter(iwriter){
-        this.form.writer.push(iwriter);
-        this.dialogFormVisible = false
+      addWriter(formName){
+        this.$refs[formName].validate(valid =>{
+          if (valid){
+            this.form.writer.push(formName);
+            this.dialogFormVisible = false
+          }
+          else{
+            this.$message({
+              type:'warning',
+              showClose: true,
+              message: '表单格式错误'
+            })
+          }
+          }
+        )
       },
 
       handleClose(tag) {

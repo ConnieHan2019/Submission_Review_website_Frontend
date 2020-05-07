@@ -216,9 +216,21 @@
       openAddWindow(){
         this.dialogFormVisible = true
       },
-      addWriter(iwriter){
-        this.form.writer.push(iwriter);
-        this.dialogFormVisible = false
+      addWriter(formName){
+        this.$refs[formName].validate(valid =>{
+            if (valid){
+              this.form.writer.push(formName);
+              this.dialogFormVisible = false
+            }
+            else{
+              this.$message({
+                type:'warning',
+                showClose: true,
+                message: '表单格式错误'
+              })
+            }
+          }
+        )
       },
 
       handleClose(tag) {

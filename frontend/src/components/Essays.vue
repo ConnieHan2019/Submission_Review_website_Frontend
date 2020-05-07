@@ -12,8 +12,8 @@ export default{
             show:1,
             essaysData:[{
                 title:'title1',
-                writer:'zyr,hty',
-                topic:'Beauty/Life/Food',
+                writer:['zyr','hty'],
+                topic:['Beauty','Life','Food'],
                 author:'Mary',
                 assignment:[{
                     name:'hhh',
@@ -28,8 +28,8 @@ export default{
                 state:'审核中'
             },{
                 title:'title2',
-                writer:'zyr,hty',
-                topic:'Beauty/Life/Food',
+                writer:['zyr','hty'],
+                topic:['Beauty','Life','Food'],
                 author:'Mary',
                 assignment:[{
                     name:'hhh',
@@ -44,8 +44,8 @@ export default{
                 state:'审核中'
             },{
                 title:'title3',
-                writer:'zyr,hty',
-                topic:'Beauty/Life/Food',
+                writer:['zyr','hty'],
+                topic:['Beauty','Life','Food'],
                 author:'Mary',
                 assignment:[{
                     name:'hhh',
@@ -60,8 +60,8 @@ export default{
                 state:'审核中'
             },{
                 title:'title4',
-                writer:'zyr,hty',
-                topic:'Beauty/Life/Food',
+                writer:['zyr','hty'],
+                topic:['Beauty','Life','Food'],
                 author:'Mary',
                 assignment:[{
                     name:'hhh',
@@ -74,8 +74,7 @@ export default{
                     state:'已审核'
                 }],
                 state:'已完成'
-            }],
-            assignment:[]
+            }]
         }
     },
     watch:{
@@ -104,6 +103,26 @@ export default{
         }
     },
     created:function(){
+    for(var i = 0;i < this.essaysData.length; i++){
+      var temp = "";
+      var arrTopic = this.essaysData[i].topic;
+      for(var j = 0;j < arrTopic.length; j++){
+        if(j > 0){
+          temp += '/';
+        }
+        temp += arrTopic[j];
+      }
+      this.essaysData[i].topic = temp;
+      temp = "";
+      var arrWriter = this.essaysData[i].writer;
+      for(var j = 0;j < arrWriter.length; j++){
+        if(j > 0){
+          temp += ',';
+        }
+        temp += arrWriter[j];
+      }
+      this.essaysData[i].writer = temp;
+    }
         this.$axios.post('/essaysData',{
             contactFullName:this.contactName,
             contactState:this.state

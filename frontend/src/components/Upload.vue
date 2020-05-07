@@ -227,6 +227,9 @@
           if(valid){
              this.$refs.upload.submit();
           }
+          else{
+            this.$message.error('请提交正确的格式')
+          }
         })
       },
       handleRemove(file, fileList) {

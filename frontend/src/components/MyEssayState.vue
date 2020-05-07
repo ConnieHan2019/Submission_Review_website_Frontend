@@ -13,8 +13,47 @@
   style="margin-bottom:10px;">
 </el-input>
         <div>
-          <b style="margin-right: 40px;color: #c69500">论文状态：<span style="color: #24fa20">{{essay.status}}</span></b>
-          <el-button @click="edit(essay.title)">编辑</el-button>
+          <el-button type="info" @click="dialogVisible=true">论文状态：<span style="color: #24fa20">{{essay.status}}</span></el-button>
+         <br>
+<div v-if="essay.status==='待审核'">
+  <el-button @click="edit(essay.title)" style="margin-top: 10px">编辑</el-button>
+</div>
+ <div v-else style="padding: 10px ;">
+   <el-form>
+     <el-form-item label="得分">
+       <el-input
+         type="text"
+         :disabled="true"
+         v-model="essay.score"
+       >
+
+       </el-input>
+     </el-form-item>
+
+     <el-form-item label="confidence">
+       <el-input
+         type="text"
+         :disabled="true"
+         v-model="essay.confidence"
+       >
+
+       </el-input>
+     </el-form-item>
+
+     <el-form-item label="评语">
+       <el-input
+         type="textarea"
+         :disabled="true"
+         v-model="essay.comment"
+       >
+
+       </el-input>
+     </el-form-item>
+   </el-form>
+ </div>
+
+
+
         </div>
 
       </div>
@@ -30,16 +69,23 @@
         name: "MyEssayState",
       data(){
         return{
+          dialogVisible:false,
           essays:[
             {
               title:'专门为牛会写的文章',
               summary:'牛牛的会议',
-              status:'待审核'
+              status:'待审核',
+              score:'1',
+              confidence:'weak',
+              comment:'挺好的'
             },
             {
               title:'专门为牛会写的第二篇文章',
               summary:'牛牛的会议',
               status:'已驳回',
+              score:'-2',
+              confidence:'very weak',
+              comment:'算了，你不是这块料'
             }
           ],
         }

@@ -213,7 +213,17 @@
       addWriter(formName){
         this.$refs[formName].validate(valid =>{
             if (valid){
-              this.form.writer.push(formName);
+              var tmp={
+                writerName:'',
+                sector:'',
+                country:'',
+                email:'',
+              }
+              tmp.writerName=formName.writerName,
+                tmp.sector=formName.sector,
+                tmp.country=formName.country,
+                tmp.email=formName.email,
+                this.form.writer.push(tmp);
               this.dialogFormVisible = false
             }
             else{

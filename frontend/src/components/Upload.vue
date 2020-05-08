@@ -2,6 +2,7 @@
   <div id="uploadWindow">
     <div id="window">
       <p>投稿会议名：<span style="color: #0c5460">{{this.$route.query.name}}</span></p>
+
       <el-form :ref="form" :model="form" label-width="80px" :rules="rules">
         <el-form-item label="论文标题" prop="title">
           <el-input type="text"
@@ -142,15 +143,13 @@
         },
         options:countries,
         sectorOption:sectors,
-        meetingTags:[],
+        meetingTags:['养生','旅游'],
 
         fileList:[],
         form: {
           title: '',
           extract: '',
-          writer:[
-              ],
-
+          writer:[],
           topic:[],
         },
       rules: {
@@ -197,8 +196,18 @@
       addWriter(formName){
         this.$refs[formName].validate(valid =>{
           if (valid){
-            this.form.writer.push(formName);
-            this.dialogFormVisible = false
+            var tmp={
+              writerName:'',
+              sector:'',
+              country:'',
+              email:'',
+            }
+            tmp.writerName=formName.writerName,
+            tmp.sector=formName.sector,
+            tmp.country=formName.country,
+            tmp.email=formName.email,
+            this.form.writer.push(tmp);
+            this.dialogFormVisible = false;
           }
           else{
             this.$message({

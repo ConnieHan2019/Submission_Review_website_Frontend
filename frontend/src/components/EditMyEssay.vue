@@ -5,7 +5,7 @@
       <el-form :ref="form" :model="form" label-width="80px" :rules="rules">
         <el-form-item label="论文标题" prop="title">
           <el-input type="text"
-                    v-model="this.$route.query.title"
+                    v-model="form.title"
                     placeholder="请输入论文标题"
                     maxlength="50"
                     show-word-limit
@@ -146,6 +146,7 @@
 
         fileList:[],
         form: {
+          title:this.$route.query.title,
           extract: '',
           writer:[{
             writerName:'第一作者',

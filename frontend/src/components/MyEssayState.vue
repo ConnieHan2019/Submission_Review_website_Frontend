@@ -12,21 +12,22 @@
   :disabled="true"
   style="margin-bottom:10px;">
 </el-input>
-        <div>
-          <el-button type="info" @click="dialogVisible=true">论文状态：<span style="color: #24fa20">{{essay.status}}</span></el-button>
-         <br>
-<div v-if="essay.status==='待审核'">
+
+<div v-if="essay.meetingState===2">
   <el-button @click="edit(essay.title)" style="margin-top: 10px">编辑</el-button>
 </div>
  <div v-else style="padding: 10px ;">
-   <el-form>
+<el-divider>反馈信息</el-divider>
+   <el-form v-for='aComment in essay.commentSet' v-bind:key="aComment.score" v-bind:index="aComment.score">
+     <el-form-item label="状态">
+       <el-tag>{{aComment.status}}</el-tag>
+     </el-form-item>
      <el-form-item label="得分">
        <el-input
          type="text"
          :disabled="true"
-         v-model="essay.score"
+         v-model="aComment.score"
        >
-
        </el-input>
      </el-form-item>
 
@@ -34,7 +35,7 @@
        <el-input
          type="text"
          :disabled="true"
-         v-model="essay.confidence"
+         v-model="aComment.confidence"
        >
 
        </el-input>
@@ -44,23 +45,22 @@
        <el-input
          type="textarea"
          :disabled="true"
-         v-model="essay.comment"
+         v-model="aComment.comment"
        >
 
        </el-input>
      </el-form-item>
+     <el-divider></el-divider>
    </el-form>
+
  </div>
 
-
-
-        </div>
+      </div>
 
       </div>
       <el-divider></el-divider>
       <el-button type="primary" class="enterMeetingBt" @click="seeDetail()">进入会议</el-button>
     </div>
-  </div>
 
 </template>
 
@@ -74,18 +74,35 @@
             {
               title:'专门为牛会写的文章',
               summary:'牛牛的会议',
-              status:'待审核',
-              score:'1',
-              confidence:'weak',
-              comment:'挺好的'
+              meetingState:3,
+              commentSet:[
+                {
+                  status:'已审核',
+                  score:'1',
+                  confidence:'weak',
+                  comment:'挺好的'
+                },
+                {
+                  status:'已审核',
+                  score:'1',
+                  confidence:'weak',
+                  comment:'挺好的'
+                },
+                {
+                  status:'已审核',
+                  score:'2',
+                  confidence:'weak',
+                  comment:'挺好的'
+                }
+              ],
+
             },
             {
               title:'专门为牛会写的第二篇文章',
               summary:'牛牛的会议',
-              status:'已驳回',
-              score:'-2',
-              confidence:'very weak',
-              comment:'算了，你不是这块料'
+              meetingState:2,
+              commentSet:[],
+
             }
           ],
         }

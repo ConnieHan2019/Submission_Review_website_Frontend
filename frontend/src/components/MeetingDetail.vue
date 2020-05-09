@@ -105,57 +105,81 @@
     data() {
       return {
         verDetailContactData:{
+          FullName:'第32届全国互联网顶尖人才大会',
+          chair:'Root',
+          pcMembers:[
+            'a','b','c'
+          ],
+          authors:[
+            'a','b'
+          ],
+          state:2,//只有当会议状态处于2的时候才能投稿，所以需要获取一下状态
+          ShortName:'互联网大会',
+          BeginTime:'2019-10-18',
+          ContributeDDL:'2019-11-12',
+          ReleaseResultTime:'2019-12-3',
+          Place:'上海',
+          topic:['吃播','美食'],
         },
         //role表示当前用户在当前会议中的角色，如果他自己是chair的话，投稿功能是禁用的
         role:'',
       };
     },
     methods:{
-      up(){
-        this.$router.push({path: '/upload',query:{name:this.$route.query.name}});
-      }
-      //为了方便测试投稿页面的改动我把这个注释掉了，后面写的差不多了再改回来
       // up(){
-      //   this.$axios.post('/judgeRoleInMeeting', {
-      //     //会议的全名
-      //     fullname:this.$route.query.name,
-      //     //用户的名字
-      //     username:this.$store.state.userDetails
-      //   })
-      //     .then(resp => {
-      //       if (resp.status === 200 && resp.data.hasOwnProperty("userRoleInThisConference")) {
-      //         this.role = resp.data.userRoleInThisConference;
-      //         console.log(this.role);
-      //         //判断该用户在该会议中的角色确定是否能投稿
-      //         if(this.role=='chair') {
-      //           this.$message({
-      //             showClose: true,
-      //             message: '你是该会议的会议主席，无法投稿！',
-      //           });
-      //         }
-      //         else{
-      //           this.$router.push({path: '/upload',query:{name:this.$route.query.name}});
-      //         }
-      //       } else {
-      //         this.$message({
-      //           showClose: true,
-      //           message: 'upload error',
-      //           type: 'warning'
-      //         });
-      //         console.log(resp)
-      //       }
-      //     })
-      //     .catch(error => {
-      //       if (error.response) {
-      //         // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-      //         console.log(error.response)
-      //       } else {
-      //         // Something happened in setting up the request that triggered an Error
-      //         console.log('Error', error.message)
-      //       }
-      //       console.log(error.config);
-      //     })
-      // },
+      //   this.$router.push({path: '/upload',query:{name:this.$route.query.name}});
+      // }
+      //为了方便测试投稿页面的改动我把这个注释掉了，后面写的差不多了再改回来
+      up(){
+        this.$axios.post('/judgeRoleInMeeting', {
+          //会议的全名
+          fullname:this.$route.query.name,
+          //用户的名字
+          username:this.$store.state.userDetails
+        })
+          .then(resp => {
+            if (resp.status === 200 && resp.data.hasOwnProperty("userRoleInThisConference")) {
+              this.role = resp.data.userRoleInThisConference;
+              console.log(this.role);
+              //判断该用户在该会议中的角色确定是否能投稿
+              if(this.role=='chair') {
+                this.$message({
+                  showClose: true,
+                  message: '你是该会议的会议主席，无法投稿！',
+                });
+              }
+              else{
+                if(this.verDetailContactData.state===2){
+                  this.$router.push({path: '/upload',query:{name:this.$route.query.name}});
+                }else{
+                  this.$message({
+                    showClose: true,
+                    message: '现在不是投稿时间',
+                    type: 'warning'
+                  });
+                }
+
+              }
+            } else {
+              this.$message({
+                showClose: true,
+                message: 'upload error',
+                type: 'warning'
+              });
+              console.log(resp)
+            }
+          })
+          .catch(error => {
+            if (error.response) {
+              // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+              console.log(error.response)
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.log('Error', error.message)
+            }
+            console.log(error.config);
+          })
+      },
     }
   }
 </script>

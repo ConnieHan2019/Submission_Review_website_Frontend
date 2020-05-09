@@ -63,6 +63,7 @@ export default {
     //   this.invites.splice(this.invites.indexOf(refusedMeetingObject), 1);
     // },
     refuse(refusedMeetingObject){
+
         this.$axios.post('/refuseInvitation', {
           username: this.$store.state.userDetails,
           fullname:refusedMeetingObject.FullName,
@@ -70,7 +71,7 @@ export default {
         })
           .then(resp => {
             if (resp.status === 200 ) {
-            //  this.invites.splice(this.invites.indexOf(refusedMeetingObject), 1);
+              this.invites.splice(this.invites.indexOf(refusedMeetingObject), 1);
               this.$message({
                 showClose: true,
                 message: '已拒绝',
@@ -127,12 +128,14 @@ export default {
         })
           .then(resp => {
             if (resp.status === 200) {
-              this.myTopic.cleanup();
+             // this.myTopic.cleanup();
+              this.myTopic.splice(0,this.myTopic.length)
               this.$message({
                 showClose: true,
                 message: '已同意',
                 type: 'success'
               });
+              this.invites.splice(this.invites.indexOf(agreedMeetingObject), 1);
             } else {
               this.$message({
                 showClose: true,

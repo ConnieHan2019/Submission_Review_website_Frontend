@@ -83,8 +83,8 @@ export default{
             if(val === 3){
                 //post for assignment
         this.$axios.post('/essaysData',{
-            contactFullName:val,
-            contactState:this.state
+            contactFullName:this.contactName,
+            contactState:val
         })
         .then(resp => {
             if(resp.status === 200 && resp.data.hasOwnProperty('respEssaysData')){
@@ -156,7 +156,6 @@ export default{
                 this.$message.error('已过会议举办时间，不能再发布结果')
                 return
             }
-                    this.$emit('releaseResult')
             for(var i = 0; i < this.essaysData.length;i++){
                 if(this.essaysData[i].state === '审核中'){
                     this.$message.error('还有稿件未完成，无法公布结果')
@@ -164,7 +163,7 @@ export default{
                 }
             }
             //发布结果
-            this.axios.post('/releaseResult',{
+            this.$axios.post('/releaseResult',{
                 contactFullName:this.contactName
             })
             .then(resp => {
@@ -172,6 +171,16 @@ export default{
                     this.$message({type:'success',message:'发布成功'})
                     this.$emit('releaseResult')
                 }
+            })
+            .catch(error => {
+                if(error.repsonse){
+                    this.$message.error('发布失败')
+                }
+                else{
+                    this.$message.error('出现了一些错误，请重试')
+                }
+                console.log('发布失败')
+                console.log(error)
             })
         }
     }

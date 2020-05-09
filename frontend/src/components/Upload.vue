@@ -275,7 +275,7 @@
             formData.append('topic',this.form.topic)
             formData.append('meetingFullname',this.$route.query.name)
             console.log(formData.get('file'))
-            this.$axios.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+            this.$axios.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data',produces:"application/json; utf-8" } })
             .then(resp => {
               if(resp.status === 200){
                 this.$message({

@@ -104,7 +104,7 @@ export default {
 
 
     agree(agreedMeetingObject){
-      if(myTopic.length===0){
+      if(this.myTopic.length===0){
         this.$message({
           showClose: true,
           message: '请至少选择一个Topic',
@@ -122,8 +122,8 @@ export default {
         this.$axios.post('/refuseInvitation', {
           username: this.$store.state.userDetails,
           fullname:agreedMeetingObject.FullName,
+          refutation:false,
           topic:tmp,
-          refutation:false
         })
           .then(resp => {
             if (resp.status === 200) {

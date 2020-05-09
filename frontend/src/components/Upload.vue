@@ -149,7 +149,20 @@
         form: {
           title: '',
           extract: '',
-          writer:[],
+          writer:[
+            {
+              writerName:'第一作者',
+              sector:'复旦大学',
+              country:'Canada',
+              email:'333@qq.com',
+            },
+            {
+              writerName:'第二作者',
+              sector:'吃饭大学',
+              country:'Canada',
+              email:'33344@qq.com',
+            },
+          ],
           topic:[],
         },
       rules: {
@@ -254,7 +267,11 @@
             formData.append('title',this.form.title)
             formData.append('authorname',this.$store.state.userDetails)
             formData.append('summary',this.form.extract)
-            formData.append('writer',this.form.writer)
+
+            var writerStr=JSON.stringify(this.form.writer)
+            formData.append('writer',writerStr)
+            //formData.append('writer',this.form.writer)
+
             formData.append('topic',this.form.topic)
             formData.append('meetingFullname',this.$route.query.name)
             console.log(formData.get('file'))

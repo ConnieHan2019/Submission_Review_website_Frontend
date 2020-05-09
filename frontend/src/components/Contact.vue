@@ -267,50 +267,60 @@ export default {
       });
     },
     contact (formName) {
-      this.$refs[formName].validate(valid => {
-        if(valid){
-          this.$axios.post('/contact', {
-            chairname:this.$store.state.userDetails,
-        shortname: this.contactForm.shortname,
-        fullname: this.contactForm.fullname,
-        deadline: this.contactForm.deadline,
-        resultReleaseTime: this.contactForm.resultReleaseTime,
-        organizationTime: this.contactForm.organizationTime,
-        place: this.contactForm.place,
-        topic: this.contactForm.topic,
-      })
-        .then(resp => {
-          if (resp.status === 200 ) {
-            this.success()
-           // alert("申请成功")
-             this.$router.replace({path:'/'})
-          } 
-          else{
-            this.fail()
-           // alert('申请失败')
+      if(formName.topic.length===0){
+        this.$message({
+          showClose: true,
+          message: '会议标签数不能少于一个',
+          type: 'warning'
+        });
+      }
+      else{
+        this.$refs[formName].validate(valid => {
+          if(valid){
+            this.$axios.post('/contact', {
+              chairname:this.$store.state.userDetails,
+              shortname: this.contactForm.shortname,
+              fullname: this.contactForm.fullname,
+              deadline: this.contactForm.deadline,
+              resultReleaseTime: this.contactForm.resultReleaseTime,
+              organizationTime: this.contactForm.organizationTime,
+              place: this.contactForm.place,
+              topic: this.contactForm.topic,
+            })
+              .then(resp => {
+                if (resp.status === 200 ) {
+                  this.success()
+                  // alert("申请成功")
+                  this.$router.replace({path:'/'})
+                }
+                else{
+                  this.fail()
+                  // alert('申请失败')
+                }
+              })
+              .catch(error => {
+                if(error.response){
+                  if(error.response.status === 400){
+                    this.$message.error(error.response.data.message)
+                  }
+                  else{
+                    this.contactError()
+                  }
+                }
+                else{
+                  this.contactError()
+                }
+                console.log(error)
+                //alert('contact error')
+              })
+          } else {
+            this.wrongSubmit()
+            //alert('wrong submit')
           }
         })
-        .catch(error => {
-          if(error.response){
-            if(error.response.status === 400){
-              this.$message.error(error.response.data.message)
-            }
-            else{
-               this.contactError()
-            }
-          }
-          else{
-            this.contactError()
-          }
-          console.log(error)
-          //alert('contact error')
-        })
-        } else {
-          this.wrongSubmit()
-          //alert('wrong submit')
-        }
-      })
-      
+      }
+
+
     }
   }
 }

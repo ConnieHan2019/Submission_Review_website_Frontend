@@ -3,7 +3,20 @@ export default {
   name: 'Invite',
   data(){
     return{
-      invites:[],
+      dialogTableVisible:false,
+      myTopic:[],
+      invites:[
+        {
+          chair:'root',
+          FullName:'全国互联网大会',
+          topic:['养生','蹦迪'],
+        },
+        {
+          chair:'Jeff',
+          FullName:'消费者大会',
+          topic:['养生','蹦迪'],
+        }
+      ],
       refutation:'',
     }
   },
@@ -36,14 +49,28 @@ export default {
       })
   },
   methods:{
-    refuse(refusedMeetingFullName){
+    handleClose(tag,certainTagSet) {
+      this.myTopic.splice(this.myTopic.indexOf(tag), 1);
+      //把删掉的标签扔回未选里面去
+      certainTagSet.push(tag);
+    },
+    addTopic(str,certainTagSet){
+      this.myTopic.push(str);
+      //标签被选过一次就不能再重复选了
+      certainTagSet.splice(certainTagSet.indexOf(str), 1);
+    },
+    // refuseTest(refusedMeetingObject){
+    //   this.invites.splice(this.invites.indexOf(refusedMeetingObject), 1);
+    // },
+    refuse(refusedMeetingObject){
         this.$axios.post('/refuseInvitation', {
           username: this.$store.state.userDetails,
-          fullname:refusedMeetingFullName,
+          fullname:refusedMeetingObject.FullName,
           refutation:true
         })
           .then(resp => {
             if (resp.status === 200 ) {
+            //  this.invites.splice(this.invites.indexOf(refusedMeetingObject), 1);
               this.$message({
                 showClose: true,
                 message: '已拒绝',
@@ -74,43 +101,65 @@ export default {
             console.log(error.config);
           })
     },
-    agree(agreedMeetingFullName){
-      this.$axios.post('/refuseInvitation', {
-        username: this.$store.state.userDetails,
-        fullname:agreedMeetingFullName,
-        refutation:false
-      })
-        .then(resp => {
-          if (resp.status === 200) {
-            this.$message({
-              showClose: true,
-              message: '已同意',
-              type: 'success'
-            });
-          } else {
-            this.$message({
-              showClose: true,
-              message: 'refuse error',
-              type: 'warning'
-            });
-            console.log(resp)
-          }
+
+
+    agree(agreedMeetingObject){
+      if(this.myTopic.length===0){
+        this.$message({
+          showClose: true,
+          message: '请至少选择一个Topic',
+          type: 'warning'
+        });
+      }
+      else{
+        this.dialogTableVisible=false
+           var tmp=[];
+        for(var i=0;i<this.myTopic.length;i++){
+          tmp.push(this.myTopic[i])
+        }
+
+
+        this.$axios.post('/refuseInvitation', {
+          username: this.$store.state.userDetails,
+          fullname:agreedMeetingObject.FullName,
+          refutation:false,
+          topic:tmp,
         })
-        .catch(error => {
-          if (error.response) {
-            // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-            this.$message({
-              showClose: true,
-              message: '请求已发出，但服务器响应的状态码不在 2xx 范围内',
-              type: 'warning'
-            });
-            console.log(error.response)
-          } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log('Error', error.message)
-          }
-          console.log(error.config);
-        })
+          .then(resp => {
+            if (resp.status === 200) {
+              this.myTopic.cleanup();
+              this.$message({
+                showClose: true,
+                message: '已同意',
+                type: 'success'
+              });
+            } else {
+              this.$message({
+                showClose: true,
+                message: 'refuse error',
+                type: 'warning'
+              });
+              console.log(resp)
+            }
+          })
+          .catch(error => {
+            if (error.response) {
+              // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+              this.$message({
+                showClose: true,
+                message: '请求已发出，但服务器响应的状态码不在 2xx 范围内',
+                type: 'warning'
+              });
+              console.log(error.response)
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.log('Error', error.message)
+            }
+            console.log(error.config);
+          })
+      }
+
+
     },
     seeDetail(){
       this.$router.push({path: '/meetingDetail',query:{name:this.contactName}});
@@ -132,14 +181,55 @@ export default {
 
   <h5>审稿邀请</h5>
   <div class="invitation" v-for="ins in invites" v-bind:key="ins.FullName" v-bind:index="ins.FullName">
+
+
     <p><i class="el-icon-user"></i><span class="ivt">Chair:</span>{{ins.chair}}</p>
     <p><i class="el-icon-notebook-1"></i><span class="ivt">Meeting's FullName:</span>{{ins.FullName}}</p>
-    <el-button type="success" class="goTo" @click="agree(ins.FullName)">同意</el-button>
-    <el-button type="danger" class="goTo" @click="refuse(ins.FullName)">拒绝</el-button>
+
+
+
+      <el-button type="success" class="goTo" @click="dialogTableVisible = true">同意</el-button>
+
+      <el-dialog title="选择专属会议标签" :visible.sync="dialogTableVisible">
+        <el-form>
+          <el-form-item label="专属标签">
+            <el-tag
+              :key="tag"
+              v-for="tag in myTopic"
+              closable
+              :disable-transitions="false"
+              @close="handleClose(tag,ins.topic)">
+              {{tag}}
+            </el-tag>
+          </el-form-item>
+          <el-form-item label="会议标签">
+            <el-tag
+              class="d-tag"
+              :key="defaultTag"
+              v-for="defaultTag in ins.topic"
+              @click="addTopic(defaultTag,ins.topic)"
+              type="success"
+              :disable-transitions="false"
+            >
+              {{defaultTag}}
+            </el-tag>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogTableVisible = false">取 消</el-button>
+          <el-button type="primary" @click="agree(ins)">确 定</el-button>
+        </div>
+      </el-dialog>
+      <el-button type="danger" class="goTo" @click="refuse(ins)">拒绝</el-button>
+    </div>
+
+
+
+
   </div>
 
 
-</div>
+
 </template>
 <style scoped>
   .ivt{

@@ -275,7 +275,7 @@ export default{
 <div style='margin-top:50px;'>
 <el-divider content-position="left"><span style="color:yellowgreen;font-size:larger">邀请状态</span></el-divider>
 <el-collapse>
-  <el-collapse-item :title="'已同意: '+confirmedPCmembers.length+'人'" name="confirmed" >
+  <el-collapse-item :title="'已同意（包括自己）: '+confirmedPCmembers.length+'人'" name="confirmed" >
     <el-table
     :data="confirmedPCmembers"
     stripe

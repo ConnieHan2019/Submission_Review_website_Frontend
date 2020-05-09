@@ -13,7 +13,7 @@
         </el-form-item>
         <el-form-item label="摘要" prop="extract">
           <el-input type="textarea"
-                    v-model="form.extract"
+                    v-model="form.summary"
                     autosize
                     placeholder="请输入论文摘要"
                     maxlength="800"
@@ -147,7 +147,7 @@
         fileList:[],
         form: {
           title:this.$route.query.title,
-          extract: '',
+          summary: '',
           writer:[{
             writerName:'第一作者',
             sector:'复旦大学',
@@ -182,7 +182,7 @@
     created:function(){
       this.$axios.post('/getHistoryUpload',{
         //会议全名
-        fullname:this.$route.query.name,
+        meetingFullname:this.$route.query.name,
         //投稿人的名字
         author:this.$store.state.userDetails,
         //投稿文章的标题

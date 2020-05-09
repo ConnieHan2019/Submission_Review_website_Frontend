@@ -10,17 +10,7 @@ export default{
     data(){
         return{
             fullname:'',
-            searchResults:[{
-              username:'username',
-              fullname:'fullname',
-              email:'email',
-              country:'China'
-          },{
-              username:'shortname',
-              fullname:'fullname',
-              email:'...',
-              country:'...'
-          }],
+            searchResults:[],
             invitedPCmembers:[{
               username:'username',
               fullname:'fullname',
@@ -49,13 +39,13 @@ export default{
     },
     watch:{
       invitedPCmembers:function(val){
-        alert('watch')
         //清空数组
         this.confirmedNames=[]
         this.confirmedPCmembers=[]
         this.refusedPCmembers=[]
         this.waitingPCmembers=[]
-        val.forEach(function(item,index,array){
+        for(var i = 0; i < this.invitedPCmembers.length; i++){
+          var item = this.invitedPCmembers[i]
           if(item.state === '已同意'){
             this.confirmedPCmembers.push(item)
             this.confirmedNames.push(item.username)
@@ -69,7 +59,7 @@ export default{
           else{
             alert('invalid state')
           }
-        })
+        }
       }
     },
     created:function(){
@@ -95,7 +85,7 @@ export default{
       }
       console.log(error.config);
     })
-    for(var i = 0; i < this.invitedPCmembers.length; i++){
+        for(var i = 0; i < this.invitedPCmembers.length; i++){
           var item = this.invitedPCmembers[i]
           if(item.state === '已同意'){
             this.confirmedPCmembers.push(item)
@@ -283,7 +273,7 @@ export default{
 <div style='margin-top:50px;'>
 <el-divider content-position="left"><span>邀请状态</span></el-divider>
 <el-collapse>
-  <el-collapse-item title="已同意" name="confirmed" >
+  <el-collapse-item :title="'已同意: '+confirmedPCmembers.length+'人'" name="confirmed" >
     <el-table
     :data="confirmedPCmembers"
     stripe
@@ -306,7 +296,7 @@ export default{
     </el-table-column>
   </el-table>
   </el-collapse-item>
-  <el-collapse-item title="已拒绝" name="refused">
+  <el-collapse-item :title="'已拒绝: '+refusedPCmembers.length+'人'" name="refused">
     <el-table
     :data="refusedPCmembers"
     stripe
@@ -329,7 +319,7 @@ export default{
     </el-table-column>
   </el-table>
   </el-collapse-item>
-  <el-collapse-item title="待确认" name="waiting">
+  <el-collapse-item :title="'待确认: '+waitingPCmembers.length+'人'" name="waiting">
     <el-table
     :data="waitingPCmembers"
     stripe

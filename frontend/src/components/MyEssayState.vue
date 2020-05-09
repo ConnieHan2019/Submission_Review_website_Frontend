@@ -18,7 +18,7 @@
 </div>
  <div v-else style="padding: 10px ;">
 <el-divider>反馈信息</el-divider>
-   <el-form v-for='aComment in essay.commentSet' v-bind:key="aComment.score" v-bind:index="aComment.score">
+   <el-form v-for='(aComment,index) in essay.commentSet' v-bind:key="'comment'+index" v-bind:index="'comment'+index">
      <el-form-item label="状态">
        <el-tag>{{aComment.status}}</el-tag>
      </el-form-item>

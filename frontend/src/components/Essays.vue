@@ -130,6 +130,8 @@ export default{
         .then(resp => {
             if(resp.status === 200 && resp.data.hasOwnProperty('respEssaysData')){
                 this.essaysData = resp.data.respEssaysData
+                alert('sucess')
+                console.log(resp.data.respEssaysData)
             }
             else{
                 console.log('返回数据有误')

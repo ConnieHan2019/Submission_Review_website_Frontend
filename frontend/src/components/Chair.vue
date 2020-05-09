@@ -56,7 +56,6 @@ export default{
 <template>
 <div id="Chair">
   <h3 style="margin:10px;">{{contactName}}</h3>
-  <h3 style="margin:10px;">{{contactInformation.state}}</h3>
   <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
     <el-tab-pane label="会议基本信息" name="openMeeting" ><OpenMeeting :contactInformation='contactInformation'></OpenMeeting></el-tab-pane>
     <el-tab-pane label="程序委员会成员" name="PCmember"><PCmembers :contactName='contactName' :resultReleaseTime='contactInformation.resultReleaseTime' :state="contactInformation.state" v-on:startReview='contactInformation.state = 3'></PCmembers></el-tab-pane>

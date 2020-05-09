@@ -74,6 +74,13 @@ import pdf from 'vue-pdf'
         }
       },
       created: function () {
+        this.$axios.post('/audit', {
+          username: this.$store.state.userDetails,
+          contactName:this.contactName
+        })
+          .then(resp => {
+            if (resp.status === 200 && resp.data.hasOwnProperty("essayNeedHandle")) {
+              this.authors = resp.data.essayNeedHandle        
         this.pageCount = new Array(this.authors.length)
         for(var i = 0; i < this.authors.length;i++){
           //一定要用闭包或者foreach
@@ -87,15 +94,7 @@ import pdf from 'vue-pdf'
           })
           //alert("now:"+auditVM.pageCount[i])
           })(i)
-
         }
-        this.$axios.post('/audit', {
-          username: this.$store.state.userDetails,
-          contactName:this.contactName
-        })
-          .then(resp => {
-            if (resp.status === 200 && resp.data.hasOwnProperty("essayNeedHandle")) {
-              this.authors = resp.data.essayNeedHandle
             } else {
               this.auditError(),
                 console.log(resp)

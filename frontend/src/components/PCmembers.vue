@@ -111,6 +111,14 @@ export default{
       if (resp.status === 200 && resp.data.hasOwnProperty("searchResults")){
         this.searchResults = resp.data.searchResults
         console.log('search success')
+    //筛选已同意的用户和自己
+    for(var i = 0;i < this.searchResults.length;i++){
+      //alert(this.searchResults[i].username)
+      if(this.confirmedNames.indexOf(this.searchResults[i].username) > -1 || this.searchResults[i].username == this.$store.state.userDetails){
+        this.searchResults.splice(i, 1); 
+        i--;
+      }
+    }
       }
       else{
         alert('search error')
@@ -127,13 +135,6 @@ export default{
       }
       console.log(error.config);
     })
-    //筛选已同意的用户
-    for(var i = 0;i < this.searchResults.length;i++){
-      if(this.confirmedNames.indexOf(this.searchResults[i].username) > -1 ){
-        this.searchResults.splice(i, 1); 
-        i--;
-      }
-    }
       },
       sendInvitation(){
         if(this.toInvite.length>0){
@@ -235,7 +236,7 @@ export default{
 <template>
 <div id="PCmembers">
 <div style="margin-top: 15px;">
-  <el-input placeholder="请输入用户姓名" v-model="fullname" clearable>
+  <el-input placeholder="请输入用户姓名进行搜索以邀请审稿人(不能邀请自己和已确认的成员)" v-model="fullname" clearable>
     <el-button slot="append" icon="el-icon-search" @click='searchUser'></el-button>
   </el-input>
   <div style="margin-top: 15px;" id="searchResults" v-if="searchResults.length > 0">

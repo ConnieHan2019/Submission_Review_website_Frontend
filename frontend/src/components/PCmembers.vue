@@ -235,8 +235,9 @@ export default{
 
 <template>
 <div id="PCmembers">
+<el-divider content-position="left"><span style="color:pink;font-size:larger">邀请程序委员会成员</span></el-divider>
 <div style="margin-top: 15px;">
-  <el-input placeholder="请输入用户姓名进行搜索以邀请审稿人(不能邀请自己和已确认的成员)" v-model="fullname" clearable>
+  <el-input placeholder="请输入用户姓名进行搜索(不能邀请自己和已同意的成员)" v-model="fullname" clearable>
     <el-button slot="append" icon="el-icon-search" @click='searchUser'></el-button>
   </el-input>
   <div style="margin-top: 15px;" id="searchResults" v-if="searchResults.length > 0">
@@ -272,7 +273,7 @@ export default{
   </div>
 </div>
 <div style='margin-top:50px;'>
-<el-divider content-position="left"><span>邀请状态</span></el-divider>
+<el-divider content-position="left"><span style="color:yellowgreen;font-size:larger">邀请状态</span></el-divider>
 <el-collapse>
   <el-collapse-item :title="'已同意: '+confirmedPCmembers.length+'人'" name="confirmed" >
     <el-table

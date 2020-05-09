@@ -113,11 +113,6 @@ import pdf from 'vue-pdf'
             }
           })
       },
-      watch:{
-        pageCount:function(newval,oldval){
-          
-        }
-      },
       methods: {
         aaa(index){
           alert("pagecout长度："+this.pageCount.length)

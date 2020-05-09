@@ -128,7 +128,8 @@ export default {
         })
           .then(resp => {
             if (resp.status === 200) {
-              this.myTopic.cleanup();
+             // this.myTopic.cleanup();
+              this.myTopic.splice(0,this.myTopic.length)
               this.$message({
                 showClose: true,
                 message: '已同意',

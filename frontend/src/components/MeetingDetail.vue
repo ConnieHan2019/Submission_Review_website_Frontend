@@ -20,7 +20,14 @@
 
               </el-collapse-item>
               <el-collapse-item title="会议状态：" name="4">
-                <span style="color: red">{{ verDetailContactData.state }}</span>
+                <span style="color: red" v-if="verDetailContactData.state===-1">已拒绝</span>
+                <span style="color: red" v-else-if="verDetailContactData.state===0">待审核</span>
+                <span style="color: red" v-else-if="verDetailContactData.state===1">已通过</span>
+                <span style="color: red" v-else-if="verDetailContactData.state===2">投稿中</span>
+                <span style="color: red" v-else-if="verDetailContactData.state===3">审稿中</span>
+                <span style="color: red" v-else-if="verDetailContactData.state===4">已发布结果</span>
+                <span style="color: red" v-else-if="verDetailContactData.state===5">已举办线下会议</span>
+                <span style="color: red" v-else>已结束</span>
               </el-collapse-item>
               <el-collapse-item title="会议标签：" name="5">
                 <el-tag

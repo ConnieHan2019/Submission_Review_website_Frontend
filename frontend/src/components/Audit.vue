@@ -84,7 +84,7 @@ import pdf from 'vue-pdf'
         this.pageCount = new Array(this.authors.length)
         for(var i = 0; i < this.authors.length;i++){
           //一定要用闭包或者foreach
-          alert(auditVM.pageCount[i])
+          alert(this.pageCount[i])
           var auditVM = this;
           (function(i){
           //alert('初始元素'+i+":"+auditVM.pageCount[i])
@@ -115,10 +115,6 @@ import pdf from 'vue-pdf'
           })
       },
       methods: {
-        aaa(index){
-          alert("pagecout长度："+this.pageCount.length)
-          alert("元素"+index+this.pageCount[index])
-        },
         downloadEssay(url){
           alert(url)
           let link = document.createElement('a')

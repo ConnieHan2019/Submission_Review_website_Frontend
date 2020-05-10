@@ -37,6 +37,54 @@
           <el-button type="text"
                      @click="openAddWindow()"
           >点击添加作者</el-button>
+          <el-button plain v-if="form.writer.length>=2" @click="swapWindow()">
+                   交换作者顺序
+          </el-button>
+
+          <el-dialog
+            title="请输入要交换的两个作者的序号"
+            :visible.sync="swapVisible"
+            center>
+
+            <el-form>
+              <el-form-item label="标签一的序号">
+                <el-input type="text" v-model="swap1" placeholder="标签一的序号" ></el-input>
+              </el-form-item>
+
+              <el-form-item label="标签二的序号">
+                <el-input type="text" v-model="swap2" placeholder="标签二的序号" ></el-input>
+             </el-form-item>
+            </el-form>
+
+            <div slot="footer" class="dialog-footer">
+              <el-button @click="swapVisible = false">取 消</el-button>
+              <el-button type="primary" @click="swap()">确 定</el-button>
+            </div>
+
+          </el-dialog>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
           <el-dialog
             title="作者信息"
             :visible.sync="dialogFormVisible"
@@ -134,6 +182,9 @@
     name: "Upload",
     data() {
       return {
+        swap1:'',
+        swap2:'',
+        swapVisible:false,
         dialogFormVisible: false,
         temp:{
           writerName:'',
@@ -188,6 +239,34 @@
     },
 
     methods: {
+      swap(){
+        var reg=/^[0-9]+.?[0-9]*$/;
+        if(reg.test(this.swap1)&&reg.test(this.swap2)){
+               if(this.swap1>=0&&this.swap1<this.form.writer.length&&this.swap2>=0&&this.swap2<this.form.writer.length){
+                 var media=this.form.writer[this.swap1]
+                 this.form.writer[this.swap1]=this.form.writer[this.swap2]
+                 this.form.writer[this.swap2]=media
+                 this.swapVisible=false
+               }
+               else{
+                 this.$message({
+                   type:'warning',
+                   showClose: true,
+                   message: '请输入正确的序号'
+                 })
+               }
+        }
+        else{
+          this.$message({
+            type:'warning',
+            showClose: true,
+            message: '请输入阿拉伯数字'
+          })
+        }
+      },
+      swapWindow(){
+        this.swapVisible=true
+      },
       deleteWriter(iwriter) {
         this.form.writer.splice(this.form.writer.indexOf(iwriter), 1);
       },

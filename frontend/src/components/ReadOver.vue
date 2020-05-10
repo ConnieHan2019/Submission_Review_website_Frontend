@@ -1,7 +1,7 @@
 <template>
     <div id="examInformation">
       <div id="page">
-        <p>会议名:{{this.$route.query.contactName}}</p>
+        <p>投稿人姓名:{{this.$route.query.contactName}}</p>
         <p>文章标题:{{this.$route.query.essayTitle}}</p>
         <el-form :ref="commentForm" :model="commentForm" label-width="80px" :rules="rules">
           <el-form-item label="稿件评分" prop="score">

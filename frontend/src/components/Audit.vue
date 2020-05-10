@@ -143,92 +143,10 @@ import pdf from 'vue-pdf'
           this.$router.push({path: '/readOver',query:{contactName:name,essayTitle:title}});
         },
         passEssay(name,title){
-
-          this.$axios.post('/passEssay',{
-          username: this.$store.state.userDetails,
-          contactName:this.contactName,
-          authorName:name,
-          essayTitle:title
-          })
-          .then(resp => {
-            if(resp.status === 200&&resp.data.hasOwnProperty("theEssayState")){
-              this.essayState=resp.data.theEssayState
-              if(this.essayState==="1"){
-                this.$message({
-                  showClose: true,
-                  message: '已审核过该论文，无需重复审核！',
-                  type: 'success'
-                });
-              }
-              else{
-                this.$message({
-                  showClose: true,
-                  message: '已驳回该论文，将跳转至审核信息提交页面！',
-                  type: 'success'
-                });
-                this.toEdit(this.contactName,title)
-              }
-            }
-            else{
-          this.$message({
-            showClose: true,
-            message: '请求失败',
-            type: 'error'
-          });              
-            }
-          })
-          .catch(error => {         
-            this.$message({
-            showClose: true,
-            message: '请求失败r',
-            type: 'error'
-          });
-            console.log(error)
-          })
+              this.toEdit(name,title)
         },
         refuseEssay(name,title){
-          this.$axios.post('/refuseEssay',{
-          username: this.$store.state.userDetails,
-          contactName:this.contactName,
-          authorName:name,
-          essayTitle:title
-          })
-          .then(resp => {
-            if(resp.status === 200&&resp.data.hasOwnProperty("theEssayState")){
-              this.essayState=resp.data.theEssayState
-              if(this.essayState==="1"){
-                this.$message({
-                  showClose: true,
-                  message: '已审核过该论文，无需重复审核！',
-                  type: 'success'
-                });
-              }
-              else{
-                this.$message({
-                  showClose: true,
-                  message: '已驳回该论文，将跳转至审核信息提交页面！',
-                  type: 'success'
-                });
-                this.toEdit(this.contactName,title)
-              }
-
-            }
-            else{
-          this.$message({
-            showClose: true,
-            message: '请求失败',
-            type: 'error'
-          });              
-            }
-          })
-          .catch(error => {         
-            this.$message({
-            showClose: true,
-            message: '请求失败',
-            type: 'error'
-          });
-            console.log(error)
-          })
+             this.toEdit(name,title)
         },
         scrollToEssay(index){
           document.getElementById(index).scrollIntoView();

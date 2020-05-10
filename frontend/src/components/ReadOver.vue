@@ -111,13 +111,13 @@
               this.$refs[formName].validate(valid => {
                 if(valid){
                   this.$axios.post('/sendCommentInformation', {
-                    PCmemberFullName:this.$store.state.userDetails,
+                    pcmemberFullName:this.$store.state.userDetails,
                     paperTitle:this.$route.query.essayTitle,
                     meetingFullname:this.$route.query.contactName,
                     reviewStatus:1,
-                    Score:this.commentForm.score,
-                    Confidence:this.commentForm.confidence,
-                    Comments:this.commentForm.comment,
+                    score:this.commentForm.score,
+                    confidence:this.commentForm.confidence,
+                    comments:this.commentForm.comment,
                   })
                     .then(resp => {
                       if (resp.status === 200 ) {

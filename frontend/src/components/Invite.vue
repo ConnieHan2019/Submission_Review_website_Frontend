@@ -5,18 +5,7 @@ export default {
     return{
       dialogTableVisible:false,
       myTopic:[],
-      invites:[
-        {
-          chair:'root',
-          FullName:'全国互联网大会',
-          topic:['养生','蹦迪'],
-        },
-        {
-          chair:'Jeff',
-          FullName:'消费者大会',
-          topic:['养生','蹦迪'],
-        }
-      ],
+      invites:[],
       refutation:'',
     }
   },

@@ -48,10 +48,18 @@ axios.interceptors.response.use(
     if(error.response){
       if(error.response.status === 555){
         //token过期
-        alert('身份过期，请重新登录')
+        console.log('token过期')
         store.commit('logout')
         router.currentRoute.path !== '/login' &&
         router.currentRoute.path !== '/register' &&
+        router.replace({
+          path:'/login',
+          query: { redirect: router.currentRoute.path }
+        })
+      }
+      else if(error.response.status === 666){
+        alert('无权限')
+        store.commit('logout')
         router.replace({
           path:'/login',
           query: { redirect: router.currentRoute.path }

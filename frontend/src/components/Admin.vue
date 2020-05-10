@@ -64,7 +64,8 @@ export default {
           //alert("pass");
           this.$axios.post('/passContact',{
             fullname:row.fullname,
-            adminName:this.$store.state.userDetails
+            adminName:this.$store.state.userDetails,
+            username:row.applicant
           })
           .then(resp => {
             if (resp.status === 200){
@@ -159,6 +160,10 @@ export default {
     <el-table-column
       prop="place"
       label="举办地点">
+    </el-table-column>
+    <el-table-column
+      prop="applicant"
+      label="申请人">
     </el-table-column>
     <el-table-column
       prop="topic"

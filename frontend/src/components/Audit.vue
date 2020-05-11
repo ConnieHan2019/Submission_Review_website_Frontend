@@ -16,7 +16,7 @@
         <el-divider></el-divider>
         <div  v-for="(aus,index) in authors"  :id="index" :key='aus.title' style="margin-bottom:50px">
         <h3 style='margin-top:20px'>标题:{{aus.title}}</h3>
-        <p ><i class="el-icon-user"></i><span >作者:</span>{{aus.name}} <a @click.prevent="downloadEssay(aus.link)" type="primary" :href='aus.link'>点击下载</a></p>
+        <p ><i class="el-icon-user"></i><span >作者:</span>{{aus.name}} <a @click.prevent="downloadEssay(aus.link)" type="primary" :href='aus.link'>点击下载</a>&nbsp<a target="_Blank" type="primary" :href='aus.link'>点击预览</a></p>
         <div>摘要：
 <el-input
   type="textarea"
@@ -26,19 +26,10 @@
   v-model="aus.extract">
 </el-input>
         </div>
-	<div style="width:93%;border-radius: 4px;box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);margin-top:20px;height: 500px; overflow:scroll">
-		共{{pageCount[index]}}页
-		<pdf
-			:src="aus.link"
-      v-for="i in pageCount[index]"
-      :key="i"
-      :page="i"
-		></pdf>
-	</div>
+
           <el-button-group style="margin-top:20px">
 
-            <el-button type="success" @click='passEssay(aus.name,aus.title)'>通过</el-button>
-            <el-button type="danger" @click='refuseEssay(aus.name,aus.title)'>驳回</el-button>
+            <el-button type="success" @click='toEdit(aus.name,aus.title)'>审核</el-button>
           </el-button-group>
         </div>
 
@@ -64,7 +55,7 @@ import pdf from 'vue-pdf'
           pageCount:[10,10,10],
           authors:  [
                 {name: 'Sam', extract:'xxxxxxxxxxxxxxxxx',link: 'https://dakaname.oss-cn-hangzhou.aliyuncs.com/file/2018-12-28/1546003237411.pdf',title:'wssdffl1'},
-                {name: 'AEFam', extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxsssssssssssssssssssssssssssssssssssssssssssssssssxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',link: '',title:'dgdfhdh'},
+                {name: 'AEFam', extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxsssssssssssssssssssssssssssssssssssssssssssssssssxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',link: 'http://image.cache.timepack.cn/nodejs.pdf',title:'dgdfhdh'},
                 {name: 'Ssdfam', extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxsssssssssssssssssssssssssssssssssssssssssssssssssxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',link: '',title:'retrdfhdfg'},
 {name: 'AEFam', extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxsssssssssssssssssssssssssssssssssssssssssssssssssxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',link: '',title:'sdfdsdsgg'},
                 {name: 'sefdfsd', extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxsssssssssssssssssssssssssssssssssssssssssssssssssxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',link: '',title:'dgdfggggrrhdh'},
@@ -87,10 +78,8 @@ import pdf from 'vue-pdf'
           var auditVM = this;
           (function(i){
           //alert('初始元素'+i+":"+auditVM.pageCount[i])
-          auditVM.authors[i].link = pdf.createLoadingTask(auditVM.authors[i].link);
-          auditVM.authors[i].link.promise.then(pdf => {
+          pdf.createLoadingTask(auditVM.authors[i].link).promise.then(pdf => {
             auditVM.pageCount[i] = pdf.numPages
-            //alert('返回元素'+i+":"+auditVM.pageCount[i])
           })
           //alert("now:"+auditVM.pageCount[i])
           })(i)
@@ -115,7 +104,6 @@ import pdf from 'vue-pdf'
       },
       methods: {
         downloadEssay(url){
-          alert(url)
           let link = document.createElement('a')
           fetch(url).then(res => res.blob()).then(blob => { // 将链接地址字符内容转变成blob地址
             link.href = URL.createObjectURL(blob)
@@ -137,12 +125,6 @@ import pdf from 'vue-pdf'
         //跳转到审稿信息提交界面
         toEdit(name,title){
           this.$router.push({path: '/readOver',query:{contactName:name,essayTitle:title}});
-        },
-        passEssay(name,title){
-              this.toEdit(name,title)
-        },
-        refuseEssay(name,title){
-             this.toEdit(name,title)
         },
         scrollToEssay(index){
           document.getElementById(index).scrollIntoView();

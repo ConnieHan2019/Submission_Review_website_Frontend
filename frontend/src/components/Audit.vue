@@ -16,7 +16,7 @@
         <el-divider></el-divider>
         <div  v-for="(aus,index) in authors"  :id="index" :key='aus.title' style="margin-bottom:50px">
         <h3 style='margin-top:20px'>标题:{{aus.title}}</h3>
-        <p ><i class="el-icon-user"></i><span >作者:</span>{{aus.name}} <a @click.prevent="downloadEssay(aus.link)" type="primary" :href='aus.link'>点击下载</a>&nbsp<a target="_Blank" type="primary" :href='aus.link'>点击预览</a></p>
+        <p ><i class="el-icon-user"></i><span >作者:</span>{{aus.name}} <a @click.prevent="downloadEssay(aus.link)" type="primary" :href='aus.link' style="margin-right:5px">点击下载</a><a target="_Blank" type="primary" :href='aus.link'>点击预览</a></p>
         <div>摘要：
 <el-input
   type="textarea"

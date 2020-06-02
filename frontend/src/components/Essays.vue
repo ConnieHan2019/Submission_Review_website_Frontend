@@ -4,7 +4,6 @@ export default{
     name:'Essays',
     props:{
         contactName:String,
-        organizationTime:String,
         state:Number
     },
     data(){
@@ -150,10 +149,6 @@ export default{
             }
             if(this.state > 3){
                 this.$message.error('已发布结果，不能再次发布')
-                return
-            }
-            if(new Date(this.organizationTime).getTime() < new Date().getTime()){
-                this.$message.error('已过会议举办时间，不能再发布结果')
                 return
             }
             for(var i = 0; i < this.essaysData.length;i++){

@@ -4,7 +4,6 @@ export default{
     name:'PCmembers',
     props:{
         contactName:String,
-        resultReleaseTime:String,
         state:Number
     },
     data(){
@@ -175,7 +174,6 @@ export default{
       startReview(wayOfAssignment){
         // this.$emit('startReview')
           if(this.state === 2){
-              if(new Date(this.resultReleaseTime).getTime() > new Date().getTime()){
                   if(this.confirmedPCmembers.length >= 3){
                       //上面三个条件都满足才发送请求
               this.$axios.post('startReview',{
@@ -209,10 +207,6 @@ export default{
                   else{
                       this.$message.error("审稿人不足3位，无法进行分配")
                   }
-              }
-              else{
-                  this.$message.error("已过结果发布时间，不能再开启审稿啦，下次记得早点开始哦~")
-              }
           }
           else if(this.state > 2){
               this.$message.error("已开启审稿，不能再次开启")

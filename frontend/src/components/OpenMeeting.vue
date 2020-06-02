@@ -17,7 +17,7 @@ export default{
     },
     methods:{
         open(){
-        if(new Date(this.contactInformation.deadline).getTime() > new Date().getTime()){
+        
           //this.contactInformation.state = 2
         this.$axios.post('/openMeeting',{
             contactFullName:this.contactInformation.fullname
@@ -39,10 +39,6 @@ export default{
               this.$message.error('开启会议失败')
             console.log(error)
         })
-          }
-          else{
-            this.$message.error('已过投稿截止时间，无法再开启会议')
-          } 
         }
     }
 }
@@ -80,8 +76,8 @@ export default{
 
 <el-steps :active="contactInformation.state" align-center finish-status="success" direction="vertical" style="padding:30px;">
   <el-step title="通过审核" description="通过审核之后才能开启会议"></el-step>
-  <el-step title="开启会议" description="请进入【会议基本信息】开启会议：必须在投稿截止之前开启会议，且只能开启一次，开启后会议进入投稿状态"></el-step>
-  <el-step title="开启初次审稿" description="请进入【程序委员会成员】开启审稿：必须在结果发布之前开启审稿，且该会议至少要有3位审稿人，开启后会议进入审稿状态"></el-step>
+  <el-step title="开启会议" description="请进入【会议基本信息】开启会议：只能开启一次，开启后会议进入投稿状态"></el-step>
+  <el-step title="开启初次审稿" description="请进入【程序委员会成员】开启审稿：开启审稿时该会议至少要有3位审稿人，开启后会议进入审稿状态"></el-step>
   <el-step title="发布初审结果" description="请进入【稿件基本情况】发布结果：必须在开启二次审稿之前发布结果，且所有稿件都审核完成"></el-step>
   <el-step title="开启二次审稿" description="请进入【程序委员会成员】开启审稿：必须在最终结果发布之前开启审稿，作者必须在该时间点之前提交驳斥"></el-step>
   <el-step title="发布最终结果" description="请进入【稿件基本情况】发布结果：必须在举办会议之前发布结果，且所有稿件都审核完成"></el-step>

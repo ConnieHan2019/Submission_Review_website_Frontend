@@ -3,7 +3,7 @@
     <el-divider content-position="left"><span>我的投稿</span></el-divider>
     <div class="essayBlock">
       <h5>会议主题：<span style="color:#5b25ff;">{{contactName}}</span></h5><br>
-      <div v-for='essay in essays' v-bind:key="essay.title" v-bind:index="essay.title" class="passageBlock">
+      <div v-for='(essay,indexOfEssay) in essays' v-bind:key="essay.title" v-bind:index="essay.title" class="passageBlock">
       <b class="tit">{{essay.title}}</b>
 <el-input
   type="textarea"
@@ -52,14 +52,18 @@
      </el-form-item>
      <el-divider></el-divider>
    </el-form>
-
+   <div v-if="rebuttalNeeded[indexOfEssay]">
+  <el-input placeholder="请输入驳斥内容" v-model="rebuttalText" type="textarea" autosize>
+  </el-input>
+    <el-button @click="rebuttal" style="margin:20px" type="primary" plain>发送驳斥</el-button>
+    </div>
  </div>
 
       </div>
 
       </div>
       <el-divider></el-divider>
-      <el-button type="primary" class="enterMeetingBt" @click="seeDetail()">进入会议</el-button>
+      <el-button type="primary" class="enterMeetingBt"  @click="seeDetail()" >进入会议</el-button>
     </div>
 
 </template>
@@ -70,17 +74,18 @@
       data(){
         return{
           dialogVisible:false,
+          rebuttalNeeded:[true,false],
           essays:[
             {
               title:'专门为牛会写的文章',
               summary:'牛牛的会议',
-              meetingState:3,
+              meetingState:4,
               commentSet:[
                 {
                   status:'已审核',
-                  score:'1',
+                  score:'-1',
                   confidence:'weak',
-                  comment:'挺好的'
+                  comment:'不好的'
                 },
                 {
                   status:'已审核',
@@ -105,6 +110,7 @@
 
             }
           ],
+          rebuttalText:"",
         }
       },
       props:['contactName'],
@@ -134,6 +140,18 @@
             }
             console.log(error.config);
           })
+          //判断是否可以提出驳斥
+          this.rebuttalNeeded = [];
+          for(var i = 0;i < this.essays.length;i++){
+            var essay = this.essays[i]
+            if(essay.meetingState == 4 &&(essay.commentSet[0].score == '-1'||essay.commentSet[0].score == '-2'||essay.commentSet[1].score == '-1'||essay.commentSet[1].score == '-2'||essay.commentSet[2].score == '-1'||essay.commentSet[2].score == '-2')){
+              this.rebuttalNeeded.push(true)
+            }
+            else{
+              this.rebuttalNeeded.push(false)
+            }
+          }
+
       },
       methods: {
           edit(essayTitle){
@@ -149,6 +167,9 @@
             type: 'warning'
           });
         },
+        rebuttal(){
+          alert(this.rebuttalText)
+        }
       }
     }
 </script>

@@ -259,14 +259,6 @@ export default{
         load(){
             //alert('基于审稿平均负担')
             this.startReview(1)
-        },
-        topic2(){
-          //alert('第二次基于topic相关度')
-            this.startSecondReview(0)
-        },
-        load2(){
-            //alert('第二次基于审稿平均负担')
-            this.startSecondReview(1)
         }
     }
 }
@@ -392,16 +384,6 @@ export default{
   @onCancel='load'
 >
   <el-button  slot="reference" type="info" icon="el-icon-message" style='float:right; margin-top:10px'>开启初次审稿</el-button>
-  <el-button>删除</el-button>
-</el-popconfirm>
-<el-popconfirm
-  confirmButtonText='基于话题相关度'
-  cancelButtonText='基于审稿平均负担'
-  title="选择分配方式"
-  @onConfirm='topic2'
-  @onCancel='load2'
->
-  <el-button  slot="reference" type="info" icon="el-icon-message" style='float:right; margin-top:10px;margin-right:10px'>开启二次审稿</el-button>
   <el-button>删除</el-button>
 </el-popconfirm>
 </div>

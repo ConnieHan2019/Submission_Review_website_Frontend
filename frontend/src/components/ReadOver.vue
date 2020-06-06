@@ -32,7 +32,10 @@
               ></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="success" @click="submit(commentForm)" round>Submit</el-button>
+
+            <el-button v-if="this.$route.query.auditWay==='audit'" type="success" @click="submit(commentForm)" round>Submit</el-button>
+            <el-button v-else-if="this.$route.query.auditWay==='firstChange'" type="success" @click="submitFirstChange(commentForm)" round>提交第一次修改</el-button>
+            <el-button v-else type="success" @click="submitSecondChange(commentForm)" round>提交第二次修改</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -168,8 +171,131 @@
                   });
                 }
               })
-
+        },
+        submitFirstChange (formName) {
+          this.$refs[formName].validate(valid => {
+            if(valid){
+              this.$axios.post('/sendFirstCommentChangeInformation', {
+                pcmemberFullName:this.$store.state.userDetails,
+                paperTitle:this.$route.query.essayTitle,
+                meetingFullname:this.$route.query.contactName,
+                reviewStatus:1,
+                score:this.commentForm.score,
+                confidence:this.commentForm.confidence,
+                comments:this.commentForm.comment,
+              })
+                .then(resp => {
+                  if (resp.status === 200 ) {
+                    this.$message({
+                      showClose: true,
+                      message: '批阅成功!',
+                      type: 'success'
+                    });
+                    // alert("批阅成功")
+                    this.$router.replace({path:'/personal'})
+                  }
+                  else{
+                    this.$message({
+                      showClose: true,
+                      message: '批阅失败!',
+                      type: 'error'
+                    });
+                    // alert('批阅失败')
+                  }
+                })
+                .catch(error => {
+                  if(error.response){
+                    if(error.response.status === 400){
+                      this.$message.error(error.response.data.message)
+                    }
+                    else{
+                      this.$message({
+                        showClose: true,
+                        message: 'read over error',
+                      });
+                    }
+                  }
+                  else{
+                    this.$message({
+                      showClose: true,
+                      message: 'read over error',
+                    });
+                  }
+                  console.log(error)
+                  //alert('contact error')
+                })
+            } else {
+              //alert('wrong submit')
+              this.$message({
+                showClose: true,
+                message: 'wrong submit!',
+                type: 'error'
+              });
             }
+          })
+        },
+        submitSecondChange (formName) {
+          this.$refs[formName].validate(valid => {
+            if(valid){
+              this.$axios.post('/sendSecondCommentChangeInformation', {
+                pcmemberFullName:this.$store.state.userDetails,
+                paperTitle:this.$route.query.essayTitle,
+                meetingFullname:this.$route.query.contactName,
+                reviewStatus:1,
+                score:this.commentForm.score,
+                confidence:this.commentForm.confidence,
+                comments:this.commentForm.comment,
+              })
+                .then(resp => {
+                  if (resp.status === 200 ) {
+                    this.$message({
+                      showClose: true,
+                      message: '批阅成功!',
+                      type: 'success'
+                    });
+                    // alert("批阅成功")
+                    this.$router.replace({path:'/personal'})
+                  }
+                  else{
+                    this.$message({
+                      showClose: true,
+                      message: '批阅失败!',
+                      type: 'error'
+                    });
+                    // alert('批阅失败')
+                  }
+                })
+                .catch(error => {
+                  if(error.response){
+                    if(error.response.status === 400){
+                      this.$message.error(error.response.data.message)
+                    }
+                    else{
+                      this.$message({
+                        showClose: true,
+                        message: 'read over error',
+                      });
+                    }
+                  }
+                  else{
+                    this.$message({
+                      showClose: true,
+                      message: 'read over error',
+                    });
+                  }
+                  console.log(error)
+                  //alert('contact error')
+                })
+            } else {
+              //alert('wrong submit')
+              this.$message({
+                showClose: true,
+                message: 'wrong submit!',
+                type: 'error'
+              });
+            }
+          })
+        }
 
       }
     }

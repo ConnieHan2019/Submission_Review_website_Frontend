@@ -33,7 +33,13 @@
             </el-button-group>
           </div>
 
-          <div v-else-if="essaysNeedHandle.meetingState ===30" id="第一次讨论">
+          <div v-else-if="(essaysNeedHandle.meetingState ===30||essaysNeedHandle.meetingState ===4)&&aus.hasFailScore===false">
+            <el-button-group style="margin-top:20px">
+              <el-button type="success" disabled="">已被录用</el-button>
+            </el-button-group>
+          </div>
+
+          <div v-else-if="essaysNeedHandle.meetingState ===30 &&aus.hasFailScore" id="第一次讨论">
             <p>第一次讨论</p>
             <div class="firstDiscussArea">
               <div v-for="firstDiscuss in aus.firstDiscussion"
@@ -65,8 +71,7 @@
 
             <br>
             <el-button-group style="margin-top:20px">
-              <el-button>不修改评审</el-button>
-              <el-button type="success" @click='toEdit(aus.name,aus.title)'>首次修改评审结果</el-button>
+              <el-button type="success" @click='firstChange(aus.name,aus.title)'>首次修改评审结果</el-button>
             </el-button-group>
 
 
@@ -75,7 +80,7 @@
 
 
 
-          <div v-else-if="essaysNeedHandle.meetingState ===4" id="第二次讨论">
+          <div v-else-if="essaysNeedHandle.meetingState ===4&&aus.hasFailScore" id="第二次讨论">
             <p>第二次讨论</p>
 
 
@@ -109,13 +114,12 @@
 
             <br>
             <el-button-group style="margin-top:20px">
-              <el-button>不修改评审</el-button>
-              <el-button type="success" @click='toEdit(aus.name,aus.title)'>再次修改评审结果</el-button>
+              <el-button type="success" @click='secondChange(aus.name,aus.title)'>再次修改评审结果</el-button>
             </el-button-group>
           </div>
 
           <div v-else>
-
+<p>非评审时间内</p>
           </div>
           <el-divider></el-divider>
         </div>
@@ -142,12 +146,13 @@ import pdf from 'vue-pdf'
 
 
           essaysNeedHandle:{
-            meetingState:4,
+            meetingState:30,
             authors:  [
               { name: 'Sam',
                 extract:'xxxxxxxxxxxxxxxxx',
                 link: 'https://dakaname.oss-cn-hangzhou.aliyuncs.com/file/2018-12-28/1546003237411.pdf',
                 title:'wssdffl1',
+                hasFailScore:true,
                 firstDiscussion:[
                   {
                     speaker:'moon',
@@ -181,6 +186,7 @@ import pdf from 'vue-pdf'
                 extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxsssssssssssssssssssssssssssssssssssssssssssssssssxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
                 link: 'http://image.cache.timepack.cn/nodejs.pdf',
                 title:'dgdfhdh',
+                hasFailScore:false,
                 firstDiscussion:[
                   {
                     speaker:'moon',
@@ -215,6 +221,7 @@ import pdf from 'vue-pdf'
                 extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxsssssssssssssssssssssssssssssssssssssssssssssssssxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
                 link: '',
                 title:'retrdfhdfg',
+                hasFailScore:true,
                 firstDiscussion:[
                   {
                     speaker:'msdsn',
@@ -444,8 +451,109 @@ import pdf from 'vue-pdf'
         },
         //跳转到审稿信息提交界面
         toEdit(name,title){
-          this.$router.push({path: '/readOver',query:{contactName:name,essayTitle:title}});
+          this.$router.push({path: '/readOver',query:{contactName:name,essayTitle:title,auditWay:'audit'}});
         },
+        // firstChange(name,title){
+        //   this.$router.push({path: '/readOver',query:{contactName:name,essayTitle:title,auditWay:'firstChange'}});
+        // },
+        firstChange(name,title){
+          var firstChangeRecord;
+          this.$axios.post('/whetherChangedInFirstDiscussion', {
+            meetingFullname:this.contactName,
+            authorName:this.currentAus.name,
+            essayTitle:this.currentAus.title,
+            pcMemberName: this.$store.state.userDetails,
+          })
+            .then(resp => {
+              if (resp.status === 200 && resp.data.hasOwnProperty("firstChangeRecord")) {
+                 firstChangeRecord = resp.data.firstChangeRecord;
+                 if(firstChangeRecord===1){
+                   this.$message({
+                     showClose: true,
+                     message: '第二次讨论中已修改，不能二次修改评审！',
+                     type: 'warning'
+                   });
+                 }
+                 else{
+                   this.$router.push({path: '/readOver',query:{contactName:name,essayTitle:title,auditWay:'firstChange'}});
+                 }
+              }
+               else {
+                this.$message({
+                  showClose: true,
+                  message: '评审状态获取异常！',
+                  type: 'warning'
+                });
+              }
+            })
+            .catch(error => {
+              if (error.response) {
+                // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                this.$message({
+                  showClose: true,
+                  message: '请求已发出，但服务器响应的状态码不在 2xx 范围内',
+                  type: 'warning'
+                });
+                console.log(error.response)
+              } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log('Error', error.message)
+              }
+              console.log(error.config);
+            })
+
+        },
+        // secondChange(name,title){
+        //   this.$router.push({path: '/readOver',query:{contactName:name,essayTitle:title,auditWay:'secondChange'}});
+        // },
+        secondChange(name,title){
+          var secondChangeRecord;
+          this.$axios.post('/whetherChangedInSecondDiscussion', {
+            meetingFullname:this.contactName,
+            authorName:this.currentAus.name,
+            essayTitle:this.currentAus.title,
+            pcMemberName: this.$store.state.userDetails,
+          })
+            .then(resp => {
+              if (resp.status === 200 && resp.data.hasOwnProperty("secondChangeRecord")) {
+                secondChangeRecord = resp.data.secondChangeRecord;
+                if(secondChangeRecord===1){
+                  this.$message({
+                    showClose: true,
+                    message: '第二次讨论中已修改，不能二次修改评审！',
+                    type: 'warning'
+                  });
+                }
+                else{
+                  this.$router.push({path: '/readOver',query:{contactName:name,essayTitle:title,auditWay:'secondChange'}});
+                }
+              }
+              else {
+                this.$message({
+                  showClose: true,
+                  message: '评审状态获取异常！',
+                  type: 'warning'
+                });
+              }
+            })
+            .catch(error => {
+              if (error.response) {
+                // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                this.$message({
+                  showClose: true,
+                  message: '请求已发出，但服务器响应的状态码不在 2xx 范围内',
+                  type: 'warning'
+                });
+                console.log(error.response)
+              } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log('Error', error.message)
+              }
+              console.log(error.config);
+            })
+
+        },
+
         scrollToEssay(index){
           document.getElementById(index).scrollIntoView();
         }

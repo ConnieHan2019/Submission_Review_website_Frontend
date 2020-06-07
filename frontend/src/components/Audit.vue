@@ -14,7 +14,6 @@
   <ul><li v-for="(aus,index) in authors" :key='"menu"+index' style="text-align: left;padding-left: 20px;" @click='scrollToEssay(index)'><el-link type="primary" style="font-size:20px"><i class="el-icon-caret-right" ></i>{{aus.title}}</el-link></li></ul>
 </el-drawer>
         <el-divider>我的审核稿件</el-divider>
-<p>{{currentAus}}</p>
         <div v-for="(aus,index) in authors"  :id="index" :key='aus.title' style="margin-bottom:50px">
           <h3 style='margin-top:20px'>标题:{{aus.title}}</h3>
           <p ><i class="el-icon-user"></i><span >作者:</span>{{aus.name}} <a @click.prevent="downloadEssay(aus.link)" type="primary" :href='aus.link' style="margin-right:5px">点击下载</a><a target="_Blank" type="primary" :href='aus.link'>点击预览</a></p>
@@ -37,8 +36,8 @@
 
           <div v-else-if="aus.essayState===1" id="已批阅待首次确认">
             <p>第一次讨论</p>
-            <div class="firstDiscussArea">
-              <div v-for="firstDiscuss in aus.firstDiscussion"
+            <div class="firstDiscussArea" v-if="firstDiscussAreaVisible">
+              <div v-for="firstDiscuss in showFirstDiscussionArea(aus)"
                    v-bind:key="firstDiscuss.speaker"
                    v-bind:index="firstDiscuss.speaker"
                    align="left"
@@ -51,7 +50,9 @@
                 <el-button @click="myView1(aus)">发表我的看法</el-button>
               </div>
             </div>
-
+            <div v-else>
+              <el-button @click="showFirstDiscussionArea(aus)">展开评论区</el-button>
+            </div>
             <el-dialog
               title="回复评论"
               :visible.sync="commentWindowVisible1"
@@ -91,8 +92,8 @@
 
           <div v-else-if="aus.essayState===5" id="已提交rebuttal待再次确认">
             <p>第二次讨论</p>
-            <div class="secondDiscussArea">
-              <div v-for="secondDiscuss in aus.secondDiscussion"
+            <div class="secondDiscussArea" v-if="secondDiscussAreaVisible">
+              <div v-for="secondDiscuss in showSecondDiscussionArea(aus)"
                    v-bind:key="secondDiscuss.speaker"
                    v-bind:index="secondDiscuss.speaker"
                    align="left"
@@ -104,6 +105,10 @@
               <div align="left" style="padding-left: 10%">
                 <el-button @click="myView2(aus)">发表我的看法</el-button>
               </div>
+
+            </div>
+            <div v-else>
+              <el-button @click="showSecondDiscussionArea(aus)">展开评论区</el-button>
             </div>
 
             <el-dialog
@@ -134,7 +139,7 @@
 
           <el-divider></el-divider>
         </div>
-        <el-button type="primary" class="enterMeetingBt" @click="seeDetail">进入会议</el-button>
+        <el-button type="primary" class="enterMeetingBt" @click="seeDetail()">进入会议</el-button>
       </div>
     </div>
 </template>
@@ -149,6 +154,10 @@ import pdf from 'vue-pdf'
       data() {
         return {
           aPieceOfComment:'',
+
+          firstDiscussAreaVisible:false,
+          secondDiscussAreaVisible:false,
+
           commentWindowVisible1:false,
           commentWindowVisible2:false,
           currentAus:{},
@@ -162,113 +171,42 @@ import pdf from 'vue-pdf'
                 link: 'https://dakaname.oss-cn-hangzhou.aliyuncs.com/file/2018-12-28/1546003237411.pdf',
                 title:'wssdffl1',
                 essayState:0,
-                firstDiscussion:[
-                  {
-                    speaker:'moon',
-                    content:'我觉得给吧'
-                  },
-                  {
-                    speaker:'mwary',
-                    content:'没道理'
-                  },
-                  {
-                    speaker:'sasm',
-                    content:'开玩笑的吧'
-                  },
-                ],
-                secondDiscussion:[
-                  {
-                    speaker:'tony',
-                    content:'我觉得给分不能太苛刻吧'
-                  },
-                  {
-                    speaker:'mary',
-                    content:'你说的没道理'
-                  },
-                  {
-                    speaker:'sam',
-                    content:'楼上你们开玩笑的吧'
-                  },
-                ],
               },
               {name: 'AEFam',
                 extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
                 link: 'http://image.cache.timepack.cn/nodejs.pdf',
                 title:'dgdfhdh',
                 essayState:1,
-                firstDiscussion:[
-                  {
-                    speaker:'moon',
-                    content:'我觉得给吧'
-                  },
-                ],
-                secondDiscussion:[],
               },
               {name: 'Ssdfam',
                 extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
                 link: '',
                 title:'retrdfhdfg',
                 essayState:2,
-                firstDiscussion:[
-                  {
-                    speaker:'msdsn',
-                    content:'我觉得给吧'
-                  },
-                  {
-                    speaker:'sdjod',
-                    content:'没道理'
-                  },
-                  {
-                    speaker:'sdddw',
-                    content:'开玩笑丢掉的吧'
-                  },
-                ],
-                secondDiscussion:[
-                  {
-                    speaker:'tony',
-                    content:'我觉得给分不能太苛刻吧'
-                  },
-                  {
-                    speaker:'mary',
-                    content:'你说的没道理'
-                  },
-                  {
-                    speaker:'sam',
-                    content:'楼上你们开玩笑的吧'
-                  },
-                ],
               },
               {name: 'dfgddd',
                 extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
                 link: 'http://image.cache.timepack.cn/nodejs.pdf',
                 title:'asevvh',
                 essayState:3,
-                firstDiscussion:[],
-                secondDiscussion:[],
               },
               {name: 'awrcxd',
                 extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
                 link: 'http://image.cache.timepack.cn/nodejs.pdf',
                 title:'dgdh',
                 essayState:4,
-                firstDiscussion:[],
-                secondDiscussion:[],
               },
               {name: 'ertgfd',
                 extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
                 link: 'http://image.cache.timepack.cn/nodejs.pdf',
                 title:'dgsbljh',
                 essayState:5,
-                firstDiscussion:[],
-                secondDiscussion:[],
               },
               {name: 'ghthrtj',
                 extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
                 link: 'http://image.cache.timepack.cn/nodejs.pdf',
                 title:'dfhghfhdh',
                 essayState:6,
-                firstDiscussion:[],
-                secondDiscussion:[],
               },
 
             ],
@@ -314,6 +252,79 @@ import pdf from 'vue-pdf'
           })
       },
       methods: {
+        showFirstDiscussionArea(aus){
+          this.firstDiscussAreaVisible=true;
+          var  firstDiscussion;
+          this.$axios.post('/getFirstDiscussion', {
+            meetingFullname:this.contactName,
+            authorName:aus.name,
+            essayTitle:aus.title,
+          })
+            .then(resp => {
+              if (resp.status === 200 && resp.data.hasOwnProperty("firstDiscussion")) {
+               firstDiscussion=resp.data.firstDiscussion;
+              } else {
+                this.$message({
+                  showClose: true,
+                  message: '讨论区信息获取失败！',
+                  type: 'warning'
+                });
+              }
+            })
+            .catch(error => {
+              if (error.response) {
+                // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                this.$message({
+                  showClose: true,
+                  message: '请求已发出，但服务器响应的状态码不在 2xx 范围内',
+                  type: 'warning'
+                });
+                console.log(error.response)
+              } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log('Error', error.message)
+              }
+              console.log(error.config);
+            })
+          return firstDiscussion;
+        },
+        showSecondDiscussionArea(aus){
+          this.secondDiscussAreaVisible=true;
+          var  secondDiscussion;
+          this.$axios.post('/getSecondDiscussion', {
+            meetingFullname:this.contactName,
+            authorName:aus.name,
+            essayTitle:aus.title,
+          })
+            .then(resp => {
+              if (resp.status === 200 && resp.data.hasOwnProperty("secondDiscussion")) {
+                secondDiscussion=resp.data.secondDiscussion;
+              } else {
+                this.$message({
+                  showClose: true,
+                  message: '讨论区信息获取失败！',
+                  type: 'warning'
+                });
+              }
+            })
+            .catch(error => {
+              if (error.response) {
+                // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                this.$message({
+                  showClose: true,
+                  message: '请求已发出，但服务器响应的状态码不在 2xx 范围内',
+                  type: 'warning'
+                });
+                console.log(error.response)
+              } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log('Error', error.message)
+              }
+              console.log(error.config);
+            })
+          return secondDiscussion;
+        },
+
         reply1(aus,speaker,content){
           this.currentAus=aus;
           this.commentWindowVisible1=true;
@@ -426,13 +437,18 @@ import pdf from 'vue-pdf'
             });
           }
           else{
+            this.$message({
+              showClose: true,
+              message: '评论成功！',
+              type: 'success'
+            });
             var tmp={
               speaker:'',
               content:'',
             };
             tmp.speaker='me';
             tmp.content=content;
-            this.currentAus.firstDiscussion.push(tmp);
+           // (this.showFirstDiscussionArea(this.currentAus)).push(tmp);
             //还要把这条记录增加到数据库里面去
             this.addFirstDiscussionCommentToBackend(content)
             this.commentWindowVisible1=false;
@@ -494,7 +510,6 @@ import pdf from 'vue-pdf'
             };
             tmp.speaker='me';
             tmp.content=content;
-            this.currentAus.secondDiscussion.push(tmp);
             //还要把这条记录增加到数据库里面去
             this.addSecondDiscussionCommentToBackend(content)
             this.commentWindowVisible2=false;

@@ -79,7 +79,7 @@ export default{
   <el-step title="开启会议" description="请进入【会议基本信息】开启会议：只能开启一次，开启后会议进入投稿状态"></el-step>
   <el-step title="开启初次审稿" description="请进入【程序委员会成员】开启审稿：开启审稿时该会议至少要有3位审稿人，开启后会议进入审稿状态"></el-step>
   <el-step title="发布初审结果" description="请进入【稿件基本情况】发布结果：必须在开启二次审稿之前发布结果，且所有稿件都审核完成"></el-step>
-  <el-step title="终止驳斥提交，开始二次审稿" description="请进入【稿件基本情况】开启第二次审稿：必须在最终结果发布之前开启审稿"></el-step>
+  <el-step title="终止驳斥提交" description="请进入【稿件基本情况】开启第二次审稿：必须在最终结果发布之前开启审稿"></el-step>
   <el-step title="发布最终结果" description="请进入【稿件基本情况】发布结果：必须在举办会议之前发布结果，且所有稿件都审核完成"></el-step>
   <el-step title="举办会议" description="发布结果后按照预定时间在预定地点举办线下会议"></el-step>
   <el-step title="结束会议" description=""></el-step>

@@ -15,16 +15,16 @@ export default{
                 author:'Mary',
                 assignment:[{
                     name:'hhh',
-                    state:'已审核'
+                    state:'已批阅'
                 },{
                     name:'ddd',
-                    state:'审核中'
+                    state:'批阅中'
                 },{
                     name:'ddd',
-                    state:'审核中'
+                    state:'批阅中'
                 }],
-                state:'审核中',
-                rebuttal:'未提交'
+                state:'批阅中',
+                rebuttal:''
             },{
                 title:'title2',
                 writer:['zyr','hty'],
@@ -32,16 +32,16 @@ export default{
                 author:'Mary',
                 assignment:[{
                     name:'hhh',
-                    state:'已审核'
+                    state:'已批阅'
                 },{
                     name:'ddd',
-                    state:'审核中'
+                    state:'已批阅'
                 },{
                     name:'ddd',
-                    state:'审核中'
+                    state:'已批阅'
                 }],
-                state:'审核中',
-                rebuttal:'已提交'
+                state:'确认中',
+                rebuttal:''
             },{
                 title:'title3',
                 writer:['zyr','hty'],
@@ -49,16 +49,16 @@ export default{
                 author:'Mary',
                 assignment:[{
                     name:'hhh',
-                    state:'已审核'
+                    state:'已批阅'
                 },{
                     name:'ddd',
-                    state:'审核中'
+                    state:'已批阅'
                 },{
                     name:'ddd',
-                    state:'审核中'
+                    state:'已确认'
                 }],
-                state:'审核中',
-                rebuttal:'已提交'
+                state:'确认中',
+                rebuttal:''
             },{
                 title:'title4',
                 writer:['zyr','hty'],
@@ -66,15 +66,49 @@ export default{
                 author:'Mary',
                 assignment:[{
                     name:'hhh',
-                    state:'已审核'
+                    state:'已确认'
                 },{
                     name:'ddd',
-                    state:'已审核'
+                    state:'已确认'
                 },{
                     name:'ddd',
-                    state:'已审核'
+                    state:'已确认'
                 }],
                 state:'已完成',
+                rebuttal:'未提交'
+            },{
+                title:'title5',
+                writer:['zyr','hty'],
+                topic:['Beauty','Life','Food'],
+                author:'Mary',
+                assignment:[{
+                    name:'hhh',
+                    state:'已确认'
+                },{
+                    name:'ddd',
+                    state:'已确认'
+                },{
+                    name:'ddd',
+                    state:'已确认'
+                }],
+                state:'已完成',
+                rebuttal:'已提交'
+            },{
+                title:'title6',
+                writer:['zyr','hty'],
+                topic:['Beauty','Life','Food'],
+                author:'Mary',
+                assignment:[{
+                    name:'hhh',
+                    state:'未确认'
+                },{
+                    name:'ddd',
+                    state:'已确认'
+                },{
+                    name:'ddd',
+                    state:'已确认'
+                }],
+                state:'确认中',
                 rebuttal:'已提交'
             }]
         }
@@ -268,7 +302,6 @@ export default{
       label="论文状态">
       <template v-slot="scope">
       <p v-if="state < 3">未分配</p>
-      <p v-else-if="state == 4">已发布初审结果</p>
 <div v-else-if='state == 3'>
 <el-popover
   placement="left"
@@ -280,7 +313,7 @@ export default{
   <el-button slot="reference">初审,{{essaysData[scope.$index].state}},点击查看</el-button>
 </el-popover>
 </div>
-<div  v-else-if='state == 5'>
+<div  v-else-if='state == 5 || state == 4'>
 <p v-if='essaysData[scope.$index].rebuttal == "未提交"'>未提交驳斥，不进行复审</p>
 <el-popover
   v-else

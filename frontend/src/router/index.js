@@ -41,7 +41,7 @@ export const router = new Router({
       name: 'Contact',
       component: Contact,
       meta: {
-        requireAuth: true
+        requireAuth: false
       }
     },
     {
@@ -49,7 +49,7 @@ export const router = new Router({
       name: 'Personal',
       component: Personal,
       meta: {
-        requireAuth: true
+        requireAuth: false
       }
     },
     {
@@ -57,7 +57,7 @@ export const router = new Router({
       name: 'Contribute',
       component: Contribute,
       meta: {
-        requireAuth: true
+        requireAuth: false
       }
     },
     {
@@ -65,7 +65,7 @@ export const router = new Router({
       name: 'Upload',
       component: Upload,
       meta: {
-        requireAuth: true
+        requireAuth: false
       }
     },
     {
@@ -73,7 +73,7 @@ export const router = new Router({
       name: 'MeetingDetail',
       component: MeetingDetail,
       meta: {
-        requireAuth: true
+        requireAuth: false
       }
     },
     {
@@ -81,7 +81,7 @@ export const router = new Router({
       name: 'Admin',
       component: Admin,
       meta: {
-        requireAuth: true
+        requireAuth: false
       },
     },
     {
@@ -89,7 +89,7 @@ export const router = new Router({
       name: 'ReadOver',
       component: ReadOver,
       meta: {
-        requireAuth: true
+        requireAuth: false
       },
     },
     {
@@ -97,7 +97,7 @@ export const router = new Router({
       name: 'EditMyEssay',
       component: EditMyEssay,
       meta: {
-        requireAuth: true
+        requireAuth: false
       },
     }
   ]

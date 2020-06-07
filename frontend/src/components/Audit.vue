@@ -71,6 +71,7 @@
 
             <br>
             <el-button-group style="margin-top:20px">
+              <el-button @click="doNotChange1(aus)">不修改评分</el-button>
               <el-button type="success" @click='firstChange(aus.name,aus.title)'>首次修改评审结果</el-button>
             </el-button-group>
 
@@ -306,6 +307,14 @@ import pdf from 'vue-pdf'
           this.commentWindowVisible=true;
           this.aPieceOfComment='';
         },
+        doNotChange1(aus){
+          this.currentAus=aus;
+          // this.$message({
+          //   showClose: true,
+          //   message: this.currentAus,
+          // });
+
+        },
         sendMyComment1(content){
           if(content.length===0){
             this.$message({
@@ -462,7 +471,7 @@ import pdf from 'vue-pdf'
             meetingFullname:this.contactName,
             authorName:this.currentAus.name,
             essayTitle:this.currentAus.title,
-            pcMemberName: this.$store.state.userDetails,
+            pcMemberUsername: this.$store.state.userDetails,
           })
             .then(resp => {
               if (resp.status === 200 && resp.data.hasOwnProperty("firstChangeRecord")) {
@@ -512,7 +521,7 @@ import pdf from 'vue-pdf'
             meetingFullname:this.contactName,
             authorName:this.currentAus.name,
             essayTitle:this.currentAus.title,
-            pcMemberName: this.$store.state.userDetails,
+            pcMemberUsername: this.$store.state.userDetails,
           })
             .then(resp => {
               if (resp.status === 200 && resp.data.hasOwnProperty("secondChangeRecord")) {

@@ -53,9 +53,9 @@
      <el-divider></el-divider>
    </el-form>
    <div v-if="rebuttalNeeded[indexOfEssay]">
-  <el-input placeholder="请输入驳斥内容" v-model="rebuttalText" type="textarea" autosize>
+  <el-input placeholder="请输入驳斥内容" v-model="rebuttalText[indexOfEssay]" type="textarea" autosize>
   </el-input>
-    <el-button @click="rebuttal" style="margin:20px" type="primary" plain>发送驳斥</el-button>
+    <el-button @click="rebuttal(indexOfEssay)" style="margin:20px" type="primary" plain>发送驳斥</el-button>
     </div>
  </div>
 
@@ -110,7 +110,7 @@
 
             }
           ],
-          rebuttalText:"",
+          rebuttalText:[],
         }
       },
       props:['contactName'],
@@ -167,8 +167,31 @@
             type: 'warning'
           });
         },
-        rebuttal(){
-          alert(this.rebuttalText)
+        rebuttal(index){
+          this.$axios.post('/rebuttal',{
+            username: this.$store.state.userDetails,
+            contactName:this.contactName,
+            essayTitle:this.essays[index].title,
+            rebuttalText:this.rebuttalText[i]
+          })
+          .then(resp => {
+            if (resp.status === 200){
+              this.$message({message:'驳斥申请提交成功，请耐心等待结果'})
+            }
+          })
+          .catch(error => {
+            if (error.response) {
+              // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+              if(error.response.status === 404){
+                this.$message('你已经提交过驳斥申请，不能再次提交')
+              }
+              console.log(error.response)
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.log('Error', error.message)
+            }
+            console.log(error.config);
+          })
         }
       }
     }

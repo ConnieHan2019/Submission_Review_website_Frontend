@@ -215,43 +215,6 @@ export default{
               this.$message.error("未开启会议，先去开启会议吧~")
           }
       },
-      startSecondReview(wayOfAssignment){
-          if(this.state === 4){
-              this.$axios.post('startSecondReview',{
-                  contactName:this.contactName,
-                  way:wayOfAssignment//0代表基于topic，1代表基于负担
-              })
-              .then(resp => {
-                  if (resp.status === 200){
-                      this.$message({message: '稿件分配成功，已进入第二次审稿状态，可在【稿件基本情况】查看进度',type: 'success'})
-                      //向父组件抛出事件
-                      this.$emit('startSecondReview')
-                  }
-                  else{
-                      this.$message({message: '稿件分配失败',type: 'error'})
-                  }
-              })
-              .catch(error => {
-                  if(error.response){
-                      // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-                      if(error.response.status === 400){
-                          this.$message.error("稿件分配失败，请添加审稿人之后再重试")
-                      }
-                      console.log(error.response)
-                  }
-                  else{
-                      //Something happened in setting up the request that triggered an Error
-                      console.log(error)
-                  }
-              })
-          }
-          else if(this.state >4){
-              this.$message.error("已开启第二次审稿，不能再次开启")
-          }
-          else{
-              this.$message.error("还未发布初审结果，不能开启第二次审稿")
-          }
-      },
         topic(){
             //alert('基于topic相关度')
             this.startReview(0)

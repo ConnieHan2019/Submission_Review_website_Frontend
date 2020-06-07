@@ -58,7 +58,7 @@ export default{
   <h3 style="margin:10px;">{{contactName}}</h3>
   <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
     <el-tab-pane label="会议基本信息" name="openMeeting" ><OpenMeeting :contactInformation='contactInformation'></OpenMeeting></el-tab-pane>
-    <el-tab-pane label="程序委员会成员" name="PCmember"><PCmembers :contactName='contactName'  :state="contactInformation.state" v-on:startReview='contactInformation.state = 3' v-on:startSecondReview='contactInformation.state = 5'></PCmembers></el-tab-pane>
+    <el-tab-pane label="程序委员会成员" name="PCmember"><PCmembers :contactName='contactName'  :state="contactInformation.state" v-on:startReview='contactInformation.state = 3' ></PCmembers></el-tab-pane>
     <el-tab-pane label="稿件基本情况" name="lll" ><Essays :contactName='contactName'  :state="contactInformation.state" v-on:releaseResult='contactInformation.state = 4' v-on:releaseSecondResult='contactInformation.state = 6' v-on:endRebuttal='contactInformation.state = 5'></Essays></el-tab-pane>
   </el-tabs>
 </div>

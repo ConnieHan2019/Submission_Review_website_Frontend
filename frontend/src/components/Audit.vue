@@ -115,6 +115,7 @@
 
             <br>
             <el-button-group style="margin-top:20px">
+              <el-button @click="doNotChange2(aus)">不修改评分</el-button>
               <el-button type="success" @click='secondChange(aus.name,aus.title)'>再次修改评审结果</el-button>
             </el-button-group>
           </div>
@@ -308,12 +309,87 @@ import pdf from 'vue-pdf'
           this.aPieceOfComment='';
         },
         doNotChange1(aus){
-          this.currentAus=aus;
+          //this.currentAus=aus;
           // this.$message({
           //   showClose: true,
           //   message: this.currentAus,
           // });
+          this.$axios.post('/doNotChangeInFirstDiscussion', {
+            meetingFullname:this.contactName,
+            authorName:aus.name,
+            essayTitle:aus.title,
+            pcMemberUsername: this.$store.state.userDetails,
 
+          })
+            .then(resp => {
+              if (resp.status === 200) {
+                this.$message({
+                  showClose: true,
+                  message: '已确认不修改！',
+                  type: 'success'
+                });
+              } else {
+                this.$message({
+                  showClose: true,
+                  message: '操作异常！',
+                  type: 'warning'
+                });
+              }
+            })
+            .catch(error => {
+              if (error.response) {
+                // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                this.$message({
+                  showClose: true,
+                  message: '请求已发出，但服务器响应的状态码不在 2xx 范围内',
+                  type: 'warning'
+                });
+                console.log(error.response)
+              } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log('Error', error.message)
+              }
+              console.log(error.config);
+            })
+        },
+        doNotChange2(aus){
+          this.$axios.post('/doNotChangeInSecondDiscussion', {
+            meetingFullname:this.contactName,
+            authorName:aus.name,
+            essayTitle:aus.title,
+            pcMemberUsername: this.$store.state.userDetails,
+
+          })
+            .then(resp => {
+              if (resp.status === 200) {
+                this.$message({
+                  showClose: true,
+                  message: '已确认不修改！',
+                  type: 'success'
+                });
+              } else {
+                this.$message({
+                  showClose: true,
+                  message: '操作异常！',
+                  type: 'warning'
+                });
+              }
+            })
+            .catch(error => {
+              if (error.response) {
+                // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                this.$message({
+                  showClose: true,
+                  message: '请求已发出，但服务器响应的状态码不在 2xx 范围内',
+                  type: 'warning'
+                });
+                console.log(error.response)
+              } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log('Error', error.message)
+              }
+              console.log(error.config);
+            })
         },
         sendMyComment1(content){
           if(content.length===0){
@@ -479,7 +555,7 @@ import pdf from 'vue-pdf'
                  if(firstChangeRecord===1){
                    this.$message({
                      showClose: true,
-                     message: '第二次讨论中已修改，不能二次修改评审！',
+                     message: '第一次讨论中已确认，不能二次修改评审！',
                      type: 'warning'
                    });
                  }
@@ -529,7 +605,7 @@ import pdf from 'vue-pdf'
                 if(secondChangeRecord===1){
                   this.$message({
                     showClose: true,
-                    message: '第二次讨论中已修改，不能二次修改评审！',
+                    message: '第二次讨论中已确认，不能二次修改评审！',
                     type: 'warning'
                   });
                 }

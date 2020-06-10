@@ -8,6 +8,13 @@ export default{
     },
     data(){
         return{
+            dialogDatePickerVisible:false,
+            rebuttalDeadline:'',
+            pickerOptions:{
+                disabledDate(time){
+                    return time.getTime() <= (Date.now() + 3600 * 1000 * 24 * 7);//一周后
+                }
+            },
             essaysData:[{
                 title:'title1',
                 writer:['zyr','hty'],
@@ -162,17 +169,23 @@ export default{
         })
     },
     methods:{
-        releaseResult(){
+        showDialog(){
             //以确保state==3
             for(var i = 0; i < this.essaysData.length;i++){
-                if(this.essaysData[i].state === '审核中'){
+                if(this.essaysData[i].state !== '已完成'){
                     this.$message.error('还有稿件未完成，无法公布结果')
                     return
                 }
             }
+            //全部完成才选择日期
+            this.dialogDatePickerVisible = true
+        },
+        releaseResult(){
             //发布结果
+            this.dialogDatePickerVisible = false
             this.$axios.post('/releaseResult',{
-                contactFullName:this.contactName
+                contactFullName:this.contactName,
+                rebuttalDeadline:this.rebuttalDeadline
             })
             .then(resp => {
                 if(resp.status === 200){
@@ -233,7 +246,10 @@ export default{
             })
             .catch(error => {
                 if(error.repsonse){
-                    this.$message.error('终止失败')
+                    if(error.repsonse.status === 400){
+                        this.$message('还未到预期截至时间，不能提前截止')
+                    }
+                    else{this.$message.error('终止失败')}
                 }
                 else{
                     this.$message.error('出现了一些错误，请重试')
@@ -330,8 +346,22 @@ export default{
       </template>
     </el-table-column>
   </el-table>
-  <el-button v-if="state==3" type="info" icon="el-icon-message" @click='releaseResult' style='float:right; margin-top:10px'>发布初审结果</el-button>
+  <el-button v-if="state==3" type="info" icon="el-icon-message" @click='showDialog' style='float:right; margin-top:10px'>发布初审结果</el-button>
   <el-button v-if="state==5" type="info" icon="el-icon-message" @click='releaseSecondResult' style='float:right; margin-top:10px'>发布最终结果</el-button>
   <el-button v-if="state==4" type="info" icon="el-icon-message" @click='endRebuttal' style='float:right; margin-top:10px'>终止驳斥提交</el-button>
+<el-dialog title="选择驳斥提交截止日期，至少距离今天一周" :visible.sync="dialogDatePickerVisible">
+    <el-date-picker
+      v-model="rebuttalDeadline"
+      type="date"
+      :picker-options="pickerOptions"
+      align="right"
+      placeholder="选择截止日期"
+      value-format="yyyy-MM-dd">
+    </el-date-picker>
+  <div slot="footer" class="dialog-footer">
+    <el-button @click="dialogDatePickerVisible = false">取 消</el-button>
+    <el-button type="primary" @click="releaseResult">确 定</el-button>
+  </div>
+</el-dialog>
 </div>
 </template>

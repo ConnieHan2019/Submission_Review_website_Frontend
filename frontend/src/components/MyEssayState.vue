@@ -53,6 +53,13 @@
      <el-divider></el-divider>
    </el-form>
    <div v-if="rebuttalNeeded[indexOfEssay]">
+  <el-alert
+    type="info"
+    effect="dark"
+    :closable="false"
+    style="margin-bottom:10px">
+   驳斥提交将在{{essay.rebuttalDeadline}}之后截止，请尽早提交
+  </el-alert>
   <el-input placeholder="请输入驳斥内容" v-model="rebuttalText[indexOfEssay]" type="textarea" autosize>
   </el-input>
     <el-button @click="rebuttal(indexOfEssay)" style="margin:20px" type="primary" plain>发送驳斥</el-button>
@@ -80,6 +87,7 @@
               title:'专门为牛会写的文章',
               summary:'牛牛的会议',
               meetingState:4,
+              rebuttalDeadline:'2020-06-16',
               commentSet:[
                 {
                   status:'已审核',
@@ -172,7 +180,7 @@
             username: this.$store.state.userDetails,
             contactName:this.contactName,
             essayTitle:this.essays[index].title,
-            rebuttalText:this.rebuttalText[i]
+            rebuttalText:this.rebuttalText[index]
           })
           .then(resp => {
             if (resp.status === 200){
@@ -184,6 +192,9 @@
               // 请求已发出，但服务器响应的状态码不在 2xx 范围内
               if(error.response.status === 404){
                 this.$message('你已经提交过驳斥申请，不能再次提交')
+              }
+              else{
+                this.$message.error('提交失败')
               }
               console.log(error.response)
             } else {

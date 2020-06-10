@@ -11,10 +11,10 @@
   :visible.sync="drawer"
   :with-header="true"
   size="20%">
-  <ul><li v-for="(aus,index) in essaysNeedHandle.authors" :key='"menu"+index' style="text-align: left;padding-left: 20px;" @click='scrollToEssay(index)'><el-link type="primary" style="font-size:20px"><i class="el-icon-caret-right" ></i>{{aus.title}}</el-link></li></ul>
+  <ul><li v-for="(aus,index) in authors" :key='"menu"+index' style="text-align: left;padding-left: 20px;" @click='scrollToEssay(index)'><el-link type="primary" style="font-size:20px"><i class="el-icon-caret-right" ></i>{{aus.title}}</el-link></li></ul>
 </el-drawer>
         <el-divider>我的审核稿件</el-divider>
-        <div v-for="(aus,index) in essaysNeedHandle.authors"  :id="index" :key='aus.title' style="margin-bottom:50px">
+        <div v-for="(aus,index) in authors"  :id="index" :key='aus.title' style="margin-bottom:50px">
           <h3 style='margin-top:20px'>标题:{{aus.title}}</h3>
           <p ><i class="el-icon-user"></i><span >作者:</span>{{aus.name}} <a @click.prevent="downloadEssay(aus.link)" type="primary" :href='aus.link' style="margin-right:5px">点击下载</a><a target="_Blank" type="primary" :href='aus.link'>点击预览</a></p>
           <div>摘要：
@@ -27,103 +27,119 @@
             </el-input>
           </div>
           <br>
-          <div v-if="essaysNeedHandle.meetingState === 3" id="开始审稿">
+
+          <div v-if="aus.essayState===0" id="未批阅">
             <el-button-group style="margin-top:20px">
               <el-button type="success" @click='toEdit(aus.name,aus.title)'>审核</el-button>
             </el-button-group>
           </div>
 
-          <div v-else-if="(essaysNeedHandle.meetingState ===30||essaysNeedHandle.meetingState ===4)&&aus.hasFailScore===false">
-            <el-button-group style="margin-top:20px">
-              <el-button type="success" disabled="">已被录用</el-button>
-            </el-button-group>
-          </div>
-
-          <div v-else-if="essaysNeedHandle.meetingState ===30 &&aus.hasFailScore" id="第一次讨论">
+          <div v-else-if="aus.essayState===1" id="已批阅待首次确认">
             <p>第一次讨论</p>
-            <div class="firstDiscussArea">
-              <div v-for="firstDiscuss in aus.firstDiscussion"
+            <div class="firstDiscussArea" v-if="firstDiscussAreaVisible">
+              <div v-for="firstDiscuss in showFirstDiscussionArea(aus)"
                    v-bind:key="firstDiscuss.speaker"
                    v-bind:index="firstDiscuss.speaker"
                    align="left"
                    class="discussArea">
                 <p style="color: #005cbf">{{firstDiscuss.speaker}}<span style="color: black">:{{firstDiscuss.content}}</span></p>
-                <el-button  class="el-icon-right" @click="reply(aus,firstDiscuss.speaker,firstDiscuss.content)">回复TA</el-button>
+                <el-button  class="el-icon-right" @click="reply1(aus,firstDiscuss.speaker,firstDiscuss.content)">回复TA</el-button>
               </div>
               <br>
               <div align="left" style="padding-left: 10%">
-                <el-button @click="myView(aus)">发表我的看法</el-button>
+                <el-button @click="myView1(aus)">发表我的看法</el-button>
               </div>
             </div>
-
+            <div v-else>
+              <el-button @click="showFirstDiscussionArea(aus)">展开评论区</el-button>
+            </div>
             <el-dialog
               title="回复评论"
-              :visible.sync="commentWindowVisible"
+              :visible.sync="commentWindowVisible1"
               center>
               <el-input v-model="aPieceOfComment"></el-input>
 
               <el-button-group style="margin-left: 20%;margin-top: 5%">
-                <el-button @click="commentWindowVisible=false">取消</el-button>
-                <el-button type="success" @click="sendMyComment1(aPieceOfComment)">发布评论</el-button>
+                <el-button @click="commentWindowVisible1=false">取消</el-button>
+                <el-button type="success" @click="sendMyComment1(aPieceOfComment)">发布评论1</el-button>
               </el-button-group>
-
             </el-dialog>
 
             <br>
             <el-button-group style="margin-top:20px">
+              <el-button @click="doNotChange1(aus)">不修改评分</el-button>
               <el-button type="success" @click='firstChange(aus.name,aus.title)'>首次修改评审结果</el-button>
             </el-button-group>
-
-
-
           </div>
 
+          <div v-else-if="aus.essayState===2" id="已首次确认">
+            <el-button-group style="margin-top:20px">
+              <el-button type="success" disabled>已首次确认</el-button>
+            </el-button-group>
+          </div>
 
+          <div v-else-if="aus.essayState===3" id="已录用">
+            <el-button-group style="margin-top:20px">
+              <el-button type="success" disabled>已录用</el-button>
+            </el-button-group>
+          </div>
 
-          <div v-else-if="essaysNeedHandle.meetingState ===4&&aus.hasFailScore" id="第二次讨论">
+          <div v-else-if="aus.essayState===4" id="已驳回但未提交rebuttal">
+            <el-button-group style="margin-top:20px">
+              <el-button type="warning" disabled>已驳回</el-button>
+            </el-button-group>
+          </div>
+
+          <div v-else-if="aus.essayState===5" id="已提交rebuttal待再次确认">
             <p>第二次讨论</p>
-
-
-            <div class="secondDiscussArea">
-              <div v-for="secondDiscuss in aus.secondDiscussion"
+            <div class="secondDiscussArea" v-if="secondDiscussAreaVisible">
+              <div v-for="secondDiscuss in showSecondDiscussionArea(aus)"
                    v-bind:key="secondDiscuss.speaker"
                    v-bind:index="secondDiscuss.speaker"
                    align="left"
                    class="discussArea">
                 <p style="color: #005cbf">{{secondDiscuss.speaker}}<span style="color: black">:{{secondDiscuss.content}}</span></p>
-                <el-button  class="el-icon-right" @click="reply(aus,secondDiscuss.speaker,secondDiscuss.content)">回复TA</el-button>
+                <el-button  class="el-icon-right" @click="reply2(aus,secondDiscuss.speaker,secondDiscuss.content)">回复TA</el-button>
               </div>
               <br>
               <div align="left" style="padding-left: 10%">
-                <el-button @click="myView(aus)">发表我的看法</el-button>
+                <el-button @click="myView2(aus)">发表我的看法</el-button>
               </div>
+
+            </div>
+            <div v-else>
+              <el-button @click="showSecondDiscussionArea(aus)">展开评论区</el-button>
             </div>
 
             <el-dialog
               title="回复评论"
-              :visible.sync="commentWindowVisible"
+              :visible.sync="commentWindowVisible2"
               center>
               <el-input v-model="aPieceOfComment"></el-input>
 
               <el-button-group style="margin-left: 20%;margin-top: 5%">
-                <el-button @click="commentWindowVisible=false">取消</el-button>
-                <el-button type="success" @click="sendMyComment2(aPieceOfComment)">发布评论</el-button>
+                <el-button @click="commentWindowVisible2=false">取消</el-button>
+                <el-button type="success" @click="sendMyComment2(aPieceOfComment)">发布评论2</el-button>
               </el-button-group>
 
             </el-dialog>
 
             <br>
             <el-button-group style="margin-top:20px">
+              <el-button @click="doNotChange2(aus)">不修改评分</el-button>
               <el-button type="success" @click='secondChange(aus.name,aus.title)'>再次修改评审结果</el-button>
             </el-button-group>
           </div>
 
-          <div v-else>
-<p>非评审时间内</p>
+          <div v-else id="已再次确认">
+            <el-button-group style="margin-top:20px">
+              <el-button type="success" disabled>已再次确认</el-button>
+            </el-button-group>
           </div>
+
           <el-divider></el-divider>
         </div>
-        <el-button type="primary" class="enterMeetingBt" @click="seeDetail">进入会议</el-button>
+        <el-button type="primary" class="enterMeetingBt" @click="seeDetail()">进入会议</el-button>
       </div>
     </div>
 </template>
@@ -138,122 +154,62 @@ import pdf from 'vue-pdf'
       data() {
         return {
           aPieceOfComment:'',
-          commentWindowVisible:false,
+
+          firstDiscussAreaVisible:false,
+          secondDiscussAreaVisible:false,
+
+          commentWindowVisible1:false,
+          commentWindowVisible2:false,
           currentAus:{},
 
           drawer:false,
           pageCount:[10,10,10],
 
-
-          essaysNeedHandle:{
-            meetingState:30,
-            authors:  [
+          authors:  [
               { name: 'Sam',
                 extract:'xxxxxxxxxxxxxxxxx',
                 link: 'https://dakaname.oss-cn-hangzhou.aliyuncs.com/file/2018-12-28/1546003237411.pdf',
                 title:'wssdffl1',
-                hasFailScore:true,
-                firstDiscussion:[
-                  {
-                    speaker:'moon',
-                    content:'我觉得给吧'
-                  },
-                  {
-                    speaker:'mwary',
-                    content:'没道理'
-                  },
-                  {
-                    speaker:'sasm',
-                    content:'开玩笑的吧'
-                  },
-                ],
-                secondDiscussion:[
-                  {
-                    speaker:'tony',
-                    content:'我觉得给分不能太苛刻吧'
-                  },
-                  {
-                    speaker:'mary',
-                    content:'你说的没道理'
-                  },
-                  {
-                    speaker:'sam',
-                    content:'楼上你们开玩笑的吧'
-                  },
-                ],
+                essayState:0,
               },
               {name: 'AEFam',
-                extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxsssssssssssssssssssssssssssssssssssssssssssssssssxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+                extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
                 link: 'http://image.cache.timepack.cn/nodejs.pdf',
                 title:'dgdfhdh',
-                hasFailScore:false,
-                firstDiscussion:[
-                  {
-                    speaker:'moon',
-                    content:'我觉得给吧'
-                  },
-                  {
-                    speaker:'mwary',
-                    content:'没道理'
-                  },
-                  {
-                    speaker:'sasm',
-                    content:'开玩笑的吧'
-                  },
-                ],
-
-                secondDiscussion:[
-                  {
-                    speaker:'asdc',
-                    content:'啊啊啊啊啊'
-                  },
-                  {
-                    speaker:'mdy',
-                    content:'你说的没道理'
-                  },
-                  {
-                    speaker:'wsxm',
-                    content:'楼上你们废物开玩笑的吧'
-                  },
-                ],
+                essayState:1,
               },
               {name: 'Ssdfam',
-                extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxsssssssssssssssssssssssssssssssssssssssssssssssssxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+                extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
                 link: '',
                 title:'retrdfhdfg',
-                hasFailScore:true,
-                firstDiscussion:[
-                  {
-                    speaker:'msdsn',
-                    content:'我觉得给吧'
-                  },
-                  {
-                    speaker:'sdjod',
-                    content:'没道理'
-                  },
-                  {
-                    speaker:'sdddw',
-                    content:'开玩笑丢掉的吧'
-                  },
-                ],
-                secondDiscussion:[
-                  {
-                    speaker:'tony',
-                    content:'我觉得给分不能太苛刻吧'
-                  },
-                  {
-                    speaker:'mary',
-                    content:'你说的没道理'
-                  },
-                  {
-                    speaker:'sam',
-                    content:'楼上你们开玩笑的吧'
-                  },
-                ],
+                essayState:2,
+              },
+              {name: 'dfgddd',
+                extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+                link: 'http://image.cache.timepack.cn/nodejs.pdf',
+                title:'asevvh',
+                essayState:3,
+              },
+              {name: 'awrcxd',
+                extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+                link: 'http://image.cache.timepack.cn/nodejs.pdf',
+                title:'dgdh',
+                essayState:4,
+              },
+              {name: 'ertgfd',
+                extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+                link: 'http://image.cache.timepack.cn/nodejs.pdf',
+                title:'dgsbljh',
+                essayState:5,
+              },
+              {name: 'ghthrtj',
+                extract:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+                link: 'http://image.cache.timepack.cn/nodejs.pdf',
+                title:'dfhghfhdh',
+                essayState:6,
               },
 
-            ]
-          },
+            ],
 
         }
       },
@@ -264,7 +220,7 @@ import pdf from 'vue-pdf'
         })
           .then(resp => {
             if (resp.status === 200 && resp.data.hasOwnProperty("essayNeedHandle")) {
-              this.essaysNeedHandle = resp.data.essayNeedHandle
+              this.authors = resp.data.essayNeedHandle
         this.pageCount = new Array(this.authors.length)
         for(var i = 0; i < this.authors.length;i++){
           //一定要用闭包或者foreach,加载pdf页数
@@ -296,15 +252,181 @@ import pdf from 'vue-pdf'
           })
       },
       methods: {
-        reply(aus,speaker,content){
+        showFirstDiscussionArea(aus){
+          this.firstDiscussAreaVisible=true;
+          var  firstDiscussion;
+          this.$axios.post('/getFirstDiscussion', {
+            meetingFullname:this.contactName,
+            authorName:aus.name,
+            essayTitle:aus.title,
+          })
+            .then(resp => {
+              if (resp.status === 200 && resp.data.hasOwnProperty("firstDiscussion")) {
+               firstDiscussion=resp.data.firstDiscussion;
+              } else {
+                this.$message({
+                  showClose: true,
+                  message: '讨论区信息获取失败！',
+                  type: 'warning'
+                });
+              }
+            })
+            .catch(error => {
+              if (error.response) {
+                // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                this.$message({
+                  showClose: true,
+                  message: '请求已发出，但服务器响应的状态码不在 2xx 范围内',
+                  type: 'warning'
+                });
+                console.log(error.response)
+              } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log('Error', error.message)
+              }
+              console.log(error.config);
+            })
+          return firstDiscussion;
+        },
+        showSecondDiscussionArea(aus){
+          this.secondDiscussAreaVisible=true;
+          var  secondDiscussion;
+          this.$axios.post('/getSecondDiscussion', {
+            meetingFullname:this.contactName,
+            authorName:aus.name,
+            essayTitle:aus.title,
+          })
+            .then(resp => {
+              if (resp.status === 200 && resp.data.hasOwnProperty("secondDiscussion")) {
+                secondDiscussion=resp.data.secondDiscussion;
+              } else {
+                this.$message({
+                  showClose: true,
+                  message: '讨论区信息获取失败！',
+                  type: 'warning'
+                });
+              }
+            })
+            .catch(error => {
+              if (error.response) {
+                // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                this.$message({
+                  showClose: true,
+                  message: '请求已发出，但服务器响应的状态码不在 2xx 范围内',
+                  type: 'warning'
+                });
+                console.log(error.response)
+              } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log('Error', error.message)
+              }
+              console.log(error.config);
+            })
+          return secondDiscussion;
+        },
+
+        reply1(aus,speaker,content){
           this.currentAus=aus;
-          this.commentWindowVisible=true;
+          this.commentWindowVisible1=true;
           this.aPieceOfComment='[回复'+speaker+':'+content+']';
         },
-        myView(aus){
+        reply2(aus,speaker,content){
           this.currentAus=aus;
-          this.commentWindowVisible=true;
+          this.commentWindowVisible2=true;
+          this.aPieceOfComment='[回复'+speaker+':'+content+']';
+        },
+        myView1(aus){
+          this.currentAus=aus;
+          this.commentWindowVisible1=true;
           this.aPieceOfComment='';
+        },
+        myView2(aus){
+          this.currentAus=aus;
+          this.commentWindowVisible2=true;
+          this.aPieceOfComment='';
+        },
+        doNotChange1(aus){
+          //this.currentAus=aus;
+          // this.$message({
+          //   showClose: true,
+          //   message: this.currentAus,
+          // });
+          this.$axios.post('/doNotChangeInFirstDiscussion', {
+            meetingFullname:this.contactName,
+            authorName:aus.name,
+            essayTitle:aus.title,
+            pcMemberUsername: this.$store.state.userDetails,
+
+          })
+            .then(resp => {
+              if (resp.status === 200) {
+                this.$message({
+                  showClose: true,
+                  message: '已确认不修改！',
+                  type: 'success'
+                });
+              } else {
+                this.$message({
+                  showClose: true,
+                  message: '操作异常！',
+                  type: 'warning'
+                });
+              }
+            })
+            .catch(error => {
+              if (error.response) {
+                // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                this.$message({
+                  showClose: true,
+                  message: '请求已发出，但服务器响应的状态码不在 2xx 范围内',
+                  type: 'warning'
+                });
+                console.log(error.response)
+              } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log('Error', error.message)
+              }
+              console.log(error.config);
+            })
+        },
+        doNotChange2(aus){
+          this.$axios.post('/doNotChangeInSecondDiscussion', {
+            meetingFullname:this.contactName,
+            authorName:aus.name,
+            essayTitle:aus.title,
+            pcMemberUsername: this.$store.state.userDetails,
+
+          })
+            .then(resp => {
+              if (resp.status === 200) {
+                this.$message({
+                  showClose: true,
+                  message: '已确认不修改！',
+                  type: 'success'
+                });
+              } else {
+                this.$message({
+                  showClose: true,
+                  message: '操作异常！',
+                  type: 'warning'
+                });
+              }
+            })
+            .catch(error => {
+              if (error.response) {
+                // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                this.$message({
+                  showClose: true,
+                  message: '请求已发出，但服务器响应的状态码不在 2xx 范围内',
+                  type: 'warning'
+                });
+                console.log(error.response)
+              } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log('Error', error.message)
+              }
+              console.log(error.config);
+            })
         },
         sendMyComment1(content){
           if(content.length===0){
@@ -315,16 +437,21 @@ import pdf from 'vue-pdf'
             });
           }
           else{
+            this.$message({
+              showClose: true,
+              message: '评论成功！',
+              type: 'success'
+            });
             var tmp={
               speaker:'',
               content:'',
             };
             tmp.speaker='me';
             tmp.content=content;
-            this.currentAus.firstDiscussion.push(tmp);
+           // (this.showFirstDiscussionArea(this.currentAus)).push(tmp);
             //还要把这条记录增加到数据库里面去
             this.addFirstDiscussionCommentToBackend(content)
-            this.commentWindowVisible=false;
+            this.commentWindowVisible1=false;
           }
 
         },
@@ -383,10 +510,9 @@ import pdf from 'vue-pdf'
             };
             tmp.speaker='me';
             tmp.content=content;
-            this.currentAus.secondDiscussion.push(tmp);
             //还要把这条记录增加到数据库里面去
             this.addSecondDiscussionCommentToBackend(content)
-            this.commentWindowVisible=false;
+            this.commentWindowVisible2=false;
           }
 
         },
@@ -453,106 +579,106 @@ import pdf from 'vue-pdf'
         toEdit(name,title){
           this.$router.push({path: '/readOver',query:{contactName:name,essayTitle:title,auditWay:'audit'}});
         },
-        // firstChange(name,title){
-        //   this.$router.push({path: '/readOver',query:{contactName:name,essayTitle:title,auditWay:'firstChange'}});
-        // },
         firstChange(name,title){
-          var firstChangeRecord;
-          this.$axios.post('/whetherChangedInFirstDiscussion', {
-            meetingFullname:this.contactName,
-            authorName:this.currentAus.name,
-            essayTitle:this.currentAus.title,
-            pcMemberName: this.$store.state.userDetails,
-          })
-            .then(resp => {
-              if (resp.status === 200 && resp.data.hasOwnProperty("firstChangeRecord")) {
-                 firstChangeRecord = resp.data.firstChangeRecord;
-                 if(firstChangeRecord===1){
-                   this.$message({
-                     showClose: true,
-                     message: '第二次讨论中已修改，不能二次修改评审！',
-                     type: 'warning'
-                   });
-                 }
-                 else{
-                   this.$router.push({path: '/readOver',query:{contactName:name,essayTitle:title,auditWay:'firstChange'}});
-                 }
-              }
-               else {
-                this.$message({
-                  showClose: true,
-                  message: '评审状态获取异常！',
-                  type: 'warning'
-                });
-              }
-            })
-            .catch(error => {
-              if (error.response) {
-                // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-                this.$message({
-                  showClose: true,
-                  message: '请求已发出，但服务器响应的状态码不在 2xx 范围内',
-                  type: 'warning'
-                });
-                console.log(error.response)
-              } else {
-                // Something happened in setting up the request that triggered an Error
-                console.log('Error', error.message)
-              }
-              console.log(error.config);
-            })
-
+          this.$router.push({path: '/readOver',query:{contactName:name,essayTitle:title,auditWay:'firstChange'}});
         },
-        // secondChange(name,title){
-        //   this.$router.push({path: '/readOver',query:{contactName:name,essayTitle:title,auditWay:'secondChange'}});
+        // firstChange(name,title){
+        //   var firstChangeRecord;
+        //   this.$axios.post('/whetherChangedInFirstDiscussion', {
+        //     meetingFullname:this.contactName,
+        //     authorName:this.currentAus.name,
+        //     essayTitle:this.currentAus.title,
+        //     pcMemberUsername: this.$store.state.userDetails,
+        //   })
+        //     .then(resp => {
+        //       if (resp.status === 200 && resp.data.hasOwnProperty("firstChangeRecord")) {
+        //          firstChangeRecord = resp.data.firstChangeRecord;
+        //          if(firstChangeRecord===1){
+        //            this.$message({
+        //              showClose: true,
+        //              message: '第一次讨论中已确认，不能二次修改评审！',
+        //              type: 'warning'
+        //            });
+        //          }
+        //          else{
+        //            this.$router.push({path: '/readOver',query:{contactName:name,essayTitle:title,auditWay:'firstChange'}});
+        //          }
+        //       }
+        //        else {
+        //         this.$message({
+        //           showClose: true,
+        //           message: '评审状态获取异常！',
+        //           type: 'warning'
+        //         });
+        //       }
+        //     })
+        //     .catch(error => {
+        //       if (error.response) {
+        //         // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+        //         this.$message({
+        //           showClose: true,
+        //           message: '请求已发出，但服务器响应的状态码不在 2xx 范围内',
+        //           type: 'warning'
+        //         });
+        //         console.log(error.response)
+        //       } else {
+        //         // Something happened in setting up the request that triggered an Error
+        //         console.log('Error', error.message)
+        //       }
+        //       console.log(error.config);
+        //     })
+        //
         // },
         secondChange(name,title){
-          var secondChangeRecord;
-          this.$axios.post('/whetherChangedInSecondDiscussion', {
-            meetingFullname:this.contactName,
-            authorName:this.currentAus.name,
-            essayTitle:this.currentAus.title,
-            pcMemberName: this.$store.state.userDetails,
-          })
-            .then(resp => {
-              if (resp.status === 200 && resp.data.hasOwnProperty("secondChangeRecord")) {
-                secondChangeRecord = resp.data.secondChangeRecord;
-                if(secondChangeRecord===1){
-                  this.$message({
-                    showClose: true,
-                    message: '第二次讨论中已修改，不能二次修改评审！',
-                    type: 'warning'
-                  });
-                }
-                else{
-                  this.$router.push({path: '/readOver',query:{contactName:name,essayTitle:title,auditWay:'secondChange'}});
-                }
-              }
-              else {
-                this.$message({
-                  showClose: true,
-                  message: '评审状态获取异常！',
-                  type: 'warning'
-                });
-              }
-            })
-            .catch(error => {
-              if (error.response) {
-                // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-                this.$message({
-                  showClose: true,
-                  message: '请求已发出，但服务器响应的状态码不在 2xx 范围内',
-                  type: 'warning'
-                });
-                console.log(error.response)
-              } else {
-                // Something happened in setting up the request that triggered an Error
-                console.log('Error', error.message)
-              }
-              console.log(error.config);
-            })
-
+          this.$router.push({path: '/readOver',query:{contactName:name,essayTitle:title,auditWay:'secondChange'}});
         },
+        // secondChange(name,title){
+        //   var secondChangeRecord;
+        //   this.$axios.post('/whetherChangedInSecondDiscussion', {
+        //     meetingFullname:this.contactName,
+        //     authorName:this.currentAus.name,
+        //     essayTitle:this.currentAus.title,
+        //     pcMemberUsername: this.$store.state.userDetails,
+        //   })
+        //     .then(resp => {
+        //       if (resp.status === 200 && resp.data.hasOwnProperty("secondChangeRecord")) {
+        //         secondChangeRecord = resp.data.secondChangeRecord;
+        //         if(secondChangeRecord===1){
+        //           this.$message({
+        //             showClose: true,
+        //             message: '第二次讨论中已确认，不能二次修改评审！',
+        //             type: 'warning'
+        //           });
+        //         }
+        //         else{
+        //           this.$router.push({path: '/readOver',query:{contactName:name,essayTitle:title,auditWay:'secondChange'}});
+        //         }
+        //       }
+        //       else {
+        //         this.$message({
+        //           showClose: true,
+        //           message: '评审状态获取异常！',
+        //           type: 'warning'
+        //         });
+        //       }
+        //     })
+        //     .catch(error => {
+        //       if (error.response) {
+        //         // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+        //         this.$message({
+        //           showClose: true,
+        //           message: '请求已发出，但服务器响应的状态码不在 2xx 范围内',
+        //           type: 'warning'
+        //         });
+        //         console.log(error.response)
+        //       } else {
+        //         // Something happened in setting up the request that triggered an Error
+        //         console.log('Error', error.message)
+        //       }
+        //       console.log(error.config);
+        //     })
+        //
+        // },
 
         scrollToEssay(index){
           document.getElementById(index).scrollIntoView();

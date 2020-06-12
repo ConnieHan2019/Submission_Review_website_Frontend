@@ -35,22 +35,22 @@ export default {
 
 <el-card class="box-card">
   <div slot="header" class="clearfix">
-    <span><b><i class="el-icon-postcard"></i>基本信息</b></span>
+    <span><strong><em class="el-icon-postcard"></em>基本信息</strong></span>
   </div>
   <div class="text item">
-    <i class="el-icon-user-solid"></i><b>用户名：</b>{{personalInformation.username}}
+    <em class="el-icon-user-solid"></em><strong>用户名：</strong>{{personalInformation.username}}
   </div>
   <div class="text item">
-   <i class="el-icon-user"></i><b>姓名：</b>{{personalInformation.fullname}}
+   <em class="el-icon-user"></em><strong>姓名：</strong>{{personalInformation.fullname}}
   </div>
   <div class="text item">
-    <i class="el-icon-message"></i><b>邮箱：</b>{{personalInformation.email}}
+    <em class="el-icon-message"></em><strong>邮箱：</strong>{{personalInformation.email}}
   </div>
   <div class="text item">
-    <i class="el-icon-place"></i><b>单位：</b>{{personalInformation.sector}}
+    <em class="el-icon-place"></em><strong>单位：</strong>{{personalInformation.sector}}
   </div>
   <div class="text item">
-    <i class="el-icon-location-information"></i><b>区域：</b>{{personalInformation.country}}
+    <em class="el-icon-location-information"></em><strong>区域：</strong>{{personalInformation.country}}
   </div>
 </el-card>
 </div>

@@ -210,7 +210,6 @@
   }
   .members{
     color: rgba(0, 25, 52, 0.7);
-    font-family: "Comic Sans MS";
   }
   .member{
     margin-top: 20px;
@@ -268,8 +267,6 @@
   }
   .tableDT{
     color: #c69500;
-    font-family: "Comic Sans MS";
-    align-items: center;
   }
   #meeting{
     padding: 20px;

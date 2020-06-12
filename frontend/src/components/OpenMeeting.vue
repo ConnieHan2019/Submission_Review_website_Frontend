@@ -52,25 +52,25 @@ export default{
     <el-button style="float: right; padding: 3px 0" type="text" @click='open' :disabled='isDisabled'>开启会议</el-button>
   </div>
   <div class="text item">
-    <i class="el-icon-s-opportunity"></i><b>会议简称：</b>{{contactInformation.shortname}}
+    <em class="el-icon-s-opportunity"></em><strong>会议简称：</strong>{{contactInformation.shortname}}
   </div>
   <div class="text item">
-   <i class="el-icon-s-opportunity"></i><b>会议全称：</b>{{contactInformation.fullname}}
+   <em class="el-icon-s-opportunity"></em><strong>会议全称：</strong>{{contactInformation.fullname}}
   </div>
   <div class="text item">
-    <i class="el-icon-date"></i><b>投稿截止日期：</b>{{contactInformation.deadline}}
+    <em class="el-icon-date"></em><strong>投稿截止日期：</strong>{{contactInformation.deadline}}
   </div>
   <div class="text item">
-    <i class="el-icon-date"></i><b>结果发布日期：</b>{{contactInformation.resultReleaseTime}}
+    <em class="el-icon-date"></em><strong>结果发布日期：</strong>{{contactInformation.resultReleaseTime}}
   </div>
   <div class="text item">
-    <i class="el-icon-date"></i><b>举办时间：</b>{{contactInformation.organizationTime}}
+    <em class="el-icon-date"></em><strong>举办时间：</strong>{{contactInformation.organizationTime}}
   </div>
   <div class="text item">
-    <i class="el-icon-location"></i><b>举办地点：</b>{{contactInformation.place}}
+    <em class="el-icon-location"></em><strong>举办地点：</strong>{{contactInformation.place}}
   </div>
   <div class="text item">
-    <i class="el-icon-notebook-2"></i><b>会议话题：</b>{{contactInformation.topic}}
+    <em class="el-icon-notebook-2"></em><strong>会议话题：</strong>{{contactInformation.topic}}
   </div>
 </el-card>
 

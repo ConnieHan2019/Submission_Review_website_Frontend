@@ -56,14 +56,12 @@ export default {
           <router-link to = "contact" class="btn">申请会议</router-link>
         </div>
       <div class="d-flex banner" style="margin:3em 0 2em 2em">
-       <!--<div class = "row">-->
           <div class="col-md-4">
             <div class="d-md-flex justify-content-center">
               <h5 class="counter">13228029</h5>
               <p class="para-w3pvt">篇文章</p>
             </div>
           </div>
-         <!--<div class="col-md-4 stats_w3pvt_counter_grid mt-3">-->
             <div class="col-md-4">
             <div class="d-md-flex justify-content-center">
               <h5 class="counter">3504</h5>

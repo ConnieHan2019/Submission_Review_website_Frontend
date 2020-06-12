@@ -140,7 +140,7 @@
 
         <div class="window" id="topicList">
 
-          <b>该会议对应topic</b><br>
+          <strong>该会议对应topic</strong><br>
           <el-tag
             class="d-tag"
             :key="defaultTag"
@@ -282,11 +282,11 @@
               country:'',
               email:'',
             }
-            tmp.writerName=formName.writerName,
-            tmp.sector=formName.sector,
-            tmp.country=formName.country,
-            tmp.email=formName.email,
-            this.form.writer.push(tmp);
+            tmp.writerName=formName.writerName
+            tmp.sector=formName.sector
+            tmp.country=formName.country
+            tmp.email=formName.email
+            this.form.writer.push(tmp)
             this.dialogFormVisible = false;
           }
           else{

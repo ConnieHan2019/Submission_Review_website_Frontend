@@ -85,7 +85,7 @@
 
           <div class="window" id="topicList">
 
-            <b>topic 列表</b><br>
+            <strong>topic 列表</strong><br>
             <el-tag
               class="d-tag"
               :key="defaultTag"
@@ -132,7 +132,6 @@
 </template>
 
 <script>
-import {timeValid,placeeValid} from '../assets/js/dataValid';
 import {countries} from '../assets/js/countries';
 export default {
   name: 'Contact',
@@ -332,7 +331,7 @@ export default {
   .contact_container{
     border-radius: 15px;
     background-clip: padding-box;
-    background: #F7F5E6;
+    background-color: #F7F5E6;
     border: 1px solid #eaeaea;
     box-shadow: 0 0 25px #cac6c6;
   }

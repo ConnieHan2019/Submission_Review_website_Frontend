@@ -148,11 +148,11 @@ export default {
         <el-button type="primary"
                    class="btn more mr-2"
                    style="width: 30%;background: #afb4db;border: none;font-size:15px;font-weight:600"
-                   v-on:click="login(loginForm,'user')"><i class="el-icon-user-solid"></i>UserLogin</el-button>
+                   v-on:click="login(loginForm,'user')"><em class="el-icon-user-solid"></em>UserLogin</el-button>
         <el-button type="primary"
                    class="btn more mr-2"
                    style="width: 30%;background: #afb4db;border: none;font-size:15px;font-weight:600"
-                   v-on:click="login(loginForm,'admin')"><i class="el-icon-s-custom"></i>AdminLogin</el-button>
+                   v-on:click="login(loginForm,'admin')"><em class="el-icon-s-custom"></em>AdminLogin</el-button>
 
           <el-button type="primary"
                    class="btn more mr-2"
@@ -197,7 +197,5 @@ export default {
     margin:15px;
     height:35px;
     box-shadow: 0 0 25px #cac6c6;
-  }
-  .el-form-item{
   }
 </style>

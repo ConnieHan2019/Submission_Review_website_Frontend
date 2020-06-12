@@ -40,13 +40,13 @@
               <div v-for="firstDiscuss in showFirstDiscussionArea(aus)"
                    v-bind:key="firstDiscuss.speaker"
                    v-bind:index="firstDiscuss.speaker"
-                   align="left"
+                    
                    class="discussArea">
                 <p style="color: #005cbf">{{firstDiscuss.speaker}}<span style="color: black">:{{firstDiscuss.content}}</span></p>
                 <el-button  class="el-icon-right" @click="reply1(aus,firstDiscuss.speaker,firstDiscuss.content)">回复TA</el-button>
               </div>
               <br>
-              <div align="left" style="padding-left: 10%">
+              <div   style="padding-left: 10%">
                 <el-button @click="myView1(aus)">发表我的看法</el-button>
               </div>
             </div>
@@ -96,13 +96,13 @@
               <div v-for="secondDiscuss in showSecondDiscussionArea(aus)"
                    v-bind:key="secondDiscuss.speaker"
                    v-bind:index="secondDiscuss.speaker"
-                   align="left"
+                    
                    class="discussArea">
                 <p style="color: #005cbf">{{secondDiscuss.speaker}}<span style="color: black">:{{secondDiscuss.content}}</span></p>
                 <el-button  class="el-icon-right" @click="reply2(aus,secondDiscuss.speaker,secondDiscuss.content)">回复TA</el-button>
               </div>
               <br>
-              <div align="left" style="padding-left: 10%">
+              <div   style="padding-left: 10%">
                 <el-button @click="myView2(aus)">发表我的看法</el-button>
               </div>
 
@@ -225,16 +225,16 @@ import pdf from 'vue-pdf'
         for(var i = 0; i < this.authors.length;i++){
           //一定要用闭包或者foreach,加载pdf页数
           var auditVM = this;
-          (function(i){
-          //alert('初始元素'+i+":"+auditVM.pageCount[i])
-          pdf.createLoadingTask(auditVM.authors[i].link).promise.then(pdf => {
-            auditVM.pageCount[i] = pdf.numPages
+          (function(ii){
+          //alert('初始元素'+i+":"+auditVM.pageCount[ii])
+          pdf.createLoadingTask(auditVM.authors[ii].link).promise.then(PDF => {
+            auditVM.pageCount[ii] = PDF.numPages
           })
           //alert("now:"+auditVM.pageCount[i])
           })(i)
         }
             } else {
-              this.auditError(),
+              this.auditError()
                 console.log(resp)
             }
           })

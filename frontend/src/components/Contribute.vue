@@ -8,23 +8,23 @@
       <div id="searchedArea" v-show="dialog_visible">
         <el-divider  content-position="left"><span>搜索结果</span></el-divider>
         <div class="MeetingBox">
-          <div class="text item">
-            <b>会议简称</b><span class="para">{{contactInformation.shortname}}</span>
+          <div class="text_item">
+            <strong>会议简称</strong><span class="para">{{contactInformation.shortname}}</span>
           </div>
-          <div class="text item">
-            <b>会议全名</b><span class="para">{{contactInformation.fullname}}</span>
+          <div class="text_item">
+            <strong>会议全名</strong><span class="para">{{contactInformation.fullname}}</span>
           </div>
-          <div class="text item">
-            <b>投稿截止日期</b><span class="para">{{contactInformation.deadline}}</span>
+          <div class="text_item">
+            <strong>投稿截止日期</strong><span class="para">{{contactInformation.deadline}}</span>
           </div>
-          <div class="text item">
-            <b>结果发布日期</b><span class="para">{{contactInformation.resultReleaseTime}}</span>
+          <div class="text_item">
+            <strong>结果发布日期</strong><span class="para">{{contactInformation.resultReleaseTime}}</span>
           </div>
-          <div class="text item">
-            <b>会议举办日期</b><span class="para">{{contactInformation.organizationTime}}</span>
+          <div class="text_item">
+            <strong>会议举办日期</strong><span class="para">{{contactInformation.organizationTime}}</span>
           </div>
-          <div class="text item">
-            <b>会议标签</b>
+          <div class="text_item">
+            <strong>会议标签</strong>
             <el-tag
               :key="tag"
               v-for="tag in contactInformation.topic"
@@ -39,26 +39,26 @@
       <el-divider content-position="left"><span>推荐</span></el-divider>
       <div id="recommandArea">
         <div class="MeetingBox" v-for="met in allActiveMeeting" v-bind:key="met.fullname" v-bind:index="met.fullname">
-          <div class="text item">
-            <b>会议简称</b><span class="para">{{met.shortname}}</span>
+          <div class="text_item">
+            <strong>会议简称</strong><span class="para">{{met.shortname}}</span>
           </div>
-          <div class="text item">
-            <b>会议全名</b><span class="para">{{met.fullname}}</span>
+          <div class="text_item">
+            <strong>会议全名</strong><span class="para">{{met.fullname}}</span>
           </div>
-          <div class="text item">
-            <b>投稿截止日期</b><span class="para">{{met.deadline}}</span>
+          <div class="text_item">
+            <strong>投稿截止日期</strong><span class="para">{{met.deadline}}</span>
           </div>
-          <div class="text item">
-            <b>结果发布日期</b><span class="para">{{met.resultReleaseTime}}</span>
+          <div class="text_item">
+            <strong>结果发布日期</strong><span class="para">{{met.resultReleaseTime}}</span>
           </div>
-          <div class="text item">
-            <b>会议举办日期</b><span class="para">{{met.organizationTime}}</span>
+          <div class="text_item">
+            <strong>会议举办日期</strong><span class="para">{{met.organizationTime}}</span>
           </div>
-          <div class="text item">
-            <b>会议举办地点</b><span class="para">{{met.place}}</span>
+          <div class="text_item">
+            <strong>会议举办地点</strong><span class="para">{{met.place}}</span>
           </div>
-          <div class="text item">
-            <b>会议标签</b>
+          <div class="text_item">
+            <strong>会议标签</strong>
             <el-tag
               :key="tag"
               v-for="tag in met.topic"
@@ -203,12 +203,11 @@
   .el-input{
     width: 200px;
   }
-  .text item{
+  .text_item{
     margin-top: 20px;
   }
   .para{
     margin-left: 30px;
-    font-family: "Comic Sans MS";
     color: #c69500;
   }
 </style>

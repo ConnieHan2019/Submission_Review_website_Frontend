@@ -167,7 +167,6 @@ nav ul ul {
     top: 25px;
     padding: 10px;
     background: #fff;
-    padding: 10px;
     z-index: 999;
     border: 1px solid #ddd;
     left: 165px;
@@ -1076,11 +1075,9 @@ h6.date {
 .con-gd .form-control {
     padding: 15px 15px;
     border: 0;
-    border: none;
     outline: none;
     background: rgba(247, 247, 247, 0.29);
     color: #fff;
-    border-radius: 0;
     font-size: 0.9em;
     letter-spacing: 2px;
     border-radius: 4px;
@@ -1088,7 +1085,6 @@ h6.date {
     -o-border-radius: 4px;
     -moz-border-radius: 4px;
     -ms-border-radius: 4px;
-    border: 1px solid #ddd;
 }
 
 .con-gd button.btn {
@@ -1193,7 +1189,6 @@ section.hand-crafted p {
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-    -moz-background-size: cover;
     min-height: 11em;
 }
 
@@ -1224,9 +1219,7 @@ ol.breadcrumb li {
     text-transform: uppercase;
     background: rgba(140, 156, 171, 0.22);
     margin-right: 0.5em;
-    color: #fff;
     border-radius: 0;
-    background: transparent;
 }
 
 ol.breadcrumb li a {
@@ -1262,12 +1255,9 @@ ol.breadcrumb li a {
 .contact-hny-form input,
 .contact-hny-form textarea {
     padding: 13px 15px;
-    border: 0;
-    border: none;
     outline: none;
     background: rgba(247, 247, 247, 0.29);
     color: #fff;
-    border-radius: 0;
     font-size: 0.9em;
     letter-spacing: 2px;
     border-radius: 4px;

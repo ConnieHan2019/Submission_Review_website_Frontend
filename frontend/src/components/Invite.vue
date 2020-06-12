@@ -17,7 +17,7 @@ export default {
         if (resp.status === 200 && resp.data.hasOwnProperty("invitesData")) {
           this.invites = resp.data.invitesData
         } else {
-          this.inviteError(),
+          this.inviteError()
             console.log(resp)
         }
       })
@@ -175,8 +175,8 @@ export default {
   <div class="invitation" v-for="ins in invites" v-bind:key="ins.FullName" v-bind:index="ins.FullName">
 
 
-    <p><i class="el-icon-user"></i><span class="ivt">Chair:</span>{{ins.chair}}</p>
-    <p><i class="el-icon-notebook-1"></i><span class="ivt">Meeting's FullName:</span>{{ins.FullName}}</p>
+    <p><em class="el-icon-user"></em><span class="ivt">Chair:</span>{{ins.chair}}</p>
+    <p><em class="el-icon-notebook-1"></em><span class="ivt">Meeting's FullName:</span>{{ins.FullName}}</p>
 
 
 
@@ -232,9 +232,6 @@ export default {
     padding: 20px;
     border-radius: 2px;box-shadow: 0 2px 4px rgba(0, 0, 0, .44), 0 0 6px rgba(0, 0, 0, .44);color: #0c5460;color: black;
     background-color: white;
-  }
-  .goTo{
-
   }
 </style>
 

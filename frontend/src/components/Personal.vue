@@ -49,7 +49,7 @@ export default {
         this.contacts = resp.data.respContactData
       }
       else{
-        this.personalError(),
+        this.personalError()
         //alert('Personal error')
         console.log(resp)
       }

@@ -4,7 +4,7 @@
     <div class="essayBlock">
       <h5>会议主题：<span style="color:#5b25ff;">{{contactName}}</span></h5><br>
       <div v-for='(essay,indexOfEssay) in essays' v-bind:key="essay.title" v-bind:index="essay.title" class="passageBlock">
-      <b class="tit">{{essay.title}}</b>
+      <strong class="tit">{{essay.title}}</strong>
 <el-input
   type="textarea"
   :autosize="{ minRows: 2}"
@@ -131,7 +131,7 @@
             if (resp.status === 200 && resp.data.hasOwnProperty("userEssayStateInformation")) {
               this.essays = resp.data.userEssayStateInformation
             } else {
-              this.essayStateError(),
+              this.essayStateError()
                 console.log(resp)
             }
           })

@@ -16,7 +16,6 @@
           <input type="checkbox" id="drop" />
           <ul class="menu mr-auto">
             <li class="active"><router-link to="personal" style='text-transform:none'><span class="fa fa-user" aria-hidden="true"></span>{{ msg }}</router-link></li>
-            <!--<li><a href="">About</a></li>-->
             <li>
               <!-- First Tier Drop Down -->
               <label for="drop-2" class="toggle toggle-2"> <span class="fa fa-angle-down" aria-hidden="true"></span> </label>

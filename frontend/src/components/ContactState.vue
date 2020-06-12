@@ -17,7 +17,7 @@ export default {
         if (resp.status === 200 && resp.data.hasOwnProperty("myContactStateDelivered")) {
           this.myContactState = resp.data.myContactStateDelivered
         } else {
-          this.contactStateError(),
+          this.contactStateError()
             console.log(resp)
         }
       })
@@ -53,26 +53,26 @@ export default {
 <div id = "ContactState">
   <el-divider content-position="left"><span>我申请的会议状态</span></el-divider>
     <div class="MeetingBox" v-for="conState in myContactState" v-bind:key="conState.ShortName" v-bind:index="conState.ShortName">
-      <div class="text item">
-        <b>会议简称</b><span class="para">{{conState.ShortName}}</span>
+      <div class="text_item">
+        <strong>会议简称</strong><span class="para">{{conState.ShortName}}</span>
       </div>
-      <div class="text item">
-        <b>会议全名</b><span class="para">{{conState.FullName}}</span>
+      <div class="text_item">
+        <strong>会议全名</strong><span class="para">{{conState.FullName}}</span>
       </div>
-      <div class="text item">
-        <b>投稿截止日期</b><span class="para">{{conState.ContributeDDL}}</span>
+      <div class="text_item">
+        <strong>投稿截止日期</strong><span class="para">{{conState.ContributeDDL}}</span>
       </div>
-      <div class="text item">
-        <b>结果发布日期</b><span class="para">{{conState.ReleaseResultTime}}</span>
+      <div class="text_item">
+        <strong>结果发布日期</strong><span class="para">{{conState.ReleaseResultTime}}</span>
       </div>
-      <div class="text item">
-        <b>会议举办日期</b><span class="para">{{conState.ReleaseResultTime}}</span>
+      <div class="text_item">
+        <strong>会议举办日期</strong><span class="para">{{conState.ReleaseResultTime}}</span>
       </div>
-      <div class="text item">
-        <b>举办地点</b><span class="para">{{conState.Place}}</span>
+      <div class="text_item">
+        <strong>举办地点</strong><span class="para">{{conState.Place}}</span>
       </div>
-      <div class="text item">
-        <b>审核状态</b><span class="state">{{conState.contactState}}</span>
+      <div class="text_item">
+        <strong>审核状态</strong><span class="state">{{conState.contactState}}</span>
       </div>
 
     </div>
@@ -86,12 +86,11 @@ export default {
     background-color: white;
     margin: 20px;
   }
-  .text item{
+  .text_item{
     margin-top: 20px;
   }
   .para{
     margin-left: 30px;
-    font-family: "Comic Sans MS";
     color: #c69500;
   }
   .enterMeetingBt{

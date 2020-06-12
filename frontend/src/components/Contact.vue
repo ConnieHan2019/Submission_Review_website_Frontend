@@ -292,8 +292,17 @@ export default {
                   // alert("申请成功")
                   this.$router.replace({path:'/'})
                 }
+                else if(resp.status === 406 ||resp.status === 409 ){
+                  this.$message({
+                    showClose: true,
+                    message: '请检查三个日期顺序!',
+                  });
+                }
                 else{
-                  this.fail()
+                  this.$message({
+                    showClose: true,
+                    message: '申请失败',
+                  });
                 }
               })
               .catch(error => {
@@ -301,16 +310,13 @@ export default {
                   if(error.response.status === 400){
                     this.$message.error(error.response.data.message)
                   }
-                  else{//406 409
-                    this.$message({
-                      showClose: true,
-                      message: '请检查三个日期顺序',
-                    });
-
-                  }
                 }
                 else{
-                  this.contactError()
+                  this.$message({
+                    showClose: true,
+                    message: 'contact error',
+                    type: 'warning'
+                  });
                 }
                 console.log(error)
                 //alert('contact error')

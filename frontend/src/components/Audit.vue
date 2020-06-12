@@ -51,7 +51,7 @@
               </div>
             </div>
             <div v-else>
-              <el-button @click="showFirstDiscussionArea(aus)">展开评论区</el-button>
+              <el-button @click="showFirstDiscussionArea(aus)">刷新评论区</el-button>
             </div>
             <el-dialog
               title="回复评论"
@@ -108,7 +108,7 @@
 
             </div>
             <div v-else>
-              <el-button @click="showSecondDiscussionArea(aus)">展开评论区</el-button>
+              <el-button @click="showSecondDiscussionArea(aus)">刷新评论区</el-button>
             </div>
 
             <el-dialog

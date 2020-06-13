@@ -129,7 +129,7 @@
                           type: 'success'
                         });
 
-                        this.$router.replace({path:'/audit'})
+                        this.$router.replace({path:'/personal'})
                       }
                       else{
                         this.$message({
@@ -190,7 +190,7 @@
                       type: 'success'
                     });
                     // alert("批阅成功")
-                    this.$router.replace({path:'/audit'})
+                    this.$router.replace({path:'/personal'})
                   }
                   else{
                     this.$message({
@@ -251,7 +251,7 @@
                       type: 'success'
                     });
                     // alert("批阅成功")
-                    this.$router.replace({path:'/audit'})
+                    this.$router.replace({path:'/personal'})
                   }
                   else{
                     this.$message({

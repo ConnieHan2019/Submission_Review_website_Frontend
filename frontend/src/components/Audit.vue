@@ -357,7 +357,7 @@
                 message: '已确认不修改！',
                 type: 'success'
               });
-              this.$router.replace({path:'/audit'})
+              this.$router.go(0);
             } else {
               this.$message({
                 showClose: true,
@@ -397,7 +397,7 @@
                 message: '已确认不修改！',
                 type: 'success'
               });
-              this.$router.replace({path:'/audit'})
+              this.$router.go(0);
             } else {
               this.$message({
                 showClose: true,
@@ -453,7 +453,7 @@
                 message: '评论成功',
                 type: 'success'
               });
-              this.$router.replace({path:'/audit'})
+              this.$router.go(0);
             } else {
               this.$message({
                 showClose: true,
@@ -509,7 +509,7 @@
                 message: '评论成功',
                 type: 'success'
               });
-              this.$router.replace({path:'/audit'})
+              this.$router.go(0);
             } else {
               this.$message({
                 showClose: true,

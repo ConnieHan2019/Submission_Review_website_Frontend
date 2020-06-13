@@ -22,16 +22,15 @@ export default{
                 author:'Mary',
                 assignment:[{
                     name:'hhh',
-                    state:'已批阅'
+                    state:1
                 },{
                     name:'ddd',
-                    state:'批阅中'
+                    state:0
                 },{
                     name:'ddd',
-                    state:'批阅中'
+                    state:0
                 }],
-                state:'批阅中',
-                rebuttal:''
+                state:0
             },{
                 title:'title2',
                 writer:['zyr','hty'],
@@ -39,16 +38,15 @@ export default{
                 author:'Mary',
                 assignment:[{
                     name:'hhh',
-                    state:'已批阅'
+                    state:1
                 },{
                     name:'ddd',
-                    state:'已批阅'
+                    state:1
                 },{
                     name:'ddd',
-                    state:'已批阅'
+                    state:1
                 }],
-                state:'确认中',
-                rebuttal:''
+                state:1
             },{
                 title:'title3',
                 writer:['zyr','hty'],
@@ -56,16 +54,15 @@ export default{
                 author:'Mary',
                 assignment:[{
                     name:'hhh',
-                    state:'已批阅'
+                    state:1
                 },{
                     name:'ddd',
-                    state:'已批阅'
+                    state:1
                 },{
                     name:'ddd',
-                    state:'已确认'
+                    state:2
                 }],
-                state:'确认中',
-                rebuttal:''
+                state:1
             },{
                 title:'title4',
                 writer:['zyr','hty'],
@@ -73,16 +70,15 @@ export default{
                 author:'Mary',
                 assignment:[{
                     name:'hhh',
-                    state:'已确认'
+                    state:2
                 },{
                     name:'ddd',
-                    state:'已确认'
+                    state:2
                 },{
                     name:'ddd',
-                    state:'已确认'
+                    state:2
                 }],
-                state:'已完成',
-                rebuttal:'未提交'
+                state:2
             },{
                 title:'title5',
                 writer:['zyr','hty'],
@@ -90,16 +86,15 @@ export default{
                 author:'Mary',
                 assignment:[{
                     name:'hhh',
-                    state:'已确认'
+                    state:6
                 },{
                     name:'ddd',
-                    state:'已确认'
+                    state:6
                 },{
                     name:'ddd',
-                    state:'已确认'
+                    state:6
                 }],
-                state:'已完成',
-                rebuttal:'已提交'
+                state:6
             },{
                 title:'title6',
                 writer:['zyr','hty'],
@@ -107,16 +102,47 @@ export default{
                 author:'Mary',
                 assignment:[{
                     name:'hhh',
-                    state:'未确认'
+                    state:5
                 },{
                     name:'ddd',
-                    state:'已确认'
+                    state:6
                 },{
                     name:'ddd',
-                    state:'已确认'
+                    state:6
                 }],
-                state:'确认中',
-                rebuttal:'已提交'
+                state:5
+            },{
+                title:'title7',
+                writer:['zyr','hty'],
+                topic:['Beauty','Life','Food'],
+                author:'Mary',
+                assignment:[{
+                    name:'hhh',
+                    state:3
+                },{
+                    name:'ddd',
+                    state:3
+                },{
+                    name:'ddd',
+                    state:3
+                }],
+                state:3
+            },{
+                title:'title8',
+                writer:['zyr','hty'],
+                topic:['Beauty','Life','Food'],
+                author:'Mary',
+                assignment:[{
+                    name:'hhh',
+                    state:4
+                },{
+                    name:'ddd',
+                    state:4
+                },{
+                    name:'ddd',
+                    state:4
+                }],
+                state:4
             }]
         }
     },
@@ -132,6 +158,7 @@ export default{
             if(resp.status === 200 && resp.data.hasOwnProperty('respEssaysData')){
                 this.essaysData = resp.data.respEssaysData
                 this.transform();
+                this.convert();
             }
             else{
                 console.log('返回数据有误')
@@ -147,6 +174,7 @@ export default{
     },
     created:function(){
         this.transform();
+        this.convert();
         this.$axios.post('/essaysData',{
             contactFullName:this.contactName,
             contactState:this.state
@@ -157,6 +185,8 @@ export default{
                 //console.log(resp.data.respEssaysData)
                 //将字符数组处理成字符串
                 this.transform();
+                //将论文状态从数字换成文字
+                this.convert();
             }
             else{
                 console.log('返回数据有误')
@@ -207,7 +237,7 @@ export default{
         releaseSecondResult(){
             //以确保state==5
             for(var i = 0; i < this.essaysData.length;i++){
-                if(this.essaysData[i].rebuttal==="已提交" && this.essaysData[i].state === '审核中'){
+                if(this.essaysData[i].state !="未提交驳斥" && this.essaysData[i].state != '已完成'){
                     this.$message.error('还有稿件未完成，无法公布结果')
                     return
                 }
@@ -280,6 +310,80 @@ export default{
       }
       this.essaysData[i].writer = temp;
     }
+        },
+        convert(){
+            for(var i=0;i < this.essaysData.length;i++){
+                var assignment = this.essaysData[i].assignment;
+                var stateText;
+                for(var j = 0;j < assignment.length;j++){
+                    switch(assignment[j].state){
+                        case 0:{
+                            stateText = "批阅中";
+                            break;
+                        }
+                        case 1:{
+                            stateText = "已批阅";
+                            break;
+                        }
+                        case 2:{
+                            stateText = "已确认";
+                            break;
+                        }
+                        case 3:{
+                            stateText = "未提交驳斥";
+                            break;
+                        }
+                        case 4:{
+                            stateText = "未提交驳斥";
+                            break;
+                        }
+                        case 5:{
+                            stateText = "未确认";
+                            break;
+                        }
+                        case 6:{
+                            stateText = "已确认";
+                            break;
+                        }
+                        default:
+                            break;
+                    }
+                    assignment[j].state = stateText;
+                }
+                switch(this.essaysData[i].state){
+                        case 0:{
+                            stateText = "批阅中";
+                            break;
+                        }
+                        case 1:{
+                            stateText = "确认中";
+                            break;
+                        }
+                        case 2:{
+                            stateText = "已完成";
+                            break;
+                        }
+                        case 3:{
+                            stateText = "未提交驳斥";
+                            break;
+                        }
+                        case 4:{
+                            stateText = "未提交驳斥";
+                            break;
+                        }
+                        case 5:{
+                            stateText = "确认中";
+                            break;
+                        }
+                        case 6:{
+                            stateText = "已完成";
+                            break;
+                        }
+                        default:
+                            break;
+                }
+                this.essaysData[i].state = stateText
+            }
         }
     }
 }
@@ -309,11 +413,6 @@ export default{
       label="投稿人">
     </el-table-column>
     <el-table-column
-      v-if='state>3'
-      prop="rebuttal"
-      label="驳斥情况">
-    </el-table-column>
-    <el-table-column
       width='200px'
       label="论文状态">
       <template v-slot="scope">
@@ -330,7 +429,7 @@ export default{
 </el-popover>
 </div>
 <div  v-else-if='state == 5 || state == 4'>
-<p v-if='essaysData[scope.$index].rebuttal == "未提交"'>未提交驳斥，不进行复审</p>
+<p v-if='essaysData[scope.$index].state == "未提交驳斥"'>未提交驳斥，不进行复审</p>
 <el-popover
   v-else
   placement="left"

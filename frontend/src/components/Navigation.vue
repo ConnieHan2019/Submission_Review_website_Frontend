@@ -15,11 +15,11 @@
           <label for="drop" class="toggle">导航</label>
           <input type="checkbox" id="drop" />
           <ul class="menu mr-auto">
-            <li class="active"><router-link to="personal" style='text-transform:none'><span class="fa fa-user" aria-hidden="true"></span>{{ msg }}</router-link></li>
+            <li class="active"><router-link to="personal" style='text-transform:none'>{{ msg }}</router-link></li>
             <li>
               <!-- First Tier Drop Down -->
               <label for="drop-2" class="toggle toggle-2"> <span class="fa fa-angle-down" aria-hidden="true"></span> </label>
-              <a href="#">操作指南 <span class="fa fa-angle-down" aria-hidden="true"></span></a>
+              <a href="#">操作指南 </a>
               <input type="checkbox" id="drop-2" />
               <ul>
 

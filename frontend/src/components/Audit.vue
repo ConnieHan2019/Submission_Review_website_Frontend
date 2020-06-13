@@ -382,159 +382,13 @@
             console.log(error.config);
           })
       },
-      methods: {
-        showFirstDiscussionArea(aus){
-          this.firstDiscussAreaVisible=true;
-          var firstDiscussion=[];
-          // firstDiscussion=[
-          //    {
-          //      speaker:'msdsn',
-          //      content:'我觉得给吧'
-          //    },
-          //    {
-          //      speaker:'sdjod',
-          //      content:'没道理'
-          //    },
-          //    {
-          //      speaker:'sdddw',
-          //      content:'开玩笑丢掉的吧'
-          //    },
-          //  ];
-          this.$axios.post('/getFirstDiscussion', {
-            meetingFullname:this.contactName,
-            authorName:aus.name,
-            essayTitle:aus.title,
-          })
-            .then(resp => {
-              if (resp.status === 200 && resp.data.hasOwnProperty("firstDiscussion")) {
-                firstDiscussion=resp.data.firstDiscussion;
-                this.$message({
-                  showClose: true,
-                  message: '讨论1传来的数据'+firstDiscussion,
-                });
-              } else {
-                this.$message({
-                  showClose: true,
-                  message: '讨论区信息获取失败！',
-                  type: 'warning'
-                });
-              }
-            })
-            .catch(error => {
-              console.log(error.config);
-            })
-          return firstDiscussion;
-        },
-        showSecondDiscussionArea(aus){
-          this.secondDiscussAreaVisible=true;
-          var  secondDiscussion;
-          // secondDiscussion=[
-          //    {
-          //      speaker:'msdsn',
-          //      content:'我觉得给吧'
-          //    },
-          //    {
-          //      speaker:'sdjod',
-          //      content:'没道理'
-          //    },
-          //    {
-          //      speaker:'sdddw',
-          //      content:'开玩笑丢掉的吧'
-          //    },
-          //  ];
-          this.$axios.post('/getSecondDiscussion', {
-            meetingFullname:this.contactName,
-            authorName:aus.name,
-            essayTitle:aus.title,
-          })
-            .then(resp => {
-              if (resp.status === 200 && resp.data.hasOwnProperty("secondDiscussion")) {
-                secondDiscussion=resp.data.secondDiscussion;
-                this.$message({
-                  showClose: true,
-                  message: '讨论2传来的数据'+secondDiscussion,
-                });
-              } else {
-                this.$message({
-                  showClose: true,
-                  message: '讨论区信息获取失败！',
-                  type: 'warning'
-                });
-                console.log(resp.data)
-              }
-            })
-            .catch(error => {
-              console.log(error.config);
-            })
-            console.log(secondDiscussion)
-          return secondDiscussion;
-        },
+      doNotChange2(aus){
+        this.$axios.post('/doNotChangeInSecondDiscussion', {
+          meetingFullname:this.contactName,
+          authorName:aus.name,
+          essayTitle:aus.title,
+          pcMemberUsername: this.$store.state.userDetails,
 
-        reply1(aus,speaker,content){
-          this.currentAus=aus;
-          this.commentWindowVisible1=true;
-          this.aPieceOfComment='[回复'+speaker+':'+content+']';
-        },
-        reply2(aus,speaker,content){
-          this.currentAus=aus;
-          this.commentWindowVisible2=true;
-          this.aPieceOfComment='[回复'+speaker+':'+content+']';
-        },
-        myView1(aus){
-          this.currentAus=aus;
-          this.commentWindowVisible1=true;
-          this.aPieceOfComment='';
-        },
-        myView2(aus){
-          this.currentAus=aus;
-          this.commentWindowVisible2=true;
-          this.aPieceOfComment='';
-        },
-        doNotChange1(aus){
-          this.$axios.post('/doNotChangeInFirstDiscussion', {
-            meetingFullname:this.contactName,
-            authorName:aus.name,
-            essayTitle:aus.title,
-            pcMemberUsername: this.$store.state.userDetails,
-
-          })
-            .then(resp => {
-              if (resp.status === 200) {
-                this.$message({
-                  showClose: true,
-                  message: '已确认不修改！',
-                  type: 'success'
-                });
-              } else {
-                this.$message({
-                  showClose: true,
-                  message: '操作异常！',
-                  type: 'warning'
-                });
-              }
-            })
-            .catch(error => {
-              if (error.response) {
-                // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-                this.$message({
-                  showClose: true,
-                  message: '请求已发出，但服务器响应的状态码不在 2xx 范围内',
-                  type: 'warning'
-                });
-                console.log(error.response)
-              } else {
-                // Something happened in setting up the request that triggered an Error
-                console.log('Error', error.message)
-              }
-              console.log(error.config);
-            })
-        },
-        doNotChange2(aus){
-          this.$axios.post('/doNotChangeInSecondDiscussion', {
-            meetingFullname:this.contactName,
-            authorName:aus.name,
-            essayTitle:aus.title,
-            pcMemberUsername: this.$store.state.userDetails,
         })
           .then(resp => {
             if (resp.status === 200) {
@@ -713,7 +567,6 @@
         document.getElementById(index).scrollIntoView();
       }
     }
-  }
   }
 </script>
 

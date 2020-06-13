@@ -98,7 +98,7 @@
             <ul id="indexWay2" align="left">
               <li v-for="(secondDiscuss,index) in aus.secondDiscussion"  v-bind:key="secondDiscuss.speaker">
                 <p style="color: #005cbf">第{{index+1}}楼：{{secondDiscuss.speaker}}<span style="color: black">:{{secondDiscuss.content}}</span></p>
-                <el-button  class="el-icon-right" @click="reply1(aus,secondDiscuss.speaker,secondDiscuss.content)">回复TA</el-button>
+                <el-button  class="el-icon-right" @click="reply2(aus,secondDiscuss.speaker,secondDiscuss.content)">回复TA</el-button>
               </li>
             </ul>
             <div  style="padding-left: 10%">
@@ -322,77 +322,6 @@
         })
     },
     methods: {
-      showFirstDiscussionArea(aus){
-        this.firstDiscussAreaVisible=true;
-        var firstDiscussion=[];
-        this.$axios.post('/getFirstDiscussion', {
-          meetingFullname:this.contactName,
-          authorName:aus.name,
-          essayTitle:aus.title,
-        })
-          .then(resp => {
-            if (resp.status === 200 && resp.data.hasOwnProperty("firstDiscussion")) {
-              firstDiscussion=resp.data.firstDiscussion;
-              this.$message({
-                showClose: true,
-                message: '讨论1传来的数据'+firstDiscussion,
-              });
-            } else {
-              this.$message({
-                showClose: true,
-                message: '讨论区信息获取失败！',
-                type: 'warning'
-              });
-            }
-          })
-          .catch(error => {
-            console.log(error.config);
-          })
-        return firstDiscussion;
-      },
-      showSecondDiscussionArea(aus){
-        this.secondDiscussAreaVisible=true;
-        var  secondDiscussion;
-        // secondDiscussion=[
-        //    {
-        //      speaker:'msdsn',
-        //      content:'我觉得给吧'
-        //    },
-        //    {
-        //      speaker:'sdjod',
-        //      content:'没道理'
-        //    },
-        //    {
-        //      speaker:'sdddw',
-        //      content:'开玩笑丢掉的吧'
-        //    },
-        //  ];
-        this.$axios.post('/getSecondDiscussion', {
-          meetingFullname:this.contactName,
-          authorName:aus.name,
-          essayTitle:aus.title,
-        })
-          .then(resp => {
-            if (resp.status === 200 && resp.data.hasOwnProperty("secondDiscussion")) {
-              secondDiscussion=resp.data.secondDiscussion;
-              this.$message({
-                showClose: true,
-                message: '讨论2传来的数据'+secondDiscussion,
-              });
-            } else {
-              this.$message({
-                showClose: true,
-                message: '讨论区信息获取失败！',
-                type: 'warning'
-              });
-            }
-          })
-          .catch(error => {
-            console.log(error.config);
-          })
-        return secondDiscussion;
-      },
-
       reply1(aus,speaker,content){
         this.currentAus=aus;
         this.commentWindowVisible1=true;
@@ -428,6 +357,7 @@
                 message: '已确认不修改！',
                 type: 'success'
               });
+              this.$router.replace({path:'/audit'})
             } else {
               this.$message({
                 showClose: true,
@@ -467,6 +397,7 @@
                 message: '已确认不修改！',
                 type: 'success'
               });
+              this.$router.replace({path:'/audit'})
             } else {
               this.$message({
                 showClose: true,
@@ -522,6 +453,7 @@
                 message: '评论成功',
                 type: 'success'
               });
+              this.$router.replace({path:'/audit'})
             } else {
               this.$message({
                 showClose: true,
@@ -577,6 +509,7 @@
                 message: '评论成功',
                 type: 'success'
               });
+              this.$router.replace({path:'/audit'})
             } else {
               this.$message({
                 showClose: true,

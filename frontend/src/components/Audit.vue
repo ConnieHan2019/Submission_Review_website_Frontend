@@ -347,11 +347,6 @@ import pdf from 'vue-pdf'
           this.aPieceOfComment='';
         },
         doNotChange1(aus){
-          //this.currentAus=aus;
-          // this.$message({
-          //   showClose: true,
-          //   message: this.currentAus,
-          // });
           this.$axios.post('/doNotChangeInFirstDiscussion', {
             meetingFullname:this.contactName,
             authorName:aus.name,
@@ -438,18 +433,6 @@ import pdf from 'vue-pdf'
             });
           }
           else{
-            this.$message({
-              showClose: true,
-              message: '评论成功！',
-              type: 'success'
-            });
-            var tmp={
-              speaker:'',
-              content:'',
-            };
-            tmp.speaker='me';
-            tmp.content=content;
-           // (this.showFirstDiscussionArea(this.currentAus)).push(tmp);
             //还要把这条记录增加到数据库里面去
             this.addFirstDiscussionCommentToBackend(content)
             this.commentWindowVisible1=false;
@@ -505,12 +488,6 @@ import pdf from 'vue-pdf'
             });
           }
           else{
-            var tmp={
-              speaker:'',
-              content:'',
-            };
-            tmp.speaker='me';
-            tmp.content=content;
             //还要把这条记录增加到数据库里面去
             this.addSecondDiscussionCommentToBackend(content)
             this.commentWindowVisible2=false;
@@ -583,104 +560,9 @@ import pdf from 'vue-pdf'
         firstChange(name,title){
           this.$router.push({path: '/readOver',query:{contactName:name,essayTitle:title,auditWay:'firstChange'}});
         },
-        // firstChange(name,title){
-        //   var firstChangeRecord;
-        //   this.$axios.post('/whetherChangedInFirstDiscussion', {
-        //     meetingFullname:this.contactName,
-        //     authorName:this.currentAus.name,
-        //     essayTitle:this.currentAus.title,
-        //     pcMemberUsername: this.$store.state.userDetails,
-        //   })
-        //     .then(resp => {
-        //       if (resp.status === 200 && resp.data.hasOwnProperty("firstChangeRecord")) {
-        //          firstChangeRecord = resp.data.firstChangeRecord;
-        //          if(firstChangeRecord===1){
-        //            this.$message({
-        //              showClose: true,
-        //              message: '第一次讨论中已确认，不能二次修改评审！',
-        //              type: 'warning'
-        //            });
-        //          }
-        //          else{
-        //            this.$router.push({path: '/readOver',query:{contactName:name,essayTitle:title,auditWay:'firstChange'}});
-        //          }
-        //       }
-        //        else {
-        //         this.$message({
-        //           showClose: true,
-        //           message: '评审状态获取异常！',
-        //           type: 'warning'
-        //         });
-        //       }
-        //     })
-        //     .catch(error => {
-        //       if (error.response) {
-        //         // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-        //         this.$message({
-        //           showClose: true,
-        //           message: '请求已发出，但服务器响应的状态码不在 2xx 范围内',
-        //           type: 'warning'
-        //         });
-        //         console.log(error.response)
-        //       } else {
-        //         // Something happened in setting up the request that triggered an Error
-        //         console.log('Error', error.message)
-        //       }
-        //       console.log(error.config);
-        //     })
-        //
-        // },
         secondChange(name,title){
           this.$router.push({path: '/readOver',query:{contactName:name,essayTitle:title,auditWay:'secondChange'}});
         },
-        // secondChange(name,title){
-        //   var secondChangeRecord;
-        //   this.$axios.post('/whetherChangedInSecondDiscussion', {
-        //     meetingFullname:this.contactName,
-        //     authorName:this.currentAus.name,
-        //     essayTitle:this.currentAus.title,
-        //     pcMemberUsername: this.$store.state.userDetails,
-        //   })
-        //     .then(resp => {
-        //       if (resp.status === 200 && resp.data.hasOwnProperty("secondChangeRecord")) {
-        //         secondChangeRecord = resp.data.secondChangeRecord;
-        //         if(secondChangeRecord===1){
-        //           this.$message({
-        //             showClose: true,
-        //             message: '第二次讨论中已确认，不能二次修改评审！',
-        //             type: 'warning'
-        //           });
-        //         }
-        //         else{
-        //           this.$router.push({path: '/readOver',query:{contactName:name,essayTitle:title,auditWay:'secondChange'}});
-        //         }
-        //       }
-        //       else {
-        //         this.$message({
-        //           showClose: true,
-        //           message: '评审状态获取异常！',
-        //           type: 'warning'
-        //         });
-        //       }
-        //     })
-        //     .catch(error => {
-        //       if (error.response) {
-        //         // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-        //         this.$message({
-        //           showClose: true,
-        //           message: '请求已发出，但服务器响应的状态码不在 2xx 范围内',
-        //           type: 'warning'
-        //         });
-        //         console.log(error.response)
-        //       } else {
-        //         // Something happened in setting up the request that triggered an Error
-        //         console.log('Error', error.message)
-        //       }
-        //       console.log(error.config);
-        //     })
-        //
-        // },
-
         scrollToEssay(index){
           document.getElementById(index).scrollIntoView();
         }

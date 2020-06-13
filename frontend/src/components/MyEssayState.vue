@@ -108,14 +108,14 @@
                   comment:'挺好的'
                 }
               ],
-
+              rebuttalState:0
             },
             {
               title:'专门为牛会写的第二篇文章',
               summary:'牛牛的会议',
               meetingState:2,
               commentSet:[],
-
+              rebuttalState:0
             }
           ],
           rebuttalText:[],
@@ -136,7 +136,7 @@
           this.rebuttalNeeded = [];
           for(var i = 0;i < this.essays.length;i++){
             var essay = this.essays[i]
-            if(essay.meetingState == 4 &&(essay.commentSet[0].score == '-1'||essay.commentSet[0].score == '-2'||essay.commentSet[1].score == '-1'||essay.commentSet[1].score == '-2'||essay.commentSet[2].score == '-1'||essay.commentSet[2].score == '-2')){
+            if(essay.meetingState == 4  &&(essay.commentSet[0].score == '-1'||essay.commentSet[0].score == '-2'||essay.commentSet[1].score == '-1'||essay.commentSet[1].score == '-2'||essay.commentSet[2].score == '-1'||essay.commentSet[2].score == '-2')){
               this.rebuttalNeeded.push(true)
             }
             else{
@@ -181,12 +181,13 @@
           this.$axios.post('/rebuttal',{
             username: this.$store.state.userDetails,
             contactName:this.contactName,
-            essaytitle:this.essays[index].title,
+            essayTitle:this.essays[index].title,
             rebuttalText:this.rebuttalText[index]
           })
           .then(resp => {
             if (resp.status === 200){
-              this.$message({message:'驳斥申请提交成功，请耐心等待结果'})
+              this.$message({message:'驳斥申请提交成功，请耐心等待结果',type:'success'})
+              this.$set(this.rebuttalNeeded,index,false)
             }
           })
           .catch(error => {

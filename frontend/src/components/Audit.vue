@@ -329,11 +329,13 @@ import pdf from 'vue-pdf'
                   message: '讨论区信息获取失败！',
                   type: 'warning'
                 });
+                console.log(resp.data)
               }
             })
             .catch(error => {
               console.log(error.config);
             })
+            console.log(secondDiscussion)
           return secondDiscussion;
         },
 

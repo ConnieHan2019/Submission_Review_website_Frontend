@@ -309,7 +309,7 @@ import pdf from 'vue-pdf'
                 secondDiscussion=resp.data.secondDiscussion;
                 this.$message({
                   showClose: true,
-                  message: '讨论1传来的数据'+secondDiscussion,
+                  message: '讨论2传来的数据'+secondDiscussion,
                 });
               } else {
                 this.$message({

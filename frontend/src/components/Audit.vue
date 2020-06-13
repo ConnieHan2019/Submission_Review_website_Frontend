@@ -36,22 +36,23 @@
 
           <div v-else-if="aus.essayState===1" id="已批阅待首次确认">
             <p>第一次讨论</p>
+
             <div class="firstDiscussArea" v-if="firstDiscussAreaVisible">
+              <el-button type="success" @click="showFirstDiscussionArea(aus)">刷新</el-button>
               <div v-for="firstDiscuss in showFirstDiscussionArea(aus)"
                    v-bind:key="firstDiscuss.speaker"
                    v-bind:index="firstDiscuss.speaker"
-                    
                    class="discussArea">
                 <p style="color: #005cbf">{{firstDiscuss.speaker}}<span style="color: black">:{{firstDiscuss.content}}</span></p>
                 <el-button  class="el-icon-right" @click="reply1(aus,firstDiscuss.speaker,firstDiscuss.content)">回复TA</el-button>
               </div>
               <br>
-              <div   style="padding-left: 10%">
+              <div  style="padding-left: 10%">
                 <el-button @click="myView1(aus)">发表我的看法</el-button>
               </div>
             </div>
             <div v-else>
-              <el-button @click="showFirstDiscussionArea(aus)">刷新评论区</el-button>
+              <el-button @click="showFirstDiscussionArea(aus)">展示评论区</el-button>
             </div>
             <el-dialog
               title="回复评论"
@@ -93,10 +94,10 @@
           <div v-else-if="aus.essayState===5" id="已提交rebuttal待再次确认">
             <p>第二次讨论</p>
             <div class="secondDiscussArea" v-if="secondDiscussAreaVisible">
+              <el-button type="success"  @click="showSecondDiscussionArea(aus)">刷新</el-button>
               <div v-for="secondDiscuss in showSecondDiscussionArea(aus)"
                    v-bind:key="secondDiscuss.speaker"
                    v-bind:index="secondDiscuss.speaker"
-                    
                    class="discussArea">
                 <p style="color: #005cbf">{{secondDiscuss.speaker}}<span style="color: black">:{{secondDiscuss.content}}</span></p>
                 <el-button  class="el-icon-right" @click="reply2(aus,secondDiscuss.speaker,secondDiscuss.content)">回复TA</el-button>
@@ -108,7 +109,7 @@
 
             </div>
             <div v-else>
-              <el-button @click="showSecondDiscussionArea(aus)">刷新评论区</el-button>
+              <el-button @click="showSecondDiscussionArea(aus)">展示评论区</el-button>
             </div>
 
             <el-dialog
@@ -254,8 +255,7 @@ import pdf from 'vue-pdf'
       methods: {
         showFirstDiscussionArea(aus){
           this.firstDiscussAreaVisible=true;
-          var  firstDiscussion;
-           
+          var firstDiscussion=[];
           this.$axios.post('/getFirstDiscussion', {
             meetingFullname:this.contactName,
             authorName:aus.name,
@@ -263,7 +263,12 @@ import pdf from 'vue-pdf'
           })
             .then(resp => {
               if (resp.status === 200 && resp.data.hasOwnProperty("firstDiscussion")) {
-               firstDiscussion=resp.data.firstDiscussion;
+                firstDiscussion=resp.data.firstDiscussion;
+                this.$message({
+                  showClose: true,
+                  message: '讨论1传来的数据'+firstDiscussion,
+                });
+
               } else {
                 this.$message({
                   showClose: true,
@@ -273,18 +278,6 @@ import pdf from 'vue-pdf'
               }
             })
             .catch(error => {
-              if (error.response) {
-                // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-                this.$message({
-                  showClose: true,
-                  message: '请求已发出，但服务器响应的状态码不在 2xx 范围内',
-                  type: 'warning'
-                });
-                console.log(error.response)
-              } else {
-                // Something happened in setting up the request that triggered an Error
-                console.log('Error', error.message)
-              }
               console.log(error.config);
             })
           return firstDiscussion;
@@ -292,6 +285,20 @@ import pdf from 'vue-pdf'
         showSecondDiscussionArea(aus){
           this.secondDiscussAreaVisible=true;
           var  secondDiscussion;
+          // secondDiscussion=[
+          //    {
+          //      speaker:'msdsn',
+          //      content:'我觉得给吧'
+          //    },
+          //    {
+          //      speaker:'sdjod',
+          //      content:'没道理'
+          //    },
+          //    {
+          //      speaker:'sdddw',
+          //      content:'开玩笑丢掉的吧'
+          //    },
+          //  ];
           this.$axios.post('/getSecondDiscussion', {
             meetingFullname:this.contactName,
             authorName:aus.name,
@@ -300,6 +307,10 @@ import pdf from 'vue-pdf'
             .then(resp => {
               if (resp.status === 200 && resp.data.hasOwnProperty("secondDiscussion")) {
                 secondDiscussion=resp.data.secondDiscussion;
+                this.$message({
+                  showClose: true,
+                  message: '讨论1传来的数据'+secondDiscussion,
+                });
               } else {
                 this.$message({
                   showClose: true,
@@ -309,18 +320,6 @@ import pdf from 'vue-pdf'
               }
             })
             .catch(error => {
-              if (error.response) {
-                // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-                this.$message({
-                  showClose: true,
-                  message: '请求已发出，但服务器响应的状态码不在 2xx 范围内',
-                  type: 'warning'
-                });
-                console.log(error.response)
-              } else {
-                // Something happened in setting up the request that triggered an Error
-                console.log('Error', error.message)
-              }
               console.log(error.config);
             })
           return secondDiscussion;

@@ -128,8 +128,8 @@
                           message: '批阅成功!',
                           type: 'success'
                         });
-                        // alert("批阅成功")
-                        this.$router.replace({path:'/personal'})
+
+                        this.$router.replace({path:'/audit'})
                       }
                       else{
                         this.$message({
@@ -190,7 +190,7 @@
                       type: 'success'
                     });
                     // alert("批阅成功")
-                    this.$router.replace({path:'/personal'})
+                    this.$router.replace({path:'/audit'})
                   }
                   else{
                     this.$message({
@@ -251,7 +251,7 @@
                       type: 'success'
                     });
                     // alert("批阅成功")
-                    this.$router.replace({path:'/personal'})
+                    this.$router.replace({path:'/audit'})
                   }
                   else{
                     this.$message({

@@ -255,6 +255,18 @@ import pdf from 'vue-pdf'
         showFirstDiscussionArea(aus){
           this.firstDiscussAreaVisible=true;
           var  firstDiscussion;
+           this.$message({
+                  showClose: true,
+                  message:this.contactName,
+                });
+                this.$message({
+                  showClose: true,
+                  message:aus.name,
+                });
+                 this.$message({
+                  showClose: true,
+                  message:aus.title,
+                });
           this.$axios.post('/getFirstDiscussion', {
             meetingFullname:this.contactName,
             authorName:aus.name,

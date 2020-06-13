@@ -136,7 +136,7 @@
           this.rebuttalNeeded = [];
           for(var i = 0;i < this.essays.length;i++){
             var essay = this.essays[i]
-            if(essay.meetingState == 4  &&(essay.commentSet[0].score == '-1'||essay.commentSet[0].score == '-2'||essay.commentSet[1].score == '-1'||essay.commentSet[1].score == '-2'||essay.commentSet[2].score == '-1'||essay.commentSet[2].score == '-2')){
+            if(essay.meetingState == 4 && essay.rebuttalState==0  &&(essay.commentSet[0].score == '-1'||essay.commentSet[0].score == '-2'||essay.commentSet[1].score == '-1'||essay.commentSet[1].score == '-2'||essay.commentSet[2].score == '-1'||essay.commentSet[2].score == '-2')){
               this.rebuttalNeeded.push(true)
             }
             else{

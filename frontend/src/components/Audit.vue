@@ -39,13 +39,12 @@
 
             <div class="firstDiscussArea" v-if="firstDiscussAreaVisible">
               <el-button type="success" @click="showFirstDiscussionArea(aus)">刷新</el-button>
-              <div v-for="firstDiscuss in showFirstDiscussionArea(aus)"
-                   v-bind:key="firstDiscuss.speaker"
-                   v-bind:index="firstDiscuss.speaker"
-                   class="discussArea">
-                <p style="color: #005cbf">{{firstDiscuss.speaker}}<span style="color: black">:{{firstDiscuss.content}}</span></p>
-                <el-button  class="el-icon-right" @click="reply1(aus,firstDiscuss.speaker,firstDiscuss.content)">回复TA</el-button>
-              </div>
+              <ul id="indexWay" align="left">
+                <li v-for="(firstDiscuss,index) in showFirstDiscussionArea(aus)"  v-bind:key="firstDiscuss.speaker">
+                  <p style="color: #005cbf">第{{index+1}}楼：{{firstDiscuss.speaker}}<span style="color: black">:{{firstDiscuss.content}}</span></p>
+                  <el-button  class="el-icon-right" @click="reply1(aus,firstDiscuss.speaker,firstDiscuss.content)">回复TA</el-button>
+                </li>
+              </ul>
               <br>
               <div  style="padding-left: 10%">
                 <el-button @click="myView1(aus)">发表我的看法</el-button>
@@ -256,6 +255,20 @@ import pdf from 'vue-pdf'
         showFirstDiscussionArea(aus){
           this.firstDiscussAreaVisible=true;
           var firstDiscussion=[];
+          // firstDiscussion=[
+          //    {
+          //      speaker:'msdsn',
+          //      content:'我觉得给吧'
+          //    },
+          //    {
+          //      speaker:'sdjod',
+          //      content:'没道理'
+          //    },
+          //    {
+          //      speaker:'sdddw',
+          //      content:'开玩笑丢掉的吧'
+          //    },
+          //  ];
           this.$axios.post('/getFirstDiscussion', {
             meetingFullname:this.contactName,
             authorName:aus.name,
@@ -268,7 +281,6 @@ import pdf from 'vue-pdf'
                   showClose: true,
                   message: '讨论1传来的数据'+firstDiscussion,
                 });
-
               } else {
                 this.$message({
                   showClose: true,

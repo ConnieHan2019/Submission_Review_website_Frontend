@@ -310,6 +310,12 @@ export default {
                   if(error.response.status === 400){
                     this.$message.error(error.response.data.message)
                   }
+                  else if(error.response.status=== 406 ||error.response.status === 409 ){
+                    this.$message({
+                      showClose: true,
+                      message: '请检查三个日期顺序!',
+                    });
+                  }
                 }
                 else{
                   this.$message({

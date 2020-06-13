@@ -153,7 +153,7 @@ export default {
         <template slot="title">我参加的会议</template>
         <el-submenu v-for="contact in contacts" v-bind:index="contact.shortname" v-bind:key="'submenu'+contact.shortname">
           <template slot="title">{{contact.shortname}}</template>
-          <el-menu-item v-for="role in contact.roles" v-bind:key="role"  v-bind:index="role" @click='transaction(contact.fullname,role)'>{{role}}</el-menu-item>
+          <el-menu-item v-for="role in contact.roles" v-bind:key="role+contact.shortname"  v-bind:index="role" @click='transaction(contact.fullname,role)'>{{role}}</el-menu-item>
         </el-submenu>
         </el-submenu>
         <el-menu-item index="contactState" @click='contactState'>我申请的会议</el-menu-item>

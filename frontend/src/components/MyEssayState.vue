@@ -130,6 +130,19 @@
           .then(resp => {
             if (resp.status === 200 && resp.data.hasOwnProperty("userEssayStateInformation")) {
               this.essays = resp.data.userEssayStateInformation
+              console.log('论文信息：')
+              console.log(this.essays)
+          //判断是否可以提出驳斥
+          this.rebuttalNeeded = [];
+          for(var i = 0;i < this.essays.length;i++){
+            var essay = this.essays[i]
+            if(essay.meetingState == 4 &&(essay.commentSet[0].score == '-1'||essay.commentSet[0].score == '-2'||essay.commentSet[1].score == '-1'||essay.commentSet[1].score == '-2'||essay.commentSet[2].score == '-1'||essay.commentSet[2].score == '-2')){
+              this.rebuttalNeeded.push(true)
+            }
+            else{
+              this.rebuttalNeeded.push(false)
+            }
+          }
             } else {
               this.essayStateError()
                 console.log(resp)
@@ -148,17 +161,6 @@
             }
             console.log(error.config);
           })
-          //判断是否可以提出驳斥
-          this.rebuttalNeeded = [];
-          for(var i = 0;i < this.essays.length;i++){
-            var essay = this.essays[i]
-            if(essay.meetingState == 4 &&(essay.commentSet[0].score == '-1'||essay.commentSet[0].score == '-2'||essay.commentSet[1].score == '-1'||essay.commentSet[1].score == '-2'||essay.commentSet[2].score == '-1'||essay.commentSet[2].score == '-2')){
-              this.rebuttalNeeded.push(true)
-            }
-            else{
-              this.rebuttalNeeded.push(false)
-            }
-          }
 
       },
       methods: {
@@ -179,7 +181,7 @@
           this.$axios.post('/rebuttal',{
             username: this.$store.state.userDetails,
             contactName:this.contactName,
-            essayTitle:this.essays[index].title,
+            essaytitle:this.essays[index].title,
             rebuttalText:this.rebuttalText[index]
           })
           .then(resp => {

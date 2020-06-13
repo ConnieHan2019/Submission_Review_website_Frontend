@@ -22,13 +22,13 @@ export default{
                 author:'Mary',
                 assignment:[{
                     name:'hhh',
-                    state:1
+                    essayState:1
                 },{
                     name:'ddd',
-                    state:0
+                    essayState:0
                 },{
                     name:'ddd',
-                    state:0
+                    essayState:0
                 }],
                 state:0
             },{
@@ -38,13 +38,13 @@ export default{
                 author:'Mary',
                 assignment:[{
                     name:'hhh',
-                    state:1
+                    essayState:1
                 },{
                     name:'ddd',
-                    state:1
+                    essayState:1
                 },{
                     name:'ddd',
-                    state:1
+                    essayState:1
                 }],
                 state:1
             },{
@@ -54,13 +54,13 @@ export default{
                 author:'Mary',
                 assignment:[{
                     name:'hhh',
-                    state:1
+                    essayState:1
                 },{
                     name:'ddd',
-                    state:1
+                    essayState:1
                 },{
                     name:'ddd',
-                    state:2
+                    essayState:2
                 }],
                 state:1
             },{
@@ -70,13 +70,13 @@ export default{
                 author:'Mary',
                 assignment:[{
                     name:'hhh',
-                    state:2
+                    essayState:2
                 },{
                     name:'ddd',
-                    state:2
+                    essayState:2
                 },{
                     name:'ddd',
-                    state:2
+                    essayState:2
                 }],
                 state:2
             },{
@@ -86,13 +86,13 @@ export default{
                 author:'Mary',
                 assignment:[{
                     name:'hhh',
-                    state:6
+                    essayState:6
                 },{
                     name:'ddd',
-                    state:6
+                    essayState:6
                 },{
                     name:'ddd',
-                    state:6
+                    essayState:6
                 }],
                 state:6
             },{
@@ -102,13 +102,13 @@ export default{
                 author:'Mary',
                 assignment:[{
                     name:'hhh',
-                    state:5
+                    essayState:5
                 },{
                     name:'ddd',
-                    state:6
+                    essayState:6
                 },{
                     name:'ddd',
-                    state:6
+                    essayState:6
                 }],
                 state:5
             },{
@@ -118,13 +118,13 @@ export default{
                 author:'Mary',
                 assignment:[{
                     name:'hhh',
-                    state:3
+                    essayState:3
                 },{
                     name:'ddd',
-                    state:3
+                    essayState:3
                 },{
                     name:'ddd',
-                    state:3
+                    essayState:3
                 }],
                 state:3
             },{
@@ -134,13 +134,13 @@ export default{
                 author:'Mary',
                 assignment:[{
                     name:'hhh',
-                    state:4
+                    essayState:4
                 },{
                     name:'ddd',
-                    state:4
+                    essayState:4
                 },{
                     name:'ddd',
-                    state:4
+                    essayState:4
                 }],
                 state:4
             }]
@@ -173,8 +173,8 @@ export default{
         }
     },
     created:function(){
-        this.transform();
-        this.convert();
+        //this.transform();
+        //this.convert();
         this.$axios.post('/essaysData',{
             contactFullName:this.contactName,
             contactState:this.state
@@ -182,9 +182,11 @@ export default{
         .then(resp => {
             if(resp.status === 200 && resp.data.hasOwnProperty('respEssaysData')){
                 this.essaysData = resp.data.respEssaysData
+                console.log('返回论文状态：')
+                console.log(this.essaysData)
                 //console.log(resp.data.respEssaysData)
                 //将字符数组处理成字符串
-                this.transform();
+                //this.transform();
                 //将论文状态从数字换成文字
                 this.convert();
             }
@@ -264,7 +266,6 @@ export default{
             })
         },
         endRebuttal(){
-            alert("end")
             this.$axios.post('/endRebuttal',{
                 contactFullName:this.contactName
             })
@@ -275,8 +276,8 @@ export default{
                 }
             })
             .catch(error => {
-                if(error.repsonse){
-                    if(error.repsonse.status === 400){
+                if(error.response){
+                    if(error.response.status === 400){
                         this.$message('还未到预期截至时间，不能提前截止')
                     }
                     else{this.$message.error('终止失败')}
@@ -316,7 +317,7 @@ export default{
                 var assignment = this.essaysData[i].assignment;
                 var stateText;
                 for(var j = 0;j < assignment.length;j++){
-                    switch(assignment[j].state){
+                    switch(assignment[j].essayState){
                         case 0:{
                             stateText = "批阅中";
                             break;
@@ -348,7 +349,7 @@ export default{
                         default:
                             break;
                     }
-                    assignment[j].state = stateText;
+                    assignment[j].essayState = stateText;
                 }
                 switch(this.essaysData[i].state){
                         case 0:{
@@ -423,7 +424,7 @@ export default{
   trigger="click">
   <el-table :data="essaysData[scope.$index].assignment">
     <el-table-column property="name" label="审稿人"></el-table-column>
-    <el-table-column property="state" label="状态"></el-table-column>
+    <el-table-column property="essayState" label="状态"></el-table-column>
   </el-table>
   <el-button slot="reference">初审,{{essaysData[scope.$index].state}},点击查看</el-button>
 </el-popover>
@@ -436,7 +437,7 @@ export default{
   trigger="click">
   <el-table :data="essaysData[scope.$index].assignment">
     <el-table-column property="name" label="审稿人"></el-table-column>
-    <el-table-column property="state" label="状态"></el-table-column>
+    <el-table-column property="essayState" label="状态"></el-table-column>
   </el-table>
   <el-button slot="reference">复审,{{essaysData[scope.$index].state}},点击查看</el-button>
 </el-popover>

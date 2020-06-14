@@ -362,11 +362,20 @@
               console.log(resp)
             })
             .catch(error => {
-              this.$message({
-                  type:'success',
-                  showClose: true,
-                  message: '上传失败'
-                })
+              if(error.response){
+                if(error.response.status === 400){
+                  this.$message.error('论文标题重复，上传失败')
+                }
+                else if(error.response.status === 400){
+                  this.$message.error('会议不存在，上传失败')
+                }
+                else{
+                  this.$message.error('上传失败')
+                }
+              }
+              else{
+                this.$message.error('上传失败')
+              }
               console.log(error.response)
             })
         }

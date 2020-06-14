@@ -71,6 +71,38 @@
         </div>
 
         <div v-else-if="aus.essayState===2" id="已首次确认">
+
+          <p>第一次讨论</p>
+
+          <div class="firstDiscussArea">
+
+            <ul id="indexWay1" align="left">
+              <li v-for="(firstDiscuss,index) in aus.firstDiscussion"  v-bind:key="firstDiscuss.speaker">
+                <p style="color: #005cbf">第{{index+1}}楼：{{firstDiscuss.speaker}}<span style="color: black">:{{firstDiscuss.content}}</span></p>
+                <el-button  class="el-icon-right" @click="reply1(aus,firstDiscuss.speaker,firstDiscuss.content)">回复TA</el-button>
+              </li>
+            </ul>
+            <br>
+            <div  style="padding-left: 10%">
+              <el-button @click="myView1(aus)">发表我的看法</el-button>
+            </div>
+          </div>
+
+          <el-dialog
+            title="回复评论"
+            :visible.sync="commentWindowVisible1"
+            center>
+            <el-input v-model="aPieceOfComment"></el-input>
+
+            <el-button-group style="margin-left: 20%;margin-top: 5%">
+              <el-button @click="commentWindowVisible1=false">取消</el-button>
+              <el-button type="success" @click="sendMyComment1(aPieceOfComment)">发布评论1</el-button>
+            </el-button-group>
+          </el-dialog>
+
+          <br>
+
+
           <el-button-group style="margin-top:20px">
             <el-button type="success" disabled>已首次确认</el-button>
           </el-button-group>
@@ -128,6 +160,38 @@
         </div>
 
         <div v-else id="已再次确认">
+          <p>第二次讨论</p>
+          <p >Rebuttal:<span style="color: #005cbf">{{aus.rebuttal}}</span></p>
+
+          <div class="secondDiscussArea">
+
+            <ul id="indexWay22" align="left">
+              <li v-for="(secondDiscuss,index) in aus.secondDiscussion"  v-bind:key="secondDiscuss.speaker">
+                <p style="color: #005cbf">第{{index+1}}楼：{{secondDiscuss.speaker}}<span style="color: black">:{{secondDiscuss.content}}</span></p>
+                <el-button  class="el-icon-right" @click="reply2(aus,secondDiscuss.speaker,secondDiscuss.content)">回复TA</el-button>
+              </li>
+            </ul>
+            <div  style="padding-left: 10%">
+              <el-button @click="myView2(aus)">发表我的看法</el-button>
+            </div>
+
+          </div>
+
+          <el-dialog
+            title="回复评论"
+            :visible.sync="commentWindowVisible2"
+            center>
+            <el-input v-model="aPieceOfComment"></el-input>
+
+            <el-button-group style="margin-left: 20%;margin-top: 5%">
+              <el-button @click="commentWindowVisible2=false">取消</el-button>
+              <el-button type="success" @click="sendMyComment2(aPieceOfComment)">发布评论2</el-button>
+            </el-button-group>
+
+          </el-dialog>
+
+          <br>
+
           <el-button-group style="margin-top:20px">
             <el-button type="success" disabled>已再次确认</el-button>
           </el-button-group>

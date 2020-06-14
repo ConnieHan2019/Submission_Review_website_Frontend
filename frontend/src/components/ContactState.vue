@@ -66,7 +66,7 @@ export default {
         <strong>结果发布日期</strong><span class="para">{{conState.ReleaseResultTime}}</span>
       </div>
       <div class="text_item">
-        <strong>会议举办日期</strong><span class="para">{{conState.ReleaseResultTime}}</span>
+        <strong>会议举办日期</strong><span class="para">{{conState.BeginTime}}</span>
       </div>
       <div class="text_item">
         <strong>举办地点</strong><span class="para">{{conState.Place}}</span>

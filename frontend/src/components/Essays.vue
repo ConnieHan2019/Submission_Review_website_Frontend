@@ -227,13 +227,7 @@ export default{
             })
             .catch(error => {
                 if(error.repsonse){
-                    if(error.repsonse.status===406){
-                        this.$message.error('符合要求的审稿人不足，发布失败')
-                    }
-                    else{
-                        this.$message.error('发布失败')
-                    }
-                    
+                    this.$message.error('发布失败')
                 }
                 else{
                     this.$message.error('出现了一些错误，请重试')
